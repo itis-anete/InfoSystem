@@ -1,1 +1,3 @@
 # InfoSystem
+
+Модель БД: EAV
