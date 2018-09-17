@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace InfoSystem.App.DataBase.Interfaces
+namespace InfoSystem.Infrastructure.Interfaces
 {
     public interface IUser
     {

@@ -1,4 +1,4 @@
-namespace InfoSystem.App.DataBase.Entities
+namespace InfoSystem.Infrastructure.Entities
 {
     using System.Collections.Generic;
 

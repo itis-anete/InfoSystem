@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using InfoSystem.App.DataBase.Context;
-using InfoSystem.App.DataBase.Entities;
+using InfoSystem.Infrastructure.Entities;
 
 namespace InfoSystem.App.Pages.Products
 {

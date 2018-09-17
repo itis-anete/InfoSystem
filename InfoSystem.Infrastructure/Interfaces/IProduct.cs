@@ -1,4 +1,4 @@
-namespace InfoSystem.App.DataBase.Interfaces
+namespace InfoSystem.Infrastructure.Interfaces
 {
     public interface IProduct
     {

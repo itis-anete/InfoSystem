@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InfoSystem.App.DataBase.Entities
+namespace InfoSystem.Infrastructure.Entities
 {
     public class MarketProduct : Identity
     {

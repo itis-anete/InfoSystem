@@ -1,4 +1,4 @@
-using InfoSystem.App.DataBase.Entities;
+using InfoSystem.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.App.DataBase.Context
