@@ -1,19 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace InfoSystem.Infrastructure.Entities
 {
     public class MarketProduct : Identity
     {
+        public int MarketId { get; }
+        public Market Market { get; }
+        public int ProductId { get; }
+        public Product Product { get; }
 
-        public int MarketId { get; set; }
-        public Market Market { get; set; }
-
-
-        public int ProductId { get; set; }
-
-        public Product Product { get; set; }
+        public MarketProduct(Market market, Product product)
+        {
+            Market = market;
+            MarketId = market.Id;
+            Product = product;
+            ProductId = product.Id;
+        }
     }
 }
