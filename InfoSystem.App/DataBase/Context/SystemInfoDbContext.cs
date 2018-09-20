@@ -21,5 +21,7 @@ namespace InfoSystem.App.DataBase.Context
         public DbSet<Product> Products { get; set; }
 
         public DbSet<MarketProduct> MarketProduct { get; set; }
+        
+        public DbSet<User> Users { get; set; }
     }
 }

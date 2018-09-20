@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.API.Controllers
@@ -10,6 +7,11 @@ namespace InfoSystem.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        /// <summary>
+        /// Что хранит этот класс ?
+        /// </summary>
+        /// <returns></returns>
+        
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()

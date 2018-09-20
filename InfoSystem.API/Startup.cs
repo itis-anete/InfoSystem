@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InfoSystem.Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,8 +28,13 @@ namespace InfoSystem.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSwaggerGen(c => 
-                                   c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" }));
+
+            // Import from InfoSystem.App/Startup.cs
+            // Empty as a template for PostgreSQL
+            var connectionStr = "User ID=;Password=;Host=localhost;Port=5432;Database=InfoSystem.app;";
+            services.AddTransient<IUnitOfWork>(uof => new UnitOfWork(connectionStr));
+            services.AddSwaggerGen(c =>
+                c.SwaggerDoc("v1", new Info {Title = "My API", Version = "v1"}));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
