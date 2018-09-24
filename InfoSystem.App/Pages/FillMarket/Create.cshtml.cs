@@ -36,7 +36,7 @@ namespace InfoSystem.App.Pages.FillMarket
                 return Page();
             }
 
-            _context.MarketProduct.Add(MarketProduct);
+            _context.MarketProducts.Add(MarketProduct);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

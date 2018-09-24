@@ -21,7 +21,7 @@ namespace InfoSystem.App.Pages.ShowMarket
 
         public void OnGet(int marketId)
         {
-            this.Products = this.dbContext.MarketProduct.Where(x => x.MarketId == marketId)
+            this.Products = this.dbContext.MarketProducts.Where(x => x.MarketId == marketId)
                 .Include(x=>x.Product)
                 .ToList()
                 .Select(x => x.Product);

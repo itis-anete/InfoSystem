@@ -29,7 +29,7 @@ namespace InfoSystem.App.Pages.FillMarket
                 return NotFound();
             }
 
-            MarketProduct = await _context.MarketProduct
+            MarketProduct = await _context.MarketProducts
                 .Include(m => m.Market)
                 .Include(m => m.Product).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -47,11 +47,11 @@ namespace InfoSystem.App.Pages.FillMarket
                 return NotFound();
             }
 
-            MarketProduct = await _context.MarketProduct.FindAsync(id);
+            MarketProduct = await _context.MarketProducts.FindAsync(id);
 
             if (MarketProduct != null)
             {
-                _context.MarketProduct.Remove(MarketProduct);
+                _context.MarketProducts.Remove(MarketProduct);
                 await _context.SaveChangesAsync();
             }
 

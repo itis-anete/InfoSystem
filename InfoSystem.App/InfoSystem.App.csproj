@@ -15,4 +15,7 @@
     <ProjectReference Include="..\InfoSystem.Infrastructure\InfoSystem.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="DataBase\ReposInterfaces\EmptyInterface.cs" />
+  </ItemGroup>
 </Project>

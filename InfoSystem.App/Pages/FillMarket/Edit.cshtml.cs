@@ -30,7 +30,7 @@ namespace InfoSystem.App.Pages.FillMarket
                 return NotFound();
             }
 
-            MarketProduct = await _context.MarketProduct
+            MarketProduct = await _context.MarketProducts
                 .Include(m => m.Market)
                 .Include(m => m.Product).FirstOrDefaultAsync(m => m.Id == id);
 
@@ -73,7 +73,7 @@ namespace InfoSystem.App.Pages.FillMarket
 
         private bool MarketProductExists(int id)
         {
-            return _context.MarketProduct.Any(e => e.Id == id);
+            return _context.MarketProducts.Any(e => e.Id == id);
         }
     }
 }

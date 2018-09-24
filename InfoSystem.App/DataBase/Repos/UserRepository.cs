@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using InfoSystem.App.DataBase.Context;
 using InfoSystem.App.DataBase.ReposInterfaces;
 using InfoSystem.Infrastructure.Entities;
@@ -13,20 +15,17 @@ namespace InfoSystem.App.DataBase.Repos
         {
             _context = dbContext;
         }
-        
-        public void AddUser()
+
+        public void Add(User newUser)
         {
-            throw new System.NotImplementedException();
+            //if (_context.Users.Any(user => user.Username == newUser.Username))
+            //    throw new ArgumentException();
+            _context.Users.AddAsync(newUser);
         }
 
-        public bool AuthoriseUser()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IEnumerable<User> GetUsers()
-        {
-            return _context.Users;
-        }
+        public void Delete(int id) => _context.Users.Remove(_context.Users.Find(id));
+        public bool AuthoriseUser(User receivedData) => _context.Users.Contains(receivedData); // not save enough
+        public IEnumerable<User> Get() => _context.Users.OrderBy(u => u);
+        public User Get(int id) => _context.Users.Find(id);
     }
 }

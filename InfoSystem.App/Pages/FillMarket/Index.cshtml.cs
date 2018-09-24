@@ -23,7 +23,7 @@ namespace InfoSystem.App.Pages.FillMarket
 
         public async Task OnGetAsync()
         {
-            MarketProduct = await _context.MarketProduct
+            MarketProduct = await _context.MarketProducts
                 .Include(m => m.Market)
                 .Include(m => m.Product).ToListAsync();
         }

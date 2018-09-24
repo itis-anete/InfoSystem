@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.App.DataBase.ReposInterfaces;
@@ -10,23 +9,23 @@ namespace InfoSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase, IController<User>
+    public class MarketsController : ControllerBase, IController<Market>
     {
-        private IUserRepository _repository;
-
-        public UsersController(IUnitOfWork uof)
+        private readonly IMarketRepository _repository;
+        
+        public MarketsController(IUnitOfWork uof)
         {
-            _repository = uof.UserRepos;
+            _repository = uof.MarketRepos;
         }
-
+        
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<Market>> Get()
         {
             return _repository.Get().ToList();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<Market> Get(int id)
         {
             return _repository.Get(id);
         }
@@ -34,13 +33,13 @@ namespace InfoSystem.API.Controllers
         [HttpPost]
         public void Post([FromBody] string name)
         {
-            _repository.Add(new User(name));
+            _repository.Add(new Market(name));
         }
 
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string name)
         {
-            _repository.Add(new User(name) {Id = id});
+            _repository.Add(new Market(name){Id = id});
         }
 
         [HttpDelete("{id}")]

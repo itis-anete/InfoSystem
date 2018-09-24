@@ -5,7 +5,7 @@ namespace InfoSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : ControllerBase, IController<string>
     {
         /// <summary>
         /// Что хранит этот класс ?

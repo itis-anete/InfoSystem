@@ -10,23 +10,23 @@ namespace InfoSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase, IController<User>
+    public class MarketProductsController : ControllerBase, IController<MarketProduct>
     {
-        private IUserRepository _repository;
+        private IMarketProductRepository _repository;
 
-        public UsersController(IUnitOfWork uof)
+        public MarketProductsController(IUnitOfWork uof)
         {
-            _repository = uof.UserRepos;
+            _repository = uof.MarketProductRepos;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<MarketProduct>> Get()
         {
             return _repository.Get().ToList();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<MarketProduct> Get(int id)
         {
             return _repository.Get(id);
         }
@@ -34,13 +34,13 @@ namespace InfoSystem.API.Controllers
         [HttpPost]
         public void Post([FromBody] string name)
         {
-            _repository.Add(new User(name));
+            _repository.Add(new MarketProduct());
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string name)
+        public void Put(int id, [FromBody] string value)
         {
-            _repository.Add(new User(name) {Id = id});
+            _repository.Add(new MarketProduct() {Id = id});
         }
 
         [HttpDelete("{id}")]

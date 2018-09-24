@@ -6,7 +6,7 @@ using InfoSystem.Infrastructure.Interfaces;
 
 namespace InfoSystem.Infrastructure.Entities
 {
-    public class User : IUser
+    public class User : Identity, IUser
     {
         public string Username { get; private set; }
         public Uri ContactPage { get; private set; }
@@ -17,7 +17,7 @@ namespace InfoSystem.Infrastructure.Entities
         private List<Market> _markets;
 
         public User() => _markets = new List<Market>();
-        public User(string nickname, string firstName, string lastName, string contactUrl)
+        public User(string nickname, string firstName = null, string lastName = null, string contactUrl = null)
         {
             Username = nickname;
             FirstName = firstName;

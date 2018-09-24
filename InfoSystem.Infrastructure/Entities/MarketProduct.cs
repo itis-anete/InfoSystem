@@ -7,6 +7,7 @@ namespace InfoSystem.Infrastructure.Entities
         public int ProductId { get; }
         public Product Product { get; }
 
+        public MarketProduct() { }
         public MarketProduct(Market market, Product product)
         {
             Market = market;
