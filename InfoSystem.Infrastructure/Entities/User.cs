@@ -9,7 +9,7 @@ namespace InfoSystem.Infrastructure.Entities
     public class User : Identity, IUser
     {
         public string Username { get; private set; }
-        public Uri ContactPage { get; private set; }
+        // public Uri ContactPage { get; private set; }
         public string FirstName { get; }
         public string LastName { get; }
         //public Uri ForumPage { get; set; } ???
@@ -22,7 +22,7 @@ namespace InfoSystem.Infrastructure.Entities
             Username = nickname;
             FirstName = firstName;
             LastName = lastName;
-            ContactPage = new Uri(contactUrl);
+            //ContactPage = new Uri(contactUrl);
         }
 
 

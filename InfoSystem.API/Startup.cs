@@ -31,7 +31,7 @@ namespace InfoSystem.API
 
             // Import from InfoSystem.App/Startup.cs
             // Empty as a template for PostgreSQL
-            var connectionStr = "User ID=;Password=;Host=localhost;Port=5432;Database=InfoSystem.app;";
+            var connectionStr = "User ID=postgres;Password=danon999;Host=localhost;Port=5432;Database=InfoSystem.app;";
             services.AddTransient<IUnitOfWork>(uof => new UnitOfWork(connectionStr));
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new Info {Title = "My API", Version = "v1"}));

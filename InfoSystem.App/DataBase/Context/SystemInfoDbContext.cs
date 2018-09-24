@@ -5,7 +5,7 @@ namespace InfoSystem.App.DataBase.Context
 {
     public class InfoSystemDbContext : DbContext
     {
-        public InfoSystemDbContext(DbContextOptions opt) :base(opt)
+        public InfoSystemDbContext(DbContextOptions opt) : base(opt)
         {
 
         }
@@ -16,12 +16,16 @@ namespace InfoSystem.App.DataBase.Context
             base.OnConfiguring(optionsBuilder);
         }
 
+        public DbSet<Entity> Entities { get; set; }
+        public DbSet<Properties> Properties { get; set; }
+        public DbSet<Values> Values { get; set; }
         public DbSet<Market> Markets { get; set; }
+
 
         public DbSet<Product> Products { get; set; }
 
         public DbSet<MarketProduct> MarketProducts { get; set; }
-        
+
         public DbSet<User> Users { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace InfoSystem.API.Controllers
     [ApiController]
     public class MarketProductsController : ControllerBase, IController<MarketProduct>
     {
-        private IMarketProductRepository _repository;
+        private readonly IMarketProductRepository _repository;
 
         public MarketProductsController(IUnitOfWork uof)
         {

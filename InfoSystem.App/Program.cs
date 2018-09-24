@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿/*
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace InfoSystem.App
@@ -15,3 +16,4 @@ namespace InfoSystem.App
                 .UseStartup<Startup>();
     }
 }
+*/

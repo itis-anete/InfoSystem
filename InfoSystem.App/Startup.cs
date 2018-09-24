@@ -1,3 +1,4 @@
+/*
 using InfoSystem.App.DataBase.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +30,7 @@ namespace InfoSystem.App
             });
 
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<InfoSystemDbContext>(opt=>opt.UseNpgsql("User ID=;Password=;Host=localhost;Port=5432;Database=InfoSystem.app;"));
+            services.AddEntityFrameworkNpgsql().AddDbContext<InfoSystemDbContext>(opt=>opt.UseNpgsql("User ID=;Password=;Port=5432;Da9tabase=InfoSystem.App;"));
             //services.AddDbContext<InfoSystemDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -66,3 +67,4 @@ namespace InfoSystem.App
         }
     }
 }
+*/

@@ -13,6 +13,9 @@ namespace InfoSystem.Infrastructure.UnitOfWork
         public IMarketProductRepository MarketProductRepos =>
             _marketProductRepos ?? new MarketProductRepository(_context);
         public IProductRepository ProductRepos => _productRepos ?? new ProductRepository(_context);
+        public IEntityRepository EntityRepos => _entityRepos ?? new EntityRepository(_context);
+        public IPropertiesRepository PropertiesRepos => _propertiesRepos ?? new PropertiesRepository(_context);
+        public IValuesRepository ValuesRepos => _valuesRepos ?? new ValuesRepository(_context);
 
         private bool isDisposed = false;
         private readonly InfoSystemDbContext _context;
@@ -21,11 +24,15 @@ namespace InfoSystem.Infrastructure.UnitOfWork
         private IMarketRepository _marketRepos;
         private IMarketProductRepository _marketProductRepos;
         private IProductRepository _productRepos;
+        private IEntityRepository _entityRepos;
+        private IPropertiesRepository _propertiesRepos;
+        private IValuesRepository _valuesRepos;
 
         public UnitOfWork(string connectionString)
         {
             var options = new DbContextOptionsBuilder<InfoSystemDbContext>();
-            options.UseSqlServer(connectionString);
+            //options.UseSqlServer(connectionString);
+            options.UseNpgsql(connectionString);
             _context = new InfoSystemDbContext(options.Options);
         }
 

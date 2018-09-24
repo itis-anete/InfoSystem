@@ -9,6 +9,9 @@ namespace InfoSystem.Infrastructure.UnitOfWork
         IMarketRepository MarketRepos { get; }
         IMarketProductRepository MarketProductRepos { get; }
         IProductRepository ProductRepos { get; }
+        IEntityRepository EntityRepos { get; }
+        IPropertiesRepository PropertiesRepos { get; }
+        IValuesRepository ValuesRepos { get; }
         
         void Save();
     }
