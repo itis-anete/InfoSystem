@@ -27,11 +27,10 @@ namespace InfoSystem.API.Controllers
         }
         
         [HttpPost("PostEntity")]
-        public ActionResult<Entity> PostEntity([FromBody] string receivedEntity)
+        public void PostEntity([FromBody] string receivedEntity)
         {
             var entity = JsonConvert.DeserializeObject<Entity>(receivedEntity);
             _entityRepository.Add(entity);
-            return entity; //_entityRepository.Get().First();
         }
 
         [HttpGet]

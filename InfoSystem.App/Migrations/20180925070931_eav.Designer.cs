@@ -3,15 +3,17 @@ using System;
 using InfoSystem.App.DataBase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace InfoSystem.App.Migrations
 {
     [DbContext(typeof(InfoSystemDbContext))]
-    partial class InfoSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180925070931_eav")]
+    partial class eav
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

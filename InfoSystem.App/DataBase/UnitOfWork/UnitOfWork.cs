@@ -28,12 +28,10 @@ namespace InfoSystem.Infrastructure.UnitOfWork
         private IPropertiesRepository _propertiesRepos;
         private IValuesRepository _valuesRepos;
 
-        public UnitOfWork(string connectionString)
+        public UnitOfWork()
         {
             var options = new DbContextOptionsBuilder<InfoSystemDbContext>();
-            //options.UseSqlServer(connectionString);
-            options.UseNpgsql(connectionString);
-            _context = new InfoSystemDbContext(options.Options);
+            _context = new InfoSystemDbContext();
         }
 
         #region IDisposableImplementation
