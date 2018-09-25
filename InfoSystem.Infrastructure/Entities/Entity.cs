@@ -7,6 +7,6 @@ namespace InfoSystem.Infrastructure.Entities
         public Entity() { }
         
         public bool Editable { get; set; }
-        public ICollection<Properties> Properties { get; set; }
+        //public ICollection<Properties> Properties { get; set; }
     }
 }

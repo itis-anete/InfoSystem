@@ -15,6 +15,7 @@ namespace InfoSystem.App.DataBase.Context
         {
             //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             optionsBuilder.UseNpgsql("User ID=postgres;Password=danon999;Host=localhost;Port=5432;Database=InfoSystem.app;"); // connectionStr?
+            
             //base.OnConfiguring(optionsBuilder);
         }
 

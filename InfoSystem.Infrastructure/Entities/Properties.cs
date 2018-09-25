@@ -4,6 +4,6 @@
     {
         public Properties() { }
         public string Name { get; set; }
-        public Entity Entity { get; set; }
+        //public Entity Entity { get; set; }
     }
 }

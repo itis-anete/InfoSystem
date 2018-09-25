@@ -8,6 +8,6 @@
         }
         public string Value { get; set; }
 
-        public Properties Property { get; set; }
+        //public Properties Property { get; set; }
     }
 }

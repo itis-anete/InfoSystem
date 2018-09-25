@@ -34,7 +34,7 @@ namespace InfoSystem.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Entity>> Get()
+        public IEnumerable<Entity> Get()
         {
             return _entityRepository.Get().ToList();
         }
