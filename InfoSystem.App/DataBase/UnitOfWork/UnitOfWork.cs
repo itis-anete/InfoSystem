@@ -8,14 +8,14 @@ namespace InfoSystem.Infrastructure.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IUserRepository UserRepos => _userRepos ?? new UserRepository(_context);
-        public IMarketRepository MarketRepos => _marketRepos ?? new MarketRepository(_context);
+        public IUserRepository UserRepos => _userRepos ?? (_userRepos = new UserRepository(_context));
+        public IMarketRepository MarketRepos => _marketRepos ?? (_marketRepos = new MarketRepository(_context));
         public IMarketProductRepository MarketProductRepos =>
-            _marketProductRepos ?? new MarketProductRepository(_context);
-        public IProductRepository ProductRepos => _productRepos ?? new ProductRepository(_context);
-        public IEntityRepository EntityRepos => _entityRepos ?? new EntityRepository(_context);
-        public IPropertiesRepository PropertiesRepos => _propertiesRepos ?? new PropertiesRepository(_context);
-        public IValuesRepository ValuesRepos => _valuesRepos ?? new ValuesRepository(_context);
+            _marketProductRepos ?? (_marketProductRepos = new MarketProductRepository(_context));
+        public IProductRepository ProductRepos => _productRepos ?? (_productRepos = new ProductRepository(_context));
+        public IEntityRepository EntityRepos => _entityRepos ?? (_entityRepos = new EntityRepository(_context));
+        public IPropertiesRepository PropertiesRepos => _propertiesRepos ?? (_propertiesRepos = new PropertiesRepository(_context));
+        public IValuesRepository ValuesRepos => _valuesRepos ?? (_valuesRepos = new ValuesRepository(_context));
 
         private bool isDisposed = false;
         private readonly InfoSystemDbContext _context;

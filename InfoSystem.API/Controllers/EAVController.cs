@@ -31,7 +31,6 @@ namespace InfoSystem.API.Controllers
         {
             var entity = JsonConvert.DeserializeObject<Entity>(receivedEntity);
             _entityRepository.Add(entity);
-            _valuesRepository.
             return entity; //_entityRepository.Get().First();
         }
 
