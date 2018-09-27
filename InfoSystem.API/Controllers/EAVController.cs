@@ -31,12 +31,32 @@ namespace InfoSystem.API.Controllers
         {
             var entity = JsonConvert.DeserializeObject<Entity>(receivedEntity);
             _entityRepository.Add(entity);
+
+            foreach (var prop in entity.Properties)
+            {
+                _valuesRepository.Add(prop.Value);
+                _propertiesRepository.Add(prop);
+                //_valuesRepository.Add(new Values{Property = entity.Properties.First(x => x == prop)});
+            }
         }
 
-        [HttpGet]
-        public IEnumerable<Entity> Get()
+        [HttpGet("GetEntities")]
+        public IEnumerable<Entity> GetEntities()
         {
             return _entityRepository.Get().ToList();
+        }
+
+        [HttpPost("PostProperty")]
+        public void PostProperty([FromBody] string receivedProperty)
+        {
+            var prop = JsonConvert.DeserializeObject<Properties>(receivedProperty);
+            _propertiesRepository.Add(prop);
+        }
+
+        [HttpGet("GetProperties")]
+        public IEnumerable<Properties> GetProperties()
+        {
+            return _propertiesRepository.Get().ToList();
         }
     }
 }

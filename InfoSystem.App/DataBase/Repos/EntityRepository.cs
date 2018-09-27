@@ -17,8 +17,8 @@ namespace InfoSystem.App.DataBase.Repos
         
         public void Add(Entity receivedObj)
         {
-            _context.Entities.AddAsync(receivedObj);
-            _context.SaveChangesAsync();
+            _context.Entities.Add(receivedObj);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)

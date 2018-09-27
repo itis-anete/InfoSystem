@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using InfoSystem.Infrastructure.Entities;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace InfoSystem.App.Migrations
@@ -9,16 +7,17 @@ namespace InfoSystem.App.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            /*migrationBuilder.DropTable(
                 name: "MarketProduct");
 
-            /*migrationBuilder.DropColumn(
+            migrationBuilder.DropColumn(
                 name: "Cost",
                 table: "Products");
 
             migrationBuilder.DropColumn(
                 name: "Name",
-                table: "Products");*/
+                table: "Products");
+*/
 
             migrationBuilder.CreateTable(
                 name: "Entities",
@@ -41,7 +40,7 @@ namespace InfoSystem.App.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     MarketId1 = table.Column<int>(nullable: true),
-                    ProductId1 = table.Column<int>(nullable: true),
+                    ProductId1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,12 +84,12 @@ namespace InfoSystem.App.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Properties", x => x.Id);
-                    /*table.ForeignKey(
+                    table.ForeignKey(
                         name: "FK_Properties_Entities_EntityId",
                         column: x => x.EntityId,
                         principalTable: "Entities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);*/
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,12 +104,12 @@ namespace InfoSystem.App.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Values", x => x.Id);
-                    /*table.ForeignKey(
+                    table.ForeignKey(
                         name: "FK_Values_Properties_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Properties",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);*/
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -160,9 +159,9 @@ namespace InfoSystem.App.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "Name",
                 table: "Products",
-                nullable: true);
+                nullable: true);*/
 
-            migrationBuilder.CreateTable(
+            /*migrationBuilder.CreateTable(
                 name: "MarketProduct",
                 columns: table => new
                 {

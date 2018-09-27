@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InfoSystem.App.Migrations
 {
     [DbContext(typeof(InfoSystemDbContext))]
-    [Migration("20180925070931_eav")]
-    partial class eav
+    [Migration("20180927072351_eav2")]
+    partial class eav2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,9 +84,13 @@ namespace InfoSystem.App.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("ValueId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EntityId");
+
+                    b.HasIndex("ValueId");
 
                     b.ToTable("Properties");
                 });
@@ -108,13 +112,9 @@ namespace InfoSystem.App.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("PropertyId");
-
                     b.Property<string>("Value");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PropertyId");
 
                     b.ToTable("Values");
                 });
@@ -135,13 +135,10 @@ namespace InfoSystem.App.Migrations
                     b.HasOne("InfoSystem.Infrastructure.Entities.Entity", "Entity")
                         .WithMany("Properties")
                         .HasForeignKey("EntityId");
-                });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Values", b =>
-                {
-                    b.HasOne("InfoSystem.Infrastructure.Entities.Properties", "Property")
+                    b.HasOne("InfoSystem.Infrastructure.Entities.Values", "Value")
                         .WithMany()
-                        .HasForeignKey("PropertyId");
+                        .HasForeignKey("ValueId");
                 });
 #pragma warning restore 612, 618
         }
