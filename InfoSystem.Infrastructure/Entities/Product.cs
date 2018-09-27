@@ -9,6 +9,7 @@ namespace InfoSystem.Infrastructure.Entities
         {
             Name = receivedName;
         }
+        
         public string Name { get; }
         public decimal Cost { get; }
         public List<MarketProduct> InMarkets { get; }

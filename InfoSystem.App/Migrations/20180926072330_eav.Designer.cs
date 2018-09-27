@@ -3,15 +3,17 @@ using System;
 using InfoSystem.App.DataBase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace InfoSystem.App.Migrations
 {
     [DbContext(typeof(InfoSystemDbContext))]
-    partial class InfoSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180926072330_eav")]
+    partial class eav
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,13 +84,9 @@ namespace InfoSystem.App.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("ValueId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EntityId");
-
-                    b.HasIndex("ValueId");
 
                     b.ToTable("Properties");
                 });
@@ -110,9 +108,13 @@ namespace InfoSystem.App.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("PropertyId");
+
                     b.Property<string>("Value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
 
                     b.ToTable("Values");
                 });
@@ -131,12 +133,15 @@ namespace InfoSystem.App.Migrations
             modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Properties", b =>
                 {
                     b.HasOne("InfoSystem.Infrastructure.Entities.Entity", "Entity")
-                        .WithMany("Properties")
-                        .HasForeignKey("EntityId");
-
-                    b.HasOne("InfoSystem.Infrastructure.Entities.Values", "Value")
                         .WithMany()
-                        .HasForeignKey("ValueId");
+                        .HasForeignKey("EntityId");
+                });
+
+            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Values", b =>
+                {
+                    b.HasOne("InfoSystem.Infrastructure.Entities.Properties", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId");
                 });
 #pragma warning restore 612, 618
         }
