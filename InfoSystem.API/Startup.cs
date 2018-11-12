@@ -29,7 +29,6 @@ namespace InfoSystem.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //var connectionStr = "User ID=postgres;Password=danon999;Host=localhost;Port=5432;Database=InfoSystem.app;";
             services.AddTransient<IUnitOfWork>(uof => new UnitOfWork());
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new Info {Title = "My API", Version = "v1"}));
