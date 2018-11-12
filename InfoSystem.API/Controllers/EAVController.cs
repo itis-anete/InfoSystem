@@ -25,7 +25,7 @@ namespace InfoSystem.API.Controllers
             _propertiesRepository = uof.PropertiesRepos;
             _valuesRepository = uof.ValuesRepos;
         }
-        
+
         [HttpPost("PostEntity")]
         public void PostEntity([FromBody] string receivedEntity)
         {
@@ -36,7 +36,6 @@ namespace InfoSystem.API.Controllers
             {
                 _valuesRepository.Add(prop.Value);
                 _propertiesRepository.Add(prop);
-                //_valuesRepository.Add(new Values{Property = entity.Properties.First(x => x == prop)});
             }
         }
 

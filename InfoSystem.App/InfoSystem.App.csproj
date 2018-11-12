@@ -29,4 +29,52 @@
     <ItemGroup>
         <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0-preview1-final" />
     </ItemGroup>
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\About.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Contact.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\FillMarket\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\FillMarket\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\FillMarket\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\FillMarket\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\FillMarket\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Markets.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Privacy.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Products\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Products\Delete.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Products\Details.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Products\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Products\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\_CookieConsentPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\ShowMarket\ShowMarket.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\_ViewStart.cshtml" />
+    </ItemGroup>
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Pages\About.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Contact.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Error.cshtml" />
+      <UpToDateCheckInput Remove="Pages\FillMarket\Create.cshtml" />
+      <UpToDateCheckInput Remove="Pages\FillMarket\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Pages\FillMarket\Details.cshtml" />
+      <UpToDateCheckInput Remove="Pages\FillMarket\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Pages\FillMarket\Index.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Index.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Markets.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Privacy.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Products\Create.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Products\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Products\Details.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Products\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Products\Index.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Shared\_CookieConsentPartial.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Shared\_Layout.cshtml" />
+      <UpToDateCheckInput Remove="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+      <UpToDateCheckInput Remove="Pages\ShowMarket\ShowMarket.cshtml" />
+      <UpToDateCheckInput Remove="Pages\_ViewImports.cshtml" />
+      <UpToDateCheckInput Remove="Pages\_ViewStart.cshtml" />
+    </ItemGroup>
 </Project>
