@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using InfoSystem.App.DataBase.Context;
-using InfoSystem.Infrastructure.Entities;
+using InfoSystem.Core.Entities;
+using InfoSystem.Infrastructure.DataBase.Context;
 
 namespace InfoSystem.App.Pages.Products
 {
     public class DeleteModel : PageModel
     {
-        private readonly InfoSystem.App.DataBase.Context.InfoSystemDbContext _context;
+        private readonly InfoSystemDbContext _context;
 
-        public DeleteModel(InfoSystem.App.DataBase.Context.InfoSystemDbContext context)
+        public DeleteModel(InfoSystemDbContext context)
         {
             _context = context;
         }

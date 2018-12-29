@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InfoSystem.API
+namespace InfoSystem.Web.Controllers
 {
     public interface IController<T>
     {

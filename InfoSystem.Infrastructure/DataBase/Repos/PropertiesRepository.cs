@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using InfoSystem.App.DataBase.Context;
-using InfoSystem.App.DataBase.ReposInterfaces;
-using InfoSystem.Infrastructure.Entities;
+using InfoSystem.Core.Entities;
+using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
-namespace InfoSystem.App.DataBase.Repos
+namespace InfoSystem.Infrastructure.DataBase.Repos
 {
     public class PropertiesRepository : IPropertiesRepository
     {

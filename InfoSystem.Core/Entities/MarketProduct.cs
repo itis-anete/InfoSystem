@@ -1,4 +1,4 @@
-namespace InfoSystem.Infrastructure.Entities
+namespace InfoSystem.Core.Entities
 {
     public class MarketProduct : Identity
     {

@@ -1,7 +1,7 @@
 using System;
-using InfoSystem.App.DataBase.ReposInterfaces;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
-namespace InfoSystem.Infrastructure.UnitOfWork
+namespace InfoSystem.Infrastructure.DataBase.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

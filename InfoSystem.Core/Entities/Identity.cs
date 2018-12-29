@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace InfoSystem.Infrastructure.Entities
+namespace InfoSystem.Core.Entities
 {
     public abstract class Identity
     {

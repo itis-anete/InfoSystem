@@ -1,10 +1,9 @@
 using System;
-using InfoSystem.App.DataBase.Context;
-using InfoSystem.App.DataBase.Repos;
-using InfoSystem.App.DataBase.ReposInterfaces;
-using Microsoft.EntityFrameworkCore;
+using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.Repos;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
-namespace InfoSystem.Infrastructure.UnitOfWork
+namespace InfoSystem.Infrastructure.DataBase.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

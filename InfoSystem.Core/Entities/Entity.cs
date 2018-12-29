@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace InfoSystem.Infrastructure.Entities
+namespace InfoSystem.Core.Entities
 {
-    [Table("Entities")]
     public class Entity : BaseEntity
     {
         public Entity() { }

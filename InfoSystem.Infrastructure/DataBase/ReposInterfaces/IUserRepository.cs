@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using InfoSystem.Infrastructure.Entities;
+using InfoSystem.Core.Entities;
 
-namespace InfoSystem.App.DataBase.ReposInterfaces
+namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 {
     public interface IUserRepository : IBaseRepository<User>
     {

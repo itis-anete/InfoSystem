@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 
-namespace InfoSystem.App.DataBase.ReposInterfaces
+namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 {
     public interface IBaseRepository<T>
     {

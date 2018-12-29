@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using InfoSystem.Infrastructure.Interfaces;
+using InfoSystem.Core.Interfaces;
 
-namespace InfoSystem.Infrastructure.Entities
+namespace InfoSystem.Core.Entities
 {
     public class User : Identity, IUser
     {

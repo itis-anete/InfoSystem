@@ -1,4 +1,4 @@
-﻿using InfoSystem.Infrastructure.UnitOfWork;
+﻿using InfoSystem.Infrastructure.DataBase.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace InfoSystem.API
+namespace InfoSystem.Web
 {
     public class Startup
     {

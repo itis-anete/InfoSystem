@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using InfoSystem.App.DataBase.Context;
-using InfoSystem.Infrastructure.Entities;
+using InfoSystem.Core.Entities;
+using InfoSystem.Infrastructure.DataBase.Context;
 
 namespace InfoSystem.App.Pages.FillMarket
 {
     public class EditModel : PageModel
     {
-        private readonly InfoSystem.App.DataBase.Context.InfoSystemDbContext _context;
+        private readonly InfoSystemDbContext _context;
 
-        public EditModel(InfoSystem.App.DataBase.Context.InfoSystemDbContext context)
+        public EditModel(InfoSystemDbContext context)
         {
             _context = context;
         }

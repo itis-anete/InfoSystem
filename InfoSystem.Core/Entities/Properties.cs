@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace InfoSystem.Infrastructure.Entities
+﻿namespace InfoSystem.Core.Entities
 {
-    [Table("Properties")]
     public class Properties : Identity
     {
         public Properties()

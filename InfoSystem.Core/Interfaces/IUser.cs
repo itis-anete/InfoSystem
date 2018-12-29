@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
-using InfoSystem.Infrastructure.Entities;
+using InfoSystem.Core.Entities;
 
-namespace InfoSystem.Infrastructure.Interfaces
+namespace InfoSystem.Core.Interfaces
 {
     public interface IUser
     {

@@ -1,7 +1,7 @@
-namespace InfoSystem.Infrastructure.Entities
-{
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
+namespace InfoSystem.Core.Entities
+{
     public class Product : Identity
     {
         public Product() { }

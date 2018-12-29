@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using InfoSystem.App.DataBase.ReposInterfaces;
-using InfoSystem.Infrastructure.Entities;
-using InfoSystem.Infrastructure.UnitOfWork;
+using InfoSystem.Core.Entities;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Infrastructure.DataBase.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
-namespace InfoSystem.API.Controllers
+namespace InfoSystem.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

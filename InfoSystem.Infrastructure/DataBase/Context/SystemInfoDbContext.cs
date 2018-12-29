@@ -1,8 +1,8 @@
 using System.IO;
-using InfoSystem.Infrastructure.Entities;
+using InfoSystem.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InfoSystem.App.DataBase.Context
+namespace InfoSystem.Infrastructure.DataBase.Context
 {
     public class InfoSystemDbContext : DbContext
     {
