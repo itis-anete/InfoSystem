@@ -1,9 +1,9 @@
 # InfoSystem
 
 ## Команда по учётной записи
-- Erichzann1 - Front-end
-- d4n0n-myself - Back-end
-- Polina17 - Team Leader
+* Erichzann1 - Front-end
+* d4n0n-myself - Back-end
+* Polina17 - Team Leader
 
 ## Технологии
 - Технология - .NET Core
@@ -14,3 +14,7 @@
 - Error - later
 
 Взять готовое хранилище и UI
+
+
+# Задачи
+[GitHub Board Project](https://github.com/orgs/itis-anete/projects/3)
