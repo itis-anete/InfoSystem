@@ -17,6 +17,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
         public void Add(Entity receivedObj)
         {
             _context.Entities.Add(receivedObj);
+            foreach (var property in receivedObj.Properties)
+            {
+                _context.EntityProperties.Add(
+                    new EntityProperty() {EntityId = receivedObj.Id, PropertyId = property.Id});
+            }
             _context.SaveChanges();
         }
 

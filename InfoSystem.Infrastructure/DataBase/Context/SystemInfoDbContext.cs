@@ -28,6 +28,8 @@ namespace InfoSystem.Infrastructure.DataBase.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<MarketProduct> MarketProducts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<EntityProperty> EntityProperties { get; set; }
+        public DbSet<PropertyValue> PropertyValues { get; set; }
 
 
         private string _connectionString;

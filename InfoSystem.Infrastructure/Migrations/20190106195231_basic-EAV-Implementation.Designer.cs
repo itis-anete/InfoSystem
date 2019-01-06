@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InfoSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(InfoSystemDbContext))]
-    [Migration("20181227104828_Initial")]
-    partial class Initial
+    [Migration("20190106195231_basic-EAV-Implementation")]
+    partial class basicEAVImplementation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,21 +21,35 @@ namespace InfoSystem.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Entity", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.Entity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Editable");
 
-                    b.Property<string>("EntityId");
+                    b.Property<int>("EntityId");
 
                     b.HasKey("Id");
 
                     b.ToTable("Entities");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Market", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.EntityProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("EntityId");
+
+                    b.Property<int>("PropertyId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EntityProperties");
+                });
+
+            modelBuilder.Entity("InfoSystem.Core.Entities.Market", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -47,7 +61,7 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.ToTable("Markets");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.MarketProduct", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.MarketProduct", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -65,7 +79,7 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.ToTable("MarketProducts");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Product", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -75,7 +89,7 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Properties", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.Properties", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -84,18 +98,28 @@ namespace InfoSystem.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("ValueId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EntityId");
 
-                    b.HasIndex("ValueId");
-
                     b.ToTable("Properties");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.User", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.PropertyValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("PropertyId");
+
+                    b.Property<int>("ValueId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PropertyValues");
+                });
+
+            modelBuilder.Entity("InfoSystem.Core.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -107,7 +131,7 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Values", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.Values", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -119,26 +143,22 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.ToTable("Values");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.MarketProduct", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.MarketProduct", b =>
                 {
-                    b.HasOne("InfoSystem.Infrastructure.Entities.Market")
+                    b.HasOne("InfoSystem.Core.Entities.Market")
                         .WithMany("Products")
                         .HasForeignKey("MarketId1");
 
-                    b.HasOne("InfoSystem.Infrastructure.Entities.Product")
+                    b.HasOne("InfoSystem.Core.Entities.Product")
                         .WithMany("InMarkets")
                         .HasForeignKey("ProductId1");
                 });
 
-            modelBuilder.Entity("InfoSystem.Infrastructure.Entities.Properties", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.Properties", b =>
                 {
-                    b.HasOne("InfoSystem.Infrastructure.Entities.Entity", "Entity")
+                    b.HasOne("InfoSystem.Core.Entities.Entity")
                         .WithMany("Properties")
                         .HasForeignKey("EntityId");
-
-                    b.HasOne("InfoSystem.Infrastructure.Entities.Values", "Value")
-                        .WithMany()
-                        .HasForeignKey("ValueId");
                 });
 #pragma warning restore 612, 618
         }

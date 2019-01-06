@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Core.Entities;
+using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using InfoSystem.Infrastructure.DataBase.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
@@ -27,34 +30,45 @@ namespace InfoSystem.Web.Controllers
         [HttpPost("PostEntity")]
         public void PostEntity([FromBody] string receivedEntity)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(new Entity(){EntityId = "123"}));
             var entity = JsonConvert.DeserializeObject<Entity>(receivedEntity);
             _entityRepository.Add(entity);
-
-            foreach (var prop in entity.Properties)
-            {
-                _valuesRepository.Add(prop.Value);
-                _propertiesRepository.Add(prop);
-            }
         }
 
         [HttpGet("GetEntities")]
         public IEnumerable<Entity> GetEntities()
         {
-            return _entityRepository.Get().ToList();
+            IEnumerable<Entity> entities = _entityRepository.Get();
+
+            foreach (var entity in entities)
+            {
+                var tempRepository = new PropertiesRepository(new InfoSystemDbContext());
+                entity.Properties = tempRepository.GetByEntityId(entity.Id);
+            }
+
+            return entities;
+            //return null;
         }
 
         [HttpPost("PostProperty")]
         public void PostProperty([FromBody] string receivedProperty)
         {
+            // Пример входных данных(можно вставлять в Swagger)
+            // "{name:\"myProperty\",entity:{Editable:false,Properties:null,EntityId:1234,Id:0},Value:{Value:null,Id:1},Id:123}"
+            
             var prop = JsonConvert.DeserializeObject<Properties>(receivedProperty);
             _propertiesRepository.Add(prop);
         }
-
+        
         [HttpGet("GetProperties")]
         public IEnumerable<Properties> GetProperties()
         {
-            return _propertiesRepository.Get().ToList();
+            return _propertiesRepository.Get();
+        }
+        
+        [HttpGet("GetPropertiesById")]
+        public IEnumerable<Properties> GetProperties(int entityId)
+        {
+            return _propertiesRepository.GetByEntityId(entityId);
         }
     }
 }
