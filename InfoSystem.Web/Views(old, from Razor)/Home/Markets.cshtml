@@ -1,0 +1,21 @@
+@page
+@model InfoSystem.Web.Views.Home.MarketsModel
+@{
+    ViewData["Title"] = "Markets";
+}
+
+<h2>Markets</h2>
+
+<div class="row">
+    @foreach (var item in Model.Markets)
+    {
+        <div class="card col-lg-4" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">desc</p>
+                <a href="/ShowMarket/ShowMarket?marketId=@item.Id" class="btn btn-primary">Go to market</a>
+                <a href="/FillMarket/Index" class="btn btn-success">Fill market</a>
+            </div>
+        </div>
+    }
+</div>

@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace InfoSystem.App.Pages
+namespace InfoSystem.Web.Pages
 {
-    public class ErrorModel : PageModel
-    {
-        public string RequestId { get; set; }
+	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+	public class ErrorModel : PageModel
+	{
+		public string RequestId { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+		public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public void OnGet()
-        {
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-        }
-    }
+		public void OnGet()
+		{
+			RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+		}
+	}
 }

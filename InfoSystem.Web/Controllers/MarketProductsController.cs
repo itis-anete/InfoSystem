@@ -19,25 +19,25 @@ namespace InfoSystem.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<MarketProduct>> Get()
+        public ActionResult<IEnumerable<MarketProduct>> GetMP()
         {
             return _repository.Get().ToList();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<MarketProduct> Get(int id)
+        public ActionResult<MarketProduct> GetMPById(int id)
         {
             return _repository.Get(id);
         }
 
         [HttpPost]
-        public void Post([FromBody] string name)
+        public void PostMP([FromBody] string name)
         {
             _repository.Add(new MarketProduct());
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void PostMPWithId(int id, [FromBody] string value)
         {
             _repository.Add(new MarketProduct() {Id = id});
         }
