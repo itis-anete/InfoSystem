@@ -13,8 +13,7 @@
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.0.0-beta" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.0.0-beta" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-beta" />
     </ItemGroup>
 
     <ItemGroup>
@@ -29,6 +28,12 @@
       <ProjectReference Include="..\InfoSystem.Infrastructure\InfoSystem.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <None Update="appconfig.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->
         <Exec Command="node --version" ContinueOnError="true">

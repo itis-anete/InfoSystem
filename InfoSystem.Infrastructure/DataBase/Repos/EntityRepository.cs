@@ -8,12 +8,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
     public class EntityRepository : IEntityRepository
     {
         private readonly InfoSystemDbContext _context;
-        
+
         public EntityRepository(InfoSystemDbContext dbContext)
         {
             _context = dbContext;
         }
-        
+
         public void Add(Entity receivedObj)
         {
             _context.Entities.Add(receivedObj);
@@ -22,6 +22,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 _context.EntityProperties.Add(
                     new EntityProperty() {EntityId = receivedObj.Id, PropertyId = property.Id});
             }
+
             _context.SaveChanges();
         }
 

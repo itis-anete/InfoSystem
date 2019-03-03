@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace InfoSystem.Web
 {
@@ -23,6 +24,15 @@ namespace InfoSystem.Web
 
 			// In production, the React files will be served from this directory
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+			services.AddSwaggerGen(options =>
+			{
+				options.SwaggerDoc("v1", new OpenApiInfo()
+				{
+					Title = "InfoSystem API",
+					Version = "v1",
+					Description = "This is InfoSystem"
+				});
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,7 +57,6 @@ namespace InfoSystem.Web
 			app.UseSwaggerUI(c =>
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "swaggerjson");
-				c.RoutePrefix = string.Empty;
 			});
 			
 			app.UseMvc(routes =>

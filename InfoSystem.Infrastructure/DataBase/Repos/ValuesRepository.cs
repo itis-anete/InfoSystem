@@ -8,12 +8,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
     public class ValuesRepository : IValuesRepository
     {
         private readonly InfoSystemDbContext _context;
-        
+
         public ValuesRepository(InfoSystemDbContext dbContext)
         {
             _context = dbContext;
         }
-        
+
         public void Add(Values receivedObj)
         {
             _context.Values.Add(receivedObj);
