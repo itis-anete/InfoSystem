@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace InfoSystem.SocketServer
+namespace InfoSystem.Sockets
 {
 	public class SocketClient
 	{

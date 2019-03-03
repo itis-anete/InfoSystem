@@ -1,6 +1,6 @@
 using System.Net.Sockets;
 
-namespace InfoSystem.SocketServer
+namespace InfoSystem.Sockets
 {
 	public class ServerData
 	{
