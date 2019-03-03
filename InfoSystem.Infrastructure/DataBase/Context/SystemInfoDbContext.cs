@@ -1,4 +1,4 @@
-using System.IO;
+using InfoSystem.Core;
 using InfoSystem.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,16 +8,11 @@ namespace InfoSystem.Infrastructure.DataBase.Context
     {
         public InfoSystemDbContext()
         {
+            _connectionString = new ConfigurationProvider().Configuration["ConnectionString"];
         }
-
-//        public InfoSystemDbContext(DbContextOptions<InfoSystemDbContext> opt) : base(opt)
-//        {
-//
-//        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            _connectionString = File.ReadAllLines("connectionString.txt")[0];
             optionsBuilder.UseNpgsql(_connectionString);
         }
 
@@ -30,7 +25,6 @@ namespace InfoSystem.Infrastructure.DataBase.Context
         public DbSet<User> Users { get; set; }
         public DbSet<EntityProperty> EntityProperties { get; set; }
         public DbSet<PropertyValue> PropertyValues { get; set; }
-
 
         private string _connectionString;
     }

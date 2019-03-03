@@ -1,1 +1,0 @@
-Host=ec2-79-125-14-195.eu-west-1.compute.amazonaws.com;Database=db33pt79hhj8b0;Username=hsbidldanmzrle;Port=5432;Password=cca95ad8ea553bdcf5c8e64e0401b04b6888d7a8714c4b1d9e9af65ba498f0a0;SslMode=Require;Trust Server Certificate=True
