@@ -1,7 +1,6 @@
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
@@ -15,9 +14,9 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		[HttpPost]
-		public void AddEntity()
+		public void AddEntity([FromBody] string name)
 		{
-			_repository.Add(new Entity());
+			_repository.Add(new Entity() { Name = name});
 		}
 
 		[HttpGet]
@@ -26,6 +25,6 @@ namespace InfoSystem.Web.Controllers
 			_repository.GetById(id);
 		}
 
-		private readonly IBaseRepository<Entity> _repository;
+		private readonly EntityRepository _repository;
 	}
 }

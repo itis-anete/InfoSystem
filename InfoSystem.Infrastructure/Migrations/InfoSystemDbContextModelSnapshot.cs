@@ -31,7 +31,9 @@ namespace InfoSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Properties");
+                    b.HasIndex("Name");
+
+                    b.ToTable("Atttributes");
                 });
 
             modelBuilder.Entity("InfoSystem.Core.Entities.Basic.Entity", b =>
@@ -39,9 +41,13 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Name");
+
                     b.Property<int>("TypeId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Entities");
                 });
@@ -54,6 +60,8 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Types");
                 });
@@ -70,6 +78,10 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<int>("EntityId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AttributeId");
+
+                    b.HasIndex("EntityId");
 
                     b.ToTable("Values");
                 });

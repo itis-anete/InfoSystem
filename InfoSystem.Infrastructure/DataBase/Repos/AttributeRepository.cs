@@ -1,29 +1,28 @@
-using System;
 using System.Collections.Generic;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using System.Linq;
+using InfoSystem.Core.Entities.Basic;
+using InfoSystem.Infrastructure.DataBase.Context;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class AttributeRepository : IBaseRepository<Attribute> 
+	public class AttributeRepository
 	{
-		public void Add(Attribute receivedObj)
+		public AttributeRepository(InfoSystemDbContext context)
 		{
-			throw new NotImplementedException();
+			_context = context;
 		}
 
-		public void Delete(int id)
+		public void Add(Atttribute receivedObj, string typeId)
 		{
-			throw new NotImplementedException();
+			var entityType = _context.Types.FirstOrDefault(type => type.Name == typeId);
+			if (entityType == null) return;
+			receivedObj.TypeId = entityType.Id;
+			_context.Atttributes.Add(receivedObj);
+			_context.SaveChanges();
 		}
 
-		public IEnumerable<Attribute> Get()
-		{
-			throw new NotImplementedException();
-		}
+		public IEnumerable<Atttribute> Get() => _context.Atttributes;
 
-		public Attribute GetById(int id)
-		{
-			throw new NotImplementedException();
-		}
+		private readonly InfoSystemDbContext _context;
 	}
 }
