@@ -1,21 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace InfoSystem.Core.Entities
+﻿namespace InfoSystem.Core.Entities.Basic
 {
-    public class Entity : BaseEntity
+    public class Entity
     {
-        public Entity()
-        {
-        }
-
-        public bool Editable { get; set; }
-
-        public IEnumerable<Properties> Properties { get; set; }
-
-        public override string ToString()
-        {
-            return EntityId.ToString() + Editable;
-        }
+        public int Id { get; set; }
+        public int TypeId { get; set; }
     }
 }

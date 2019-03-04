@@ -1,5 +1,6 @@
 using InfoSystem.Core;
 using InfoSystem.Core.Entities;
+using InfoSystem.Core.Entities.Basic;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.Infrastructure.DataBase.Context
@@ -17,14 +18,9 @@ namespace InfoSystem.Infrastructure.DataBase.Context
         }
 
         public DbSet<Entity> Entities { get; set; }
-        public DbSet<Properties> Properties { get; set; }
-        public DbSet<Values> Values { get; set; }
-        public DbSet<Market> Markets { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<MarketProduct> MarketProducts { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<EntityProperty> EntityProperties { get; set; }
-        public DbSet<PropertyValue> PropertyValues { get; set; }
+        public DbSet<Atttribute> Properties { get; set; }
+        public DbSet<Value> Values { get; set; }
+        public DbSet<EntityType> Types { get; set; }
 
         private string _connectionString;
     }

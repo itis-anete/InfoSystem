@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using InfoSystem.Core.Entities;
+using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-    public class EntityRepository : IEntityRepository
+    public class EntityRepository : IBaseRepository<Entity>
     {
-        private readonly InfoSystemDbContext _context;
 
         public EntityRepository(InfoSystemDbContext dbContext)
         {
@@ -17,12 +17,6 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
         public void Add(Entity receivedObj)
         {
             _context.Entities.Add(receivedObj);
-            foreach (var property in receivedObj.Properties)
-            {
-                _context.EntityProperties.Add(
-                    new EntityProperty() {EntityId = receivedObj.Id, PropertyId = property.Id});
-            }
-
             _context.SaveChanges();
         }
 
@@ -36,9 +30,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             return _context.Entities;
         }
 
-        public Entity Get(int id)
+        public Entity GetById(int id)
         {
             return _context.Entities.Find(id);
         }
+
+        private readonly InfoSystemDbContext _context;
     }
 }

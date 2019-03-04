@@ -7,6 +7,6 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
         void Add(T receivedObj);
         void Delete(int id);
         IEnumerable<T> Get();
-        T Get(int id);
+        T GetById(int id);
     }
 }
