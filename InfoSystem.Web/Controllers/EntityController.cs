@@ -14,13 +14,13 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		[HttpPost]
-		public void AddEntity([FromBody] string name)
+		public void Add(string name)
 		{
 			_repository.Add(new Entity() { Name = name});
 		}
 
 		[HttpGet]
-		public void GetEntity([FromQuery] int id)
+		public void Get([FromQuery] int id)
 		{
 			_repository.GetById(id);
 		}

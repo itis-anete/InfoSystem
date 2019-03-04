@@ -21,17 +21,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             var type = _context.Types.FirstOrDefault(t => t.Name == receivedObj.Name);
             if (type == null)
             {
-                int newId;
-                try
-                {
-                    newId = _context.Types.Max(t => t.Id) + 1;
-                }
-                catch (Exception e)
-                {
-                    newId = 1;
-                }
-                _context.Types.Add(new EntityType { Id = newId, Name = receivedObj.Name});
-                receivedObj.TypeId = newId;
+                _context.Types.Add(new EntityType { Name = receivedObj.Name});
+                _context.SaveChanges();
+                receivedObj.TypeId = _context.Types.First(t => t.Name == receivedObj.Name).Id;
             }
             else
                 receivedObj.TypeId = type.Id;

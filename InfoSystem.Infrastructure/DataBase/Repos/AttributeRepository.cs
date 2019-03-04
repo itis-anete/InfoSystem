@@ -12,9 +12,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public void Add(Atttribute receivedObj, string typeId)
+		public void Add(Atttribute receivedObj, string typeName)
 		{
-			var entityType = _context.Types.FirstOrDefault(type => type.Name == typeId);
+			var entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
 			if (entityType == null) return;
 			receivedObj.TypeId = entityType.Id;
 			_context.Atttributes.Add(receivedObj);
