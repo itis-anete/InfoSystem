@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using InfoSystem.Core.Entities;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
@@ -6,7 +7,7 @@ using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-    public class ValuesRepository : IBaseRepository<Value>
+    public class ValuesRepository
     {
         private readonly InfoSystemDbContext _context;
 
@@ -21,19 +22,14 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public Value GetById(int entityId, string attributeName)
         {
-            _context.Values.Remove(_context.Values.Find(id));
-        }
+            // TODO - entityId = костыль 
 
-        public IEnumerable<Value> Get()
-        {
-            return _context.Values;
-        }
-
-        public Value GetById(int id)
-        {
-            return _context.Values.Find(id);
+            var attribute = _context.Attributes.FirstOrDefault(a => a.Name == attributeName);
+            return attribute == null
+                ? null
+                : _context.Values.FirstOrDefault(v => v.EntityId == entityId && v.AttributeId == attribute.Id);
         }
     }
 }

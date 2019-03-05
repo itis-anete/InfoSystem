@@ -1,6 +1,6 @@
 namespace InfoSystem.Core.Entities.Basic
 {
-	public class Atttribute
+	public class Attribute
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
