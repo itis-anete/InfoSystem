@@ -3,7 +3,7 @@
     <v-toolbar flat color="white">
       <v-spacer></v-spacer>
       <template>
-        <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
+        <v-btn color="primary" dark class="mb-2">New Item</v-btn>
       </template>
       <edit-entity :dialog="dialog" @dialogChange="dialog = $event"></edit-entity>
     </v-toolbar>

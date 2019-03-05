@@ -19,17 +19,10 @@
       </v-toolbar>
       <v-card-text>
         <v-list three-line subheader>
-          <v-subheader>User Controls</v-subheader>
-          <v-list-tile avatar>
+          <v-subheader>Attributes</v-subheader>
+          <v-list-tile avatar v-for="value in currentValues" :key="value.id">
             <v-list-tile-content>
-              <v-list-tile-title>Content filtering</v-list-tile-title>
-              <v-list-tile-sub-title>Set the content filtering level to restrict apps that can be downloaded</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>Password</v-list-tile-title>
-              <v-list-tile-sub-title>Require password for purchase or use password to restrict purchase</v-list-tile-sub-title>
+              <v-text-field :label="value.attribute.name" v-model="value.content"></v-text-field>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -42,6 +35,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: ['dialog'],
   data: () => ({}),
@@ -49,6 +43,9 @@ export default {
     dialog(val) {
       this.$emit('dialogChange', val)
     }
+  },
+  computed: {
+    ...mapGetters(['currentValues'])
   }
 }
 </script>

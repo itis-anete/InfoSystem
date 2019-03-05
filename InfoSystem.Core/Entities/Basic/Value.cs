@@ -1,4 +1,6 @@
-﻿namespace InfoSystem.Core.Entities.Basic
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace InfoSystem.Core.Entities.Basic
 {
     public class Value 
     {
@@ -6,5 +8,6 @@
         public string Content { get; set; }
         public int EntityId { get; set; }
         public int AttributeId { get; set; }
+        public Attribute Attribute { get; set; }
     }
 }
