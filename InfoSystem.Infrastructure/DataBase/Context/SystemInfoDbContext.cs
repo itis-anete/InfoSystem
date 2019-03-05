@@ -1,5 +1,6 @@
 using InfoSystem.Core;
 using InfoSystem.Core.Entities;
+using InfoSystem.Core.Entities.Basic;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.Infrastructure.DataBase.Context
@@ -16,15 +17,19 @@ namespace InfoSystem.Infrastructure.DataBase.Context
             optionsBuilder.UseNpgsql(_connectionString);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Entity>().HasIndex(e => e.Name);
+            modelBuilder.Entity<Attribute>().HasIndex(a => a.Name);
+            modelBuilder.Entity<EntityType>().HasIndex(t => t.Name);
+            modelBuilder.Entity<Value>().HasIndex(v => v.EntityId);
+            modelBuilder.Entity<Value>().HasIndex(v => v.AttributeId);
+        }
+
         public DbSet<Entity> Entities { get; set; }
-        public DbSet<Properties> Properties { get; set; }
-        public DbSet<Values> Values { get; set; }
-        public DbSet<Market> Markets { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<MarketProduct> MarketProducts { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<EntityProperty> EntityProperties { get; set; }
-        public DbSet<PropertyValue> PropertyValues { get; set; }
+        public DbSet<Attribute> Attributes { get; set; }
+        public DbSet<Value> Values { get; set; }
+        public DbSet<EntityType> Types { get; set; }
 
         private string _connectionString;
     }

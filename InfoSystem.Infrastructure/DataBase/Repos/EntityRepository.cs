@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using InfoSystem.Core.Entities;
+using System.Linq;
+using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-    public class EntityRepository : IEntityRepository
+    public class EntityRepository //: IBaseRepository<Entity>
     {
-        private readonly InfoSystemDbContext _context;
 
         public EntityRepository(InfoSystemDbContext dbContext)
         {
@@ -16,13 +15,17 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         public void Add(Entity receivedObj)
         {
-            _context.Entities.Add(receivedObj);
-            foreach (var property in receivedObj.Properties)
+            var type = _context.Types.FirstOrDefault(t => t.Name == receivedObj.Name);
+            if (type == null)
             {
-                _context.EntityProperties.Add(
-                    new EntityProperty() {EntityId = receivedObj.Id, PropertyId = property.Id});
+                _context.Types.Add(new EntityType { Name = receivedObj.Name});
+                _context.SaveChanges();
+                receivedObj.TypeId = _context.Types.First(t => t.Name == receivedObj.Name).Id;
             }
-
+            else
+                receivedObj.TypeId = type.Id;
+            
+            _context.Entities.Add(receivedObj);
             _context.SaveChanges();
         }
 
@@ -31,14 +34,13 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context.Entities.Remove(_context.Entities.Find(id));
         }
 
-        public IEnumerable<Entity> Get()
-        {
-            return _context.Entities;
-        }
+        public IEnumerable<Entity> Get() => _context.Entities;
 
-        public Entity Get(int id)
+        public Entity GetById(int id)
         {
             return _context.Entities.Find(id);
         }
+
+        private readonly InfoSystemDbContext _context;
     }
 }

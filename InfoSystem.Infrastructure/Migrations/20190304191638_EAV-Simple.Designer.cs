@@ -2,15 +2,17 @@
 using InfoSystem.Infrastructure.DataBase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace InfoSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(InfoSystemDbContext))]
-    partial class InfoSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190304191638_EAV-Simple")]
+    partial class EAVSimple
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,9 +33,7 @@ namespace InfoSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
-
-                    b.ToTable("Atttributes");
+                    b.ToTable("Properties");
                 });
 
             modelBuilder.Entity("InfoSystem.Core.Entities.Basic.Entity", b =>
@@ -41,13 +41,9 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
-
                     b.Property<int>("TypeId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name");
 
                     b.ToTable("Entities");
                 });
@@ -60,8 +56,6 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Name");
 
                     b.ToTable("Types");
                 });
@@ -78,10 +72,6 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<int>("EntityId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AttributeId");
-
-                    b.HasIndex("EntityId");
 
                     b.ToTable("Values");
                 });
