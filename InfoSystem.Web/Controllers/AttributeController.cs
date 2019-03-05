@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
@@ -12,11 +13,17 @@ namespace InfoSystem.Web.Controllers
 		{
 			_repository = new AttributeRepository(new InfoSystemDbContext());
 		}
-		
+
 		[HttpPost]
 		public void Add(string attributeName, string typeName)
 		{
-			_repository.Add(new Atttribute() { Name = attributeName}, typeName);
+			_repository.Add(new Attribute() {Name = attributeName}, typeName);
+		}
+
+		[HttpGet]
+		public IEnumerable<Attribute> GetTypeAtttributes(string typeName)
+		{
+			return _repository.GetTypeAttributes(typeName);
 		}
 
 		private readonly AttributeRepository _repository;

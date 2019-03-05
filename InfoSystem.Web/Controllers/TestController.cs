@@ -18,7 +18,7 @@ namespace InfoSystem.Web.Controllers
             var type = _context.Types.FirstOrDefault(t => typeName == t.Name);
             if (type == null) return;
             Console.WriteLine(type.Name);
-            foreach (var atttribute in _context.Atttributes.Where(a => a.TypeId == type.Id))
+            foreach (var atttribute in _context.Attributes.Where(a => a.TypeId == type.Id))
                 Console.WriteLine("\t" + atttribute.Name);
         }
 
