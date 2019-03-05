@@ -31,5 +31,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 ? null
                 : _context.Values.FirstOrDefault(v => v.EntityId == entityId && v.AttributeId == attribute.Id);
         }
+
+        public IEnumerable<Value> GetByTypeId(int entityId, int typeId)
+        {
+            var attributes = _context.Attributes.Where(a => a.TypeId == typeId);
+            return _context.Values.Where(v => v.EntityId == entityId && attributes.Any(x=>x.Id == v.AttributeId));
+            
+        }
     }
 }

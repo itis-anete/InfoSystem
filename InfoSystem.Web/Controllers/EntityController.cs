@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
@@ -13,18 +15,24 @@ namespace InfoSystem.Web.Controllers
 			_repository = new EntityRepository(new InfoSystemDbContext());
 		}
 
-		[HttpPost]
-		public void Add(string name)
-		{
-			_repository.Add(new Entity() { Name = name});
-		}
+        [HttpPost]
+        public void Add(string name)
+        {
+            _repository.Add(new Entity() { Name = name });
+        }
 
-		[HttpGet]
-		public void Get([FromQuery] int id)
+        [HttpGet]
+		public Entity Get([FromQuery] int id)
 		{
-			_repository.GetById(id);
-		}
+            return _repository.GetById(id);
+        }
 
-		private readonly EntityRepository _repository;
+	    [HttpGet]
+	    public IEnumerable<Entity> GetByType([FromQuery] int typeId)
+	    {
+	        return _repository.Get().Where(x => x.TypeId == typeId);
+        }
+
+        private readonly EntityRepository _repository;
 	}
 }

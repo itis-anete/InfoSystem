@@ -24,6 +24,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="appconfig.json" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\InfoSystem.Core\InfoSystem.Core.csproj" />
       <ProjectReference Include="..\InfoSystem.Infrastructure\InfoSystem.Infrastructure.csproj" />
     </ItemGroup>
@@ -57,6 +61,10 @@
       <_ContentIncludedByDefault Remove="Views(old, from Razor)\ShowMarket\ShowMarket.cshtml" />
       <_ContentIncludedByDefault Remove="Views(old, from Razor)\_ViewImports.cshtml" />
       <_ContentIncludedByDefault Remove="Views(old, from Razor)\_ViewStart.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="appconfig.json" />
     </ItemGroup>
     
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

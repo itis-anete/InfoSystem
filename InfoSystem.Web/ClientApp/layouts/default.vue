@@ -40,8 +40,8 @@ export default {
         },
         {
           icon: "bubble_chart",
-          title: "Weather",
-          to: "/weather"
+          title: "Registry",
+          to: "/registry"
         }
       ]
     };

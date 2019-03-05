@@ -18,13 +18,13 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             var type = _context.Types.FirstOrDefault(t => t.Name == receivedObj.Name);
             if (type == null)
             {
-                _context.Types.Add(new EntityType { Name = receivedObj.Name});
+                _context.Types.Add(new EntityType { Name = receivedObj.Name });
                 _context.SaveChanges();
                 receivedObj.TypeId = _context.Types.First(t => t.Name == receivedObj.Name).Id;
             }
             else
                 receivedObj.TypeId = type.Id;
-            
+
             _context.Entities.Add(receivedObj);
             _context.SaveChanges();
         }
