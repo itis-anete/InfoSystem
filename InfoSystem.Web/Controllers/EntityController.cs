@@ -16,9 +16,9 @@ namespace InfoSystem.Web.Controllers
 		}
 
         [HttpPost]
-        public void Add(string name)
+        public void Add(string typeName)
         {
-            _repository.Add(new Entity() { Name = name });
+            _repository.Add(typeName);
         }
 
         [HttpGet]

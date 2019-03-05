@@ -19,7 +19,7 @@ namespace InfoSystem.Infrastructure.DataBase.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Entity>().HasIndex(e => e.Name);
+            modelBuilder.Entity<Entity>().HasIndex(e => e.TypeId);
             modelBuilder.Entity<Attribute>().HasIndex(a => a.Name);
             modelBuilder.Entity<EntityType>().HasIndex(t => t.Name);
             modelBuilder.Entity<Value>().HasIndex(v => v.EntityId);
