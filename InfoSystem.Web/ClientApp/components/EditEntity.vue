@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="dialog"
+    v-model="localDialog"
     fullscreen
     hide-overlay
     transition="dialog-bottom-transition"
@@ -11,8 +11,8 @@
         <v-toolbar-title>Edit Entity</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-          <v-btn dark flat @click="dialog = false">Save</v-btn>
-          <v-btn icon dark @click="dialog = false">
+          <v-btn dark flat @click="localDialog = false">Save</v-btn>
+          <v-btn icon dark @click="localDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
         </v-toolbar-items>
@@ -38,14 +38,19 @@
 import { mapGetters } from 'vuex'
 export default {
   props: ['dialog'],
-  data: () => ({}),
-  watch: {
-    dialog(val) {
-      this.$emit('dialogChange', val)
-    }
+  data() {
+    return {}
   },
   computed: {
-    ...mapGetters(['currentValues'])
+    ...mapGetters(['currentValues']),
+    localDialog: {
+      get() {
+        return this.dialog
+      },
+      set(value) {
+        this.$emit('update:dialog', value)
+      }
+    }
   }
 }
 </script>

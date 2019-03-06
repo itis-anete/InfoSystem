@@ -7,8 +7,8 @@ Vue.use(Vuex)
 const store = () =>
   new Vuex.Store({
     state: {
-      entities: [],
-      currentValues: []
+      entities: null,
+      currentValues: null
     },
     mutations: {
       setEntities(state, payload) {
