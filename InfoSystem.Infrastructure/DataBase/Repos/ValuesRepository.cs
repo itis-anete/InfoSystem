@@ -33,6 +33,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 : _context.Values.FirstOrDefault(v => v.EntityId == entityId && v.AttributeId == attribute.Id);
         }
 
+        public Value GetById(int id)
+        {
+            return _context.Values.Where(x=>x.Id == id).Include(x=>x.Attribute).FirstOrDefault();
+        }
+
         public IEnumerable<Value> GetByTypeId(int entityId, int typeId)
         {
             var attributes = _context.Attributes.Where(a => a.TypeId == typeId);

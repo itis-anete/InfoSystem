@@ -27,14 +27,24 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		public IEnumerable<Attribute> Get() => _context.Attributes;
 
-		public IEnumerable<Attribute> GetTypeAttributes(string typeName)
+	    public Attribute GetById(int id)
+	    {
+	        return _context.Attributes.FirstOrDefault(a => a.Id == id);
+	    }
+
+        public IEnumerable<Attribute> GetTypeAttributes(string typeName)
 		{
 			var entityType = _context.Types.FirstOrDefault(t => t.Name == typeName);
 			if (entityType == null) return null;
 			return _context.Attributes.Where(a => a.TypeId == entityType.Id);
 		}
 
-		public Attribute GetByName(string entityType, string attributeName)
+	    public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
+	    {
+	        return _context.Attributes.Where(a => a.TypeId == typeId);
+	    }
+
+        public Attribute GetByName(string entityType, string attributeName)
 		{
 			var type = _context.Types.FirstOrDefault(t => t.Name == entityType);
 			if (type != null)

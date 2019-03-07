@@ -26,6 +26,12 @@ namespace InfoSystem.Web.Controllers
 			return _repository.GetTypeAttributes(typeName);
 		}
 
-		private readonly AttributeRepository _repository;
+	    [HttpGet]
+	    public IEnumerable<Attribute> GetByTypeId([FromQuery] int typeId)
+	    {
+	        return _repository.GetTypeAttributesById(typeId);
+	    }
+
+        private readonly AttributeRepository _repository;
 	}
 }

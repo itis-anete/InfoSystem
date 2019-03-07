@@ -33,6 +33,7 @@ export default {
     editItem(item) {
       this.dialog = true
       this.$store.dispatch('getValues', { entityId: item.id, typeId: item.typeId })
+      this.$store.dispatch('getAttributes', item.typeId)
     },
 
     deleteItem(item) {}
