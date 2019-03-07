@@ -18,7 +18,7 @@ namespace InfoSystem.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("InfoSystem.Core.Entities.Basic.Atttribute", b =>
+            modelBuilder.Entity("InfoSystem.Core.Entities.Basic.Attribute", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -33,7 +33,7 @@ namespace InfoSystem.Infrastructure.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Atttributes");
+                    b.ToTable("Attributes");
                 });
 
             modelBuilder.Entity("InfoSystem.Core.Entities.Basic.Entity", b =>
@@ -41,13 +41,11 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
-
                     b.Property<int>("TypeId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name");
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Entities");
                 });

@@ -33,6 +33,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			if (entityType == null) return null;
 			return _context.Attributes.Where(a => a.TypeId == entityType.Id);
 		}
+
 		public Attribute GetByName(string entityType, string attributeName)
 		{
 			var type = _context.Types.FirstOrDefault(t => t.Name == entityType);

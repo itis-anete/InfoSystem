@@ -13,19 +13,20 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context = dbContext;
         }
 
-        public void Add(Entity receivedObj)
+        public void Add(string typeName)
         {
-            var type = _context.Types.FirstOrDefault(t => t.Name == receivedObj.Name);
+            var newEntity = new Entity();
+            var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
             if (type == null)
             {
-                _context.Types.Add(new EntityType { Name = receivedObj.Name});
+                _context.Types.Add(new EntityType {Name = typeName});
                 _context.SaveChanges();
-                receivedObj.TypeId = _context.Types.First(t => t.Name == receivedObj.Name).Id;
+                newEntity.TypeId = _context.Types.First(t => t.Name == typeName).Id;
             }
             else
-                receivedObj.TypeId = type.Id;
-            
-            _context.Entities.Add(receivedObj);
+                newEntity.TypeId = type.Id;
+
+            _context.Entities.Add(newEntity);
             _context.SaveChanges();
         }
 

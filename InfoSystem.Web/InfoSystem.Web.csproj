@@ -24,6 +24,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Remove="appconfig.json" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\InfoSystem.Core\InfoSystem.Core.csproj" />
       <ProjectReference Include="..\InfoSystem.Infrastructure\InfoSystem.Infrastructure.csproj" />
     </ItemGroup>

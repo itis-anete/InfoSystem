@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
@@ -36,7 +38,13 @@ namespace InfoSystem.Web.Controllers
 			return _valueRepository.GetById(entityId, attributeName);
 		}
 
-		private readonly ValuesRepository _valueRepository;
+	    [HttpGet]
+	    public IEnumerable<Value> GetByTypeId([FromQuery]int entityId, int typeId)
+	    {
+	        return _valueRepository.GetByTypeId(entityId, typeId).ToList();
+	    }
+
+        private readonly ValuesRepository _valueRepository;
 		private readonly AttributeRepository _attributeRepository;
 		//private readonly EntityRepository _entityRepository;
 	}

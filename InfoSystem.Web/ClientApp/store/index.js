@@ -7,22 +7,33 @@ Vue.use(Vuex)
 const store = () =>
   new Vuex.Store({
     state: {
-      weather: []
+      entities: null,
+      currentValues: null
     },
     mutations: {
-      setWeather(state, payload) {
-        state.weather = payload
+      setEntities(state, payload) {
+        state.entities = payload
+      },
+      setCurrentValues(state, payload) {
+        state.currentValues = payload
       }
     },
     actions: {
-      async getWeather({ commit }) {
-        let response = await axios.get('/api/SampleData/WeatherForecasts')
-        commit('setWeather', response.data)
+      async getEntities({ commit }, payload) {
+        let response = await axios.get(`/Entity/GetByType?typeId=${payload}`)
+        commit('setEntities', response.data)
+      },
+      async getValues({ commit }, payload) {
+        let response = await axios.get(`/Value/GetByTypeId?entityId=${payload.entityId}&typeId=${payload.typeId}`)
+        commit('setCurrentValues', response.data)
       }
     },
     getters: {
-      weather(state) {
-        return state.weather
+      entities(state) {
+        return state.entities
+      },
+      currentValues(state) {
+        return state.currentValues
       }
     }
   })
