@@ -7,7 +7,7 @@
         <v-btn color="primary" dark class="ma-3">New Item</v-btn>
       </template>
     </v-toolbar>
-    <v-data-table :headers="headers" :items="items" class="elevation-1">
+    <v-data-table :loading="loading" :headers="headers" :items="items" class="elevation-1">
       <template v-slot:items="props">
         <td>{{ props.item.id }}</td>
         <td class="justify-end layout px-4">
@@ -21,6 +21,7 @@
 
 <script>
 import EditEntity from './EditEntity.vue'
+import { mapGetters } from 'vuex'
 export default {
   props: ['headers', 'items'],
   components: {
@@ -32,11 +33,14 @@ export default {
   methods: {
     editItem(item) {
       this.dialog = true
-      this.$store.dispatch('getValues', { entityId: item.id, typeId: item.typeId })
-      this.$store.dispatch('getAttributes', item.typeId)
+      this.$store.dispatch('values/getValues', { entityId: item.id, typeId: item.typeId })
+      this.$store.dispatch('attributes/getAttributes', item.typeId)
     },
 
     deleteItem(item) {}
+  },
+  computed: {
+    ...mapGetters(['loading'])
   }
 }
 </script>

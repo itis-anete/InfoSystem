@@ -21,22 +21,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['entities']),
+    ...mapGetters(['entities/entities']),
     id() {
       return this.$route.params.id
     }
   },
   watch: {
     id() {
-      this.$store.dispatch('getEntities', this.id)
+      this.$store.dispatch('entities/getEntities', this.id)
     }
   },
   created() {
-    this.$store.dispatch('getEntities', this.$route.params.id)
+    this.$store.dispatch('entities/getEntities', this.$route.params.id)
   }
 }
 </script>
 
 <style scoped>
-
 </style>
