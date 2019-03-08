@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 
-namespace InfoSystem.Core.Entities
+namespace InfoSystem.Web.Models
 {
 	public class AttributeViewModel
 	{
