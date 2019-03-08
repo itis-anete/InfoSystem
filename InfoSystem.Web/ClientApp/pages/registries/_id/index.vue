@@ -21,7 +21,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['entities/entities']),
+    ...mapGetters({ entities: 'entities/entities' }),
     id() {
       return this.$route.params.id
     }

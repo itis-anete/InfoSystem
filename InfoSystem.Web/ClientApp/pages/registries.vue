@@ -24,8 +24,6 @@ export default {
   data() {
     return {}
   },
-  computed: {
-    ...mapGetters(['entities'])
-  }
+  computed: {}
 }
 </script>

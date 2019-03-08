@@ -6,7 +6,7 @@ export const state = () => ({
   currentValues: null
 })
 
-export const mutations = () => ({
+export const mutations = {
   setCurrentValues(state, payload) {
     state.currentValues = payload
   },
@@ -15,9 +15,9 @@ export const mutations = () => ({
     var index = current.findIndex(x => x.id == payload.id)
     current.splice(index, 1, payload)
   }
-})
+}
 
-export const actions = () => ({
+export const actions = {
   async getValues({ commit }, payload) {
     commit('setLoading', true)
     let response = await axios.get(`/Value/GetByTypeId?entityId=${payload.entityId}&typeId=${payload.typeId}`)
@@ -30,10 +30,10 @@ export const actions = () => ({
     commit('editCurrentValues', response.data)
     commit('setLoading', false)
   }
-})
+}
 
-export const getters = () => ({
+export const getters = {
   currentValues(state) {
     return state.currentValues
   }
-})
+}

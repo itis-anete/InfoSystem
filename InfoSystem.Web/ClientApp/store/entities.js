@@ -1,16 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
 import axios from 'axios'
 
 export const state = () => ({
-  entities: null,
-  loading: false
+  entities: null
 })
 
 export const mutations = {
-  setLoading(state, payload) {
-    state.loading = payload
-  },
   setEntities(state, payload) {
     state.entities = payload
   }

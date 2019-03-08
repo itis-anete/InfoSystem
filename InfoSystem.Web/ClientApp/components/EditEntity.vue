@@ -132,7 +132,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['editValue']),
+    ...mapActions({ editValue: 'values/editValue' }),
     save(item) {
       this.snack = true
       this.snackColor = 'success'
@@ -162,7 +162,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentValues', 'attributes']),
+    ...mapGetters({ currentValues: 'values/currentValues' }, { attributes: 'attributes' }),
     localDialog: {
       get() {
         return this.dialog
