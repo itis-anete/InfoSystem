@@ -1,10 +1,12 @@
 <template>
   <div>
-    <edit-entity :dialog.sync="dialog"></edit-entity>
+    <edit-entity-dialog :dialogActive.sync="dialogActive"></edit-entity-dialog>
     <v-toolbar flat color="white">
       <v-spacer></v-spacer>
       <template>
-        <v-btn color="primary" dark class="ma-3">New Item</v-btn>
+        <v-btn color="primary" dark class="ma-3">
+          <v-icon class="mr-2">add</v-icon>Add
+        </v-btn>
       </template>
     </v-toolbar>
     <v-data-table :loading="loading" :headers="headers" :items="items" class="elevation-1">
@@ -20,19 +22,19 @@
 </template>
 
 <script>
-import EditEntity from './EditEntity.vue'
+import EditEntityDialog from '~/components/edit-entity/dialog.vue'
 import { mapGetters } from 'vuex'
 export default {
   props: ['headers', 'items'],
   components: {
-    EditEntity
+    EditEntityDialog
   },
   data: () => ({
-    dialog: false
+    dialogActive: false
   }),
   methods: {
     editItem(item) {
-      this.dialog = true
+      this.dialogActive = true
       this.$store.dispatch('getValues', { entityId: item.id, typeId: item.typeId })
       this.$store.dispatch('getAttributes', item.typeId)
     },

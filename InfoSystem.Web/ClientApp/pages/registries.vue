@@ -15,7 +15,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import RegistryNavigationDrawer from '~/components/RegistryNavigationDrawer.vue'
+import RegistryNavigationDrawer from '~/components/registry/navigation-drawer.vue'
 export default {
   components: {
     RegistryNavigationDrawer

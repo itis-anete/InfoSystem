@@ -1,12 +1,12 @@
 <template>
   <v-card v-if="entities">
-    <registry-grid v-if="entities" :headers="headers" :items="entities"></registry-grid>
+    <registry-grid :headers="headers" :items="entities"></registry-grid>
   </v-card>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import RegistryGrid from '~/components/RegistryGrid.vue'
+import RegistryGrid from '~/components/registry/grid.vue'
 export default {
   name: 'Registry',
   validate({ params }) {
