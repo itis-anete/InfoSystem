@@ -8,7 +8,7 @@ namespace InfoSystem.Core
 
 		public ConfigurationProvider()
 		{
-			Configuration = new ConfigurationBuilder().AddJsonFile("appconfig.json").Build();
+			Configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 		}
 	}
 }

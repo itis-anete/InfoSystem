@@ -53,7 +53,7 @@ namespace InfoSystem.Web
 			app.UseSwagger();
 			app.UseSwaggerUI(c =>
 			{
-				c.SwaggerEndpoint("/swagger/v1/swagger.json", "swaggerjson");
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "d4n0n's spec");
 			});
 			
 			app.UseMvc(routes =>
