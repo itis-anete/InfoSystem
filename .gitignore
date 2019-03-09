@@ -6,8 +6,9 @@
 # No configs in repository
 InfoSystem*/appconfig.json
 InfoSystem*/appconfig*.json
+InfoSystem*/appsettings.json
 InfoSystem*/appsettings*.json
-
+*.appsettings.json
 # User-specific files
 *.suo
 *.user
