@@ -44,6 +44,15 @@ namespace InfoSystem.Web.Controllers
 	        return _valueRepository.GetByTypeId(entityId, typeId).ToList();
 	    }
 
+	    [HttpPut]
+	    public IActionResult EditValue([FromBody]Value editedValue)
+	    {
+	        // TODO - изменение бд
+            editedValue.Attribute = _attributeRepository.GetById(editedValue.AttributeId);
+	        return Ok(editedValue);
+	    }
+        
+
         private readonly ValuesRepository _valueRepository;
 		private readonly AttributeRepository _attributeRepository;
 		//private readonly EntityRepository _entityRepository;

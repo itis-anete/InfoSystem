@@ -1,8 +1,7 @@
 <template>
   <v-container class="pl-0 py-0 ml-0 mt-0" fill-height>
     <v-layout>
-      <registry-navigation-drawer></registry-navigation-drawer>
-
+      <registry-navigation-drawer :types="types"></registry-navigation-drawer>
       <v-container class="ma-0">
         <v-layout justify-center>
           <v-flex xs12 sm8 md6>
@@ -15,17 +14,17 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import RegistryNavigationDrawer from '~/components/RegistryNavigationDrawer.vue'
+import { mapGetters } from 'vuex'
+import RegistryNavigationDrawer from '~/components/registry/navigation-drawer.vue'
 export default {
   components: {
     RegistryNavigationDrawer
   },
-  data() {
-    return {}
-  },
   computed: {
-    ...mapGetters(['entities'])
+    ...mapGetters(['types'])
+  },
+  async fetch({ store, params }) {
+    await store.dispatch('getTypes')
   }
 }
 </script>
