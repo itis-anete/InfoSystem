@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Core.Entities.Basic;
@@ -37,6 +38,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
         }
 
         public IEnumerable<Entity> Get() => _context.Entities;
+
+        public IEnumerable<Entity> GetByTypeId(int typeId) => _context.Entities.Where(e => e.TypeId == typeId);
 
         public Entity GetById(int id)
         {

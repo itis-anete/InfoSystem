@@ -5,14 +5,21 @@ using Newtonsoft.Json;
 
 namespace InfoSystem.Web.Controllers
 {
+	/// <inheritdoc />
 	[Route("[controller]/[action]")]
-	public class EntityTypeController : Controller
+	public class TypeController : Controller
 	{
-		public EntityTypeController()
+		/// <inheritdoc />
+		public TypeController()
 		{
 			_repository = new TypeRepository(new InfoSystemDbContext());
 		}
 
+		/// <summary>
+		/// Gets entity type specified by it's id.
+		/// </summary>
+		/// <param name="id">Type's id.</param>
+		/// <returns>ActionResult, containing json with type.</returns>
 		[HttpGet]
 		public IActionResult Get(int id)
 		{

@@ -39,11 +39,13 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             return _context.Values.Where(x => x.Id == id).Include(x => x.Attribute).FirstOrDefault();
         }
 
-        public IEnumerable<Value> GetByTypeId(int entityId, int typeId)
+        public IEnumerable<Value> GetEntityValues(int entityId)
         {
-            var attributes = _context.Attributes.Where(a => a.TypeId == typeId);
-            return _context.Values.Where(v => v.EntityId == entityId && attributes.Any(x => x.Id == v.AttributeId))
-                .Include(x => x.Attribute);
+            var entity = _context.Entities.Find(entityId);
+            var attributes = _context.Attributes.Where(a => a.TypeId == entity.TypeId);
+            return _context.Values.Where(value => value.EntityId == entityId
+                                                  && attributes.Any(attribute => attribute.Id == value.AttributeId))
+                                  .Include(x => x.Attribute);
 
         }
     }

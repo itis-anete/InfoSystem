@@ -8,9 +8,11 @@ using Newtonsoft.Json;
 
 namespace InfoSystem.Web.Controllers
 {
+	/// <inheritdoc />
 	[Route("[controller]/[action]")]
 	public class ValueController : Controller
 	{
+		/// <inheritdoc />
 		public ValueController()
 		{
 			_valueRepository = new ValuesRepository(new InfoSystemDbContext());
@@ -40,18 +42,34 @@ namespace InfoSystem.Web.Controllers
 			return Ok();
 		}
 
+		/// <summary>
+		/// Gets a value refering to attribute and entity, that contains it.
+		/// </summary>
+		/// <param name="attributeName">Attribute name.</param>
+		/// <param name="entityId">Entity's id, that contains this value</param>
+		/// <returns>Value instance.</returns>
 		[HttpGet]
 		public Value Get(string attributeName, int entityId)
 		{
 			return _valueRepository.GetById(entityId, attributeName);
 		}
 
+		/// <summary>
+		/// Gets all values of an entity.
+		/// </summary>
+		/// <param name="entityId">Entity that contains values.</param>
+		/// <returns>Entity's values collection.</returns>
 		[HttpGet]
-		public IEnumerable<Value> GetByTypeId([FromQuery] int entityId, int typeId)
+		public IEnumerable<Value> GetEntityValues([FromQuery] int entityId)
 		{
-			return _valueRepository.GetByTypeId(entityId, typeId).ToList();
+			return _valueRepository.GetEntityValues(entityId).ToList();
 		}
 
+		/// <summary>
+		/// In development.
+		/// </summary>
+		/// <param name="editedValue"></param>
+		/// <returns></returns>
 		[HttpPut]
 		public IActionResult EditValue([FromBody] Value editedValue)
 		{
