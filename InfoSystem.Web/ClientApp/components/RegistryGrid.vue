@@ -33,10 +33,9 @@ export default {
   methods: {
     editItem(item) {
       this.dialog = true
-      this.$store.dispatch('values/getValues', { entityId: item.id, typeId: item.typeId })
-      this.$store.dispatch('attributes/getAttributes', item.typeId)
+      this.$store.dispatch('getValues', { entityId: item.id, typeId: item.typeId })
+      this.$store.dispatch('getAttributes', item.typeId)
     },
-
     deleteItem(item) {}
   },
   computed: {

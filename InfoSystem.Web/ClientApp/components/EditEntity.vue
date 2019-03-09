@@ -64,9 +64,6 @@
                     >
                       <div>{{ props.item.attribute.name }}</div>
                       <template v-slot:input>
-                        <div class="mt-3 title">Update Iron</div>
-                      </template>
-                      <template v-slot:input>
                         <v-select
                           :items="attributes"
                           item-text="name"
@@ -132,7 +129,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({ editValue: 'values/editValue' }),
+    ...mapActions(['editValue']),
     save(item) {
       this.snack = true
       this.snackColor = 'success'
@@ -162,7 +159,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ currentValues: 'values/currentValues' }, { attributes: 'attributes' }),
+    ...mapGetters(['currentValues', 'attributes']),
     localDialog: {
       get() {
         return this.dialog

@@ -12,10 +12,8 @@
 
 <script>
 export default {
-  data() {
-    return {
-      name: 'InfoSystem'
-    }
-  }
+  data: () => ({
+    name: 'InfoSystem'
+  })
 }
 </script>

@@ -19,19 +19,10 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapGetters } from 'vuex'
 export default {
-  data() {
-    return {
-      types: [],
-      icons: ['local_grocery_store', 'toc']
-    }
-  },
-  created() {
-    axios.get('/EntityType/Get').then(response => (this.types = response.data))
-  },
-  methods: {},
-  computed: {}
+  props: ['types'],
+  data: () => ({
+    icons: ['local_grocery_store', 'toc']
+  })
 }
 </script>

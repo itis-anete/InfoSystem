@@ -8,34 +8,21 @@
 import { mapGetters } from 'vuex'
 import RegistryGrid from '~/components/RegistryGrid.vue'
 export default {
-  name: 'Child',
+  name: 'Registry',
   validate({ params }) {
     return !isNaN(+params.id)
   },
   components: {
     RegistryGrid
   },
-  data() {
-    return {
-      headers: [{ text: 'Id', sortable: false }, { text: '', sortable: false }]
-    }
-  },
+  data: () => ({
+    headers: [{ text: 'Id', sortable: false }, { text: '', sortable: false }]
+  }),
   computed: {
-    ...mapGetters({ entities: 'entities/entities' }),
-    id() {
-      return this.$route.params.id
-    }
+    ...mapGetters(['entities'])
   },
-  watch: {
-    id() {
-      this.$store.dispatch('entities/getEntities', this.id)
-    }
-  },
-  created() {
-    this.$store.dispatch('entities/getEntities', this.$route.params.id)
+  async fetch({ store, params }) {
+    await store.dispatch('getEntities', params.id)
   }
 }
 </script>
-
-<style scoped>
-</style>

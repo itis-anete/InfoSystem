@@ -1,15 +1,24 @@
-export const state = () => ({
-  loading: false
-})
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-export const mutations = {
-  setLoading(state, payload) {
-    state.loading = payload
-  }
+Vue.use(Vuex)
+
+import common from './common'
+import attributes from './attributes'
+import entities from './entities'
+import values from './values'
+import types from './types'
+
+const createStore = () => {
+  return new Vuex.Store({
+    modules: {
+      common,
+      attributes,
+      entities,
+      values,
+      types
+    }
+  })
 }
 
-export const getters = {
-  loading(state) {
-    return state.loading
-  }
-}
+export default createStore
