@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 
@@ -15,6 +16,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return _context.Types.Find(id);
 		}
 
-		private readonly InfoSystemDbContext _context;
+	    public IEnumerable<EntityType> Get()
+	    {
+	        return _context.Types;
+	    }
+
+
+        private readonly InfoSystemDbContext _context;
 	}
 }

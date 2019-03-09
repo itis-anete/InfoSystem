@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 
 namespace InfoSystem.Web.Controllers
@@ -19,14 +22,23 @@ namespace InfoSystem.Web.Controllers
 		/// Gets entity type specified by it's id.
 		/// </summary>
 		/// <param name="id">Type's id.</param>
-		/// <returns>ActionResult, containing json with type.</returns>
+		/// <returns>EntityType object</returns>
 		[HttpGet]
-		public IActionResult Get(int id)
+		public EntityType GetById(int id)
 		{
-			var type = _repository.GetById(id);
-			return Json(JsonConvert.SerializeObject(type));
+		    return _repository.GetById(id);
 		}
 
-		private readonly TypeRepository _repository;
+        /// <summary>
+        /// Gets all entity type's
+        /// </summary>
+        /// <returns>EntityTypes's collection.</returns>
+        [HttpGet]
+	    public IEnumerable<EntityType> Get(int id)
+	    {
+	        return _repository.Get();
+	    }
+
+        private readonly TypeRepository _repository;
 	}
 }

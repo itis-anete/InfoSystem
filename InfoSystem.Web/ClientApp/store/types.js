@@ -12,7 +12,7 @@ export default {
   actions: {
     async getTypes({ commit }) {
       commit('setLoading', true)
-      let response = await axios.get('/EntityType/Get')
+      let response = await axios.get('/Type/Get')
       commit('setTypes', response.data)
       commit('setLoading', false)
     }

@@ -6,7 +6,7 @@
       <template v-for="(type, index) in types">
         <v-list-tile :key="type.name" :to="'/registries/'+type.id" router exact>
           <v-list-tile-action>
-            <v-icon>{{icons[type.id-1]}}</v-icon>
+            <v-icon>{{icons[type.name.toLowerCase()]}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title v-text="`${type.name}s`"/>
@@ -22,7 +22,7 @@
 export default {
   props: ['types'],
   data: () => ({
-    icons: ['local_grocery_store', 'toc']
+    icons: { market: 'local_grocery_store', product: 'toc' }
   })
 }
 </script>
