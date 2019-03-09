@@ -35,7 +35,7 @@ export default {
   methods: {
     editItem(item) {
       this.dialogActive = true
-      this.$store.dispatch('getValues', { entityId: item.id, typeId: item.typeId })
+      this.$store.dispatch('getValues', item.id)
       this.$store.dispatch('getAttributes', item.typeId)
     },
     deleteItem(item) {}

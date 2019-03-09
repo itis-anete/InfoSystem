@@ -17,7 +17,7 @@ export default {
   actions: {
     async getValues({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.get(`/Value/GetByTypeId?entityId=${payload.entityId}&typeId=${payload.typeId}`)
+      let response = await axios.get(`/Value/GetEntityValues?entityId=${payload}`)
       commit('setCurrentValues', response.data)
       commit('setLoading', false)
     },
