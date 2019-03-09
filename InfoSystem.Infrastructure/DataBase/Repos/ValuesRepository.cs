@@ -1,9 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfoSystem.Core.Entities;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
@@ -25,9 +24,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         public Value GetById(int entityId, string attributeName)
         {
-            // TODO - entityId = костыль 
-
-            var attribute = _context.Attributes.FirstOrDefault(a => a.Name == attributeName);
+            var entity = _context.Entities.FirstOrDefault(e => e.Id == entityId);
+            if (entity == null)
+                throw new NullReferenceException("Database doesn't have such entity!");
+            var attribute =
+                _context.Attributes.FirstOrDefault(a => a.Name == attributeName && a.TypeId == entity.TypeId);
             return attribute == null
                 ? null
                 : _context.Values.FirstOrDefault(v => v.EntityId == entityId && v.AttributeId == attribute.Id);
@@ -35,14 +36,15 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         public Value GetById(int id)
         {
-            return _context.Values.Where(x=>x.Id == id).Include(x=>x.Attribute).FirstOrDefault();
+            return _context.Values.Where(x => x.Id == id).Include(x => x.Attribute).FirstOrDefault();
         }
 
         public IEnumerable<Value> GetByTypeId(int entityId, int typeId)
         {
             var attributes = _context.Attributes.Where(a => a.TypeId == typeId);
-            return _context.Values.Where(v => v.EntityId == entityId && attributes.Any(x=>x.Id == v.AttributeId)).Include(x=>x.Attribute);
-            
+            return _context.Values.Where(v => v.EntityId == entityId && attributes.Any(x => x.Id == v.AttributeId))
+                .Include(x => x.Attribute);
+
         }
     }
 }

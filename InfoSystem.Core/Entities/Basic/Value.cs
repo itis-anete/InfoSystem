@@ -8,6 +8,7 @@ namespace InfoSystem.Core.Entities.Basic
         public string Content { get; set; }
         public int EntityId { get; set; }
         public int AttributeId { get; set; }
+        [NotMapped]
         public Attribute Attribute { get; set; }
     }
 }

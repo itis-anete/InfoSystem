@@ -15,9 +15,9 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		[HttpPost]
-		public void Add(string attributeName, string typeName)
+		public void Add(string attributeName, string valueType, string typeName)
 		{
-			_repository.Add(new Attribute() {Name = attributeName}, typeName);
+			_repository.Add(attributeName, valueType, typeName);
 		}
 
 		[HttpGet]
@@ -26,12 +26,12 @@ namespace InfoSystem.Web.Controllers
 			return _repository.GetTypeAttributes(typeName);
 		}
 
-	    [HttpGet]
-	    public IEnumerable<Attribute> GetByTypeId([FromQuery] int typeId)
-	    {
-	        return _repository.GetTypeAttributesById(typeId);
-	    }
+		[HttpGet]
+		public IEnumerable<Attribute> GetByTypeId([FromQuery] int typeId)
+		{
+			return _repository.GetTypeAttributesById(typeId);
+		}
 
-        private readonly AttributeRepository _repository;
+		private readonly AttributeRepository _repository;
 	}
 }

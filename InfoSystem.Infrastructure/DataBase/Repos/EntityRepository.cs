@@ -5,7 +5,7 @@ using InfoSystem.Infrastructure.DataBase.Context;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-    public class EntityRepository //: IBaseRepository<Entity>
+    public class EntityRepository
     {
 
         public EntityRepository(InfoSystemDbContext dbContext)
@@ -19,9 +19,10 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
             if (type == null)
             {
-                _context.Types.Add(new EntityType {Name = typeName});
-                _context.SaveChanges();
-                newEntity.TypeId = _context.Types.First(t => t.Name == typeName).Id;
+                var newType = new EntityType {Name = typeName};
+                _context.Types.Add(newType);
+                var receivedType = _context.Types.FirstOrDefault(t => t.Name == typeName);
+                newEntity.TypeId = receivedType?.Id ?? 1;
             }
             else
                 newEntity.TypeId = type.Id;

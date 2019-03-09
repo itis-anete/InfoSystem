@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using InfoSystem.Core.Entities;
-using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 
@@ -16,41 +13,59 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public void Add(Attribute receivedObj, string typeName)
+		public void Add(string attributeName, string valueType, string typeName)
 		{
 			var entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
 			if (entityType == null) return;
-			receivedObj.TypeId = entityType.Id;
-			_context.Attributes.Add(receivedObj);
+			var attribute = new Attribute
+			{
+				TypeId = entityType.Id,
+				Name = attributeName,
+				ValueType = valueType
+			};
+			_context.Attributes.Add(attribute);
 			_context.SaveChanges();
 		}
 
+		[Obsolete]
 		public IEnumerable<Attribute> Get() => _context.Attributes;
 
-	    public Attribute GetById(int id)
-	    {
-	        return _context.Attributes.FirstOrDefault(a => a.Id == id);
-	    }
-
-        public IEnumerable<Attribute> GetTypeAttributes(string typeName)
+		public Attribute GetById(int id)
 		{
-			var entityType = _context.Types.FirstOrDefault(t => t.Name == typeName);
-			if (entityType == null) return null;
-			return _context.Attributes.Where(a => a.TypeId == entityType.Id);
+			return _context.Attributes.FirstOrDefault(a => a.Id == id);
 		}
 
-	    public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
-	    {
-	        return _context.Attributes.Where(a => a.TypeId == typeId);
-	    }
-
-        public Attribute GetByName(string entityType, string attributeName)
+		public IEnumerable<Attribute> GetTypeAttributes(string typeName)
 		{
-			var type = _context.Types.FirstOrDefault(t => t.Name == entityType);
-			if (type != null)
-				return _context.Attributes.FirstOrDefault(a => a.Name == attributeName && a.TypeId == type.Id);
-			Console.WriteLine("go fuck yourself");
-			return null;
+			var entityType = _context.Types.FirstOrDefault(t => t.Name == typeName);
+			return entityType == null
+				? null
+				: _context.Attributes.Where(a => a.TypeId == entityType.Id);
+		}
+
+		public Attribute GetById(int entityTypeId, int attributeId)
+		{
+			bool Func(Attribute a, int attributeName) => a.Id == attributeId;
+			return Get(entityTypeId, attributeId, Func);
+		}
+
+		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
+		{
+			return _context.Attributes.Where(a => a.TypeId == typeId);
+		}
+
+		public Attribute GetByName(int entityTypeId, string attributeName)
+		{
+			bool Func(Attribute a, string name) => a.Name == name;
+			return Get(entityTypeId, attributeName, Func);
+		}
+
+		private Attribute Get<T>(int entityTypeId, T searchParameter, Func<Attribute, T, bool> selector)
+		{
+			var type = _context.Types.FirstOrDefault(t => t.Id == entityTypeId);
+			return type != null
+				? _context.Attributes.FirstOrDefault(a => selector(a, searchParameter) && a.TypeId == type.Id)
+				: null;
 		}
 
 		private readonly InfoSystemDbContext _context;

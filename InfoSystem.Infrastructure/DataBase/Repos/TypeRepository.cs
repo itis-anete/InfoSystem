@@ -1,37 +1,20 @@
-using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class TypeRepository : IBaseRepository<EntityType>
+	public class TypeRepository
 	{
-	    public TypeRepository(InfoSystemDbContext dbContext)
-	    {
-	        _context = dbContext;
-        }
-
-		public void Add(EntityType receivedObj)
+		public TypeRepository(InfoSystemDbContext dbContext)
 		{
-			throw new System.NotImplementedException();
-		}
-
-		public void Delete(int id)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public IEnumerable<EntityType> Get()
-		{
-		    return _context.Types;
+			_context = dbContext;
 		}
 
 		public EntityType GetById(int id)
 		{
-			throw new System.NotImplementedException();
+			return _context.Types.Find(id);
 		}
 
-	    private readonly InfoSystemDbContext _context;
-    }
+		private readonly InfoSystemDbContext _context;
+	}
 }
