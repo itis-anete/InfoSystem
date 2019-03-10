@@ -1,12 +1,11 @@
 <template>
   <div>
-    <v-toolbar flat color="white">
-      <v-spacer></v-spacer>
-      <template>
-        <v-btn color="primary" dark class="ma-3">
+    <v-toolbar card color="secondary">
+      <v-toolbar-items>
+        <v-btn flat>
           <v-icon class="mr-2">add</v-icon>Add
         </v-btn>
-      </template>
+      </v-toolbar-items>
     </v-toolbar>
     <v-data-table :loading="loading" :headers="headers" :items="items" class="elevation-1">
       <template v-slot:items="props">

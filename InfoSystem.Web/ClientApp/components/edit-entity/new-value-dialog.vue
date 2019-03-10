@@ -2,9 +2,8 @@
   <v-dialog v-model="localNewValueDialogActive" max-width="500px">
     <v-card>
       <v-card-title>
-        <span class="headline">New</span>
+        <span class="headline">Add new value</span>
       </v-card-title>
-
       <v-card-text>
         <v-container grid-list-md>
           <v-layout wrap>

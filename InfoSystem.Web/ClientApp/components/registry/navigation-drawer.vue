@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer style="margin-top: 1px">
     <v-list two-line subheader>
-      <v-subheader>Entities</v-subheader>
+      <v-subheader>Entity Types</v-subheader>
       <v-divider></v-divider>
       <template v-for="(type, index) in types">
         <v-list-tile :key="type.name" :to="'/registries/'+type.id" router exact>

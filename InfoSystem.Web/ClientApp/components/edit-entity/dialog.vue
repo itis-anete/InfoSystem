@@ -11,14 +11,26 @@
         <v-toolbar-title class="ml-4">Edit Entity</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="mr-4">
-          <v-btn dark flat @click="newValueDialogActive = true">New</v-btn>
           <v-btn icon dark @click="localDialogActive = false">
             <v-icon>close</v-icon>
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <v-card-text>
-        <dialog-grid></dialog-grid>
+        <v-layout row wrap justify-center>
+          <v-flex xs4>
+            <v-card>
+              <v-toolbar card color="secondary">
+                <v-toolbar-items>
+                  <v-btn flat @click="newValueDialogActive = true">
+                    <v-icon class="mr-2">add</v-icon>Add
+                  </v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
+              <dialog-grid></dialog-grid>
+            </v-card>
+          </v-flex>
+        </v-layout>
       </v-card-text>
       <new-value-dialog :entityId="entity.id" :newValueDialogActive.sync="newValueDialogActive"></new-value-dialog>
     </v-card>
