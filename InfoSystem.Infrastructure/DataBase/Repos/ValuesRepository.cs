@@ -45,8 +45,23 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             var attributes = _context.Attributes.Where(a => a.TypeId == entity.TypeId);
             return _context.Values.Where(value => value.EntityId == entityId
                                                   && attributes.Any(attribute => attribute.Id == value.AttributeId))
-                                  .Include(x => x.Attribute);
+                .Include(x => x.Attribute);
+        }
 
+        public bool Update(Value updatedValue)
+        {
+            try
+            {
+                _context.Values.Update(updatedValue);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            
         }
     }
 }

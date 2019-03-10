@@ -59,15 +59,15 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
-		/// In development.
+		/// Edits existing Value instance.
 		/// </summary>
 		/// <param name="editedValue"></param>
 		/// <returns></returns>
 		[HttpPut]
 		public IActionResult EditValue([FromBody] Value editedValue)
 		{
-			// TODO - изменение бд
-			editedValue.Attribute = _attributeRepository.GetById(editedValue.AttributeId);
+			if (!_valueRepository.Update(editedValue))
+				return BadRequest();
 			return Ok(editedValue);
 		}
 
