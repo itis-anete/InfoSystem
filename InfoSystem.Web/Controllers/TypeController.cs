@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
@@ -16,15 +17,20 @@ namespace InfoSystem.Web.Controllers
 			_repository = new TypeRepository(new InfoSystemDbContext());
 		}
 
+		/// <summary>
+		/// Adds a new entity type.
+		/// </summary>
+		/// <param name="typeName">Name of a new type.</param>
+		/// <returns>ActionResult that refers to operation result.</returns>
 		[HttpPost]
 		public IActionResult Add(string typeName)
 		{
 			if (!_repository.Add(typeName))
 				return BadRequest();
-			
+
 			return Ok();
 		}
-		
+
 		/// <summary>
 		/// Gets entity type specified by it's id.
 		/// </summary>
@@ -33,19 +39,19 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public EntityType GetById(int id)
 		{
-		    return _repository.GetById(id);
+			return _repository.GetById(id);
 		}
 
-        /// <summary>
-        /// Gets all entity type's
-        /// </summary>
-        /// <returns>EntityTypes's collection.</returns>
-        [HttpGet]
-	    public IEnumerable<EntityType> Get(int id)
-	    {
-	        return _repository.Get();
-	    }
+		/// <summary>
+		/// Gets all entity type's
+		/// </summary>
+		/// <returns>EntityTypes's collection.</returns>
+		[HttpGet]
+		public IEnumerable<EntityType> Get(int id)
+		{
+			return _repository.Get();
+		}
 
-        private readonly TypeRepository _repository;
+		private readonly ITypeRepository _repository;
 	}
 }

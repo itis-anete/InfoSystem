@@ -3,6 +3,7 @@ using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
@@ -19,19 +20,19 @@ namespace InfoSystem.Web.Controllers
 			_entityRepository = new EntityRepository(new InfoSystemDbContext());
 		}
 
-        /// <summary>
-        /// Add a new Value to database.
-        /// </summary>
-        /// <param name="value">Value, example: { "attributeId":"4", "content":"Это же название!", "entityId":"6"}</param>
-        /// <returns>Added value</returns>
-        [HttpPost]
+		/// <summary>
+		/// Add a new Value to database.
+		/// </summary>
+		/// <param name="value">Value, example: { "attributeId":"4", "content":"Это же название!", "entityId":"6"}</param>
+		/// <returns>Added value</returns>
+		[HttpPost]
 		public IActionResult Add([FromBody] Value value)
 		{
 			_valueRepository.Add(value);
-		    var entity = _entityRepository.GetById(value.EntityId);
-            value.Attribute = _attributeRepository.GetById(entity.TypeId, value.AttributeId);
-            
-            return Ok(value);
+			var entity = _entityRepository.GetById(value.EntityId);
+			value.Attribute = _attributeRepository.GetById(entity.TypeId, value.AttributeId);
+
+			return Ok(value);
 		}
 
 		/// <summary>
@@ -70,8 +71,8 @@ namespace InfoSystem.Web.Controllers
 			return Ok(editedValue);
 		}
 
-		private readonly ValuesRepository _valueRepository;
-		private readonly AttributeRepository _attributeRepository;
-		private readonly EntityRepository _entityRepository;
+		private readonly IValuesRepository _valueRepository;
+		private readonly IAttributeRepository _attributeRepository;
+		private readonly IEntityRepository _entityRepository;
 	}
 }

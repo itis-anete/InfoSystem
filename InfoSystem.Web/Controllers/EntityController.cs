@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
@@ -38,16 +39,16 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
-		/// 
+		/// Get all instances of one type.
 		/// </summary>
-		/// <param name="typeId"></param>
-		/// <returns></returns>
+		/// <param name="typeId">Entity type id.</param>
+		/// <returns>Entities collection of one type.</returns>
 		[HttpGet]
 		public IEnumerable<Entity> GetByType([FromQuery] int typeId)
 		{
 			return _repository.GetByTypeId(typeId);
 		}
 
-		private readonly EntityRepository _repository;
+		private readonly IEntityRepository _repository;
 	}
 }

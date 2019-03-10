@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-    public class ValuesRepository
+    public class ValuesRepository : IValuesRepository
     {
         private readonly InfoSystemDbContext _context;
 

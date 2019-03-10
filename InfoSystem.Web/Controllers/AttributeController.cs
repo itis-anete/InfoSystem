@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
@@ -50,6 +51,6 @@ namespace InfoSystem.Web.Controllers
 			return _repository.GetTypeAttributesById(typeId);
 		}
 
-		private readonly AttributeRepository _repository;
+		private readonly IAttributeRepository _repository;
 	}
 }

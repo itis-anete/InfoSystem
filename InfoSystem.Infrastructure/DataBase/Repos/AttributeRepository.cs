@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 using ValueType = InfoSystem.Core.Entities.ValueType;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class AttributeRepository
+	public class AttributeRepository : IAttributeRepository
 	{
 		public AttributeRepository(InfoSystemDbContext context)
 		{
@@ -36,6 +37,18 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return _context.Attributes.FirstOrDefault(a => a.Id == id);
 		}
 
+		public Attribute GetById(int entityTypeId, int attributeId)
+		{
+			bool Func(Attribute a, int attributeName) => a.Id == attributeId;
+			return Get(entityTypeId, attributeId, Func);
+		}
+		
+		public Attribute GetByName(int entityTypeId, string attributeName)
+		{
+			bool Func(Attribute a, string name) => a.Name == name;
+			return Get(entityTypeId, attributeName, Func);
+		}
+		
 		public IEnumerable<Attribute> GetTypeAttributes(string typeName)
 		{
 			var entityType = _context.Types.FirstOrDefault(t => t.Name == typeName);
@@ -43,22 +56,10 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				? null
 				: _context.Attributes.Where(a => a.TypeId == entityType.Id);
 		}
-
-		public Attribute GetById(int entityTypeId, int attributeId)
-		{
-			bool Func(Attribute a, int attributeName) => a.Id == attributeId;
-			return Get(entityTypeId, attributeId, Func);
-		}
-
+		
 		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
 		{
 			return _context.Attributes.Where(a => a.TypeId == typeId);
-		}
-
-		public Attribute GetByName(int entityTypeId, string attributeName)
-		{
-			bool Func(Attribute a, string name) => a.Name == name;
-			return Get(entityTypeId, attributeName, Func);
 		}
 
 		private Attribute Get<T>(int entityTypeId, T searchParameter, Func<Attribute, T, bool> selector)

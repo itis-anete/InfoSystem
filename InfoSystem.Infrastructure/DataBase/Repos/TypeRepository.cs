@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class TypeRepository
+	public class TypeRepository : ITypeRepository
 	{
 		public TypeRepository(InfoSystemDbContext dbContext)
 		{
@@ -28,16 +29,15 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			}
 		}
 
-		public EntityType GetById(int id)
-		{
-			return _context.Types.Find(id);
-		}
-
 		public IEnumerable<EntityType> Get()
 		{
 			return _context.Types;
 		}
 
+		public EntityType GetById(int id)
+		{
+			return _context.Types.Find(id);
+		}
 
 		private readonly InfoSystemDbContext _context;
 	}

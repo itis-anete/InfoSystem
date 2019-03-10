@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-    public class EntityRepository
+    public class EntityRepository : IEntityRepository
     {
-
         public EntityRepository(InfoSystemDbContext dbContext)
         {
             _context = dbContext;
@@ -38,12 +38,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         public IEnumerable<Entity> Get() => _context.Entities;
 
-        public IEnumerable<Entity> GetByTypeId(int typeId) => _context.Entities.Where(e => e.TypeId == typeId);
-
         public Entity GetById(int id)
         {
             return _context.Entities.Find(id);
         }
+        
+        public IEnumerable<Entity> GetByTypeId(int typeId) => _context.Entities.Where(e => e.TypeId == typeId);
 
         private readonly InfoSystemDbContext _context;
     }
