@@ -1,19 +1,21 @@
 <template>
   <div>
-    <v-data-table v-if="currentValues" :headers="headers" :items="currentValues" item-key="id">
+    <v-data-table
+      v-if="currentValues"
+      :headers="headers"
+      :items="currentValues"
+      item-key="id"
+      sort-icon="arrow_drop_down"
+    >
       <template v-slot:items="props">
-        <td>
-          <content-edit-dialog
-            :item="props.item"
-            @update:content="props.item.content = $event; save(props.item)"
-          ></content-edit-dialog>
-        </td>
-        <td>
-          <attribute-edit-dialog
-            :item="props.item"
-            @update:content="props.item.attribute = $event; save(props.item)"
-          ></attribute-edit-dialog>
-        </td>
+        <content-edit-dialog
+          :item="props.item"
+          @update:content="props.item.content = $event; save(props.item)"
+        ></content-edit-dialog>
+        <attribute-edit-dialog
+          :item="props.item"
+          @update:attribute="props.item.attribute = $event; save(props.item)"
+        ></attribute-edit-dialog>
         <td class="justify-end layout px-4">
           <v-icon small @click="deleteItem()">delete</v-icon>
         </td>
@@ -42,7 +44,7 @@ export default {
       snackText: '',
       headers: [
         {
-          text: 'Value',
+          text: 'Content',
           align: 'left',
           sortable: false
         },

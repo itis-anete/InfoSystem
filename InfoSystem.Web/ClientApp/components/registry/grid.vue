@@ -1,13 +1,20 @@
 <template>
   <div>
-    <v-toolbar card color="secondary">
+    <v-toolbar card color="#eee">
       <v-toolbar-items>
-        <v-btn flat>
+        <v-btn color="primary" flat>
           <v-icon class="mr-2">add</v-icon>Add
         </v-btn>
+        <v-divider inset vertical></v-divider>
       </v-toolbar-items>
     </v-toolbar>
-    <v-data-table :loading="loading" :headers="headers" :items="items" class="elevation-1">
+    <v-data-table
+      :headers="headers"
+      :items="items"
+      sort-icon="mdi-menu-down"
+      :loading="loading"
+      class="elevation-1"
+    >
       <template v-slot:items="props">
         <td>{{ props.item.id }}</td>
         <td class="justify-end layout px-4">

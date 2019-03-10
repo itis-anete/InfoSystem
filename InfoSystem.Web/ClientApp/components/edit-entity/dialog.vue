@@ -20,11 +20,16 @@
         <v-layout row wrap justify-center>
           <v-flex xs4>
             <v-card>
-              <v-toolbar card color="secondary">
+              <v-toolbar card color="#eee">
                 <v-toolbar-items>
-                  <v-btn flat @click="newValueDialogActive = true">
-                    <v-icon class="mr-2">add</v-icon>Add
+                  <v-btn flat color="primary" @click="newValueDialogActive = true">
+                    <v-icon class="mr-2">add</v-icon>Add Value
                   </v-btn>
+                  <v-divider inset vertical></v-divider>
+                  <v-btn flat color="primary">
+                    <v-icon class="mr-2">add</v-icon>Add Attribute
+                  </v-btn>
+                  <v-divider inset vertical></v-divider>
                 </v-toolbar-items>
               </v-toolbar>
               <dialog-grid></dialog-grid>

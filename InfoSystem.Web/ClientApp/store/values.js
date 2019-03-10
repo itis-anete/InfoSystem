@@ -32,7 +32,6 @@ export default {
     },
     async addValue({ commit }, payload) {
       commit('setLoading', true)
-      console.log(payload)
       let response = await axios.post('/Value/Add', payload)
       commit('addValue', response.data)
       commit('setLoading', false)
