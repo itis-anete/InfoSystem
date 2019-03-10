@@ -1,10 +1,8 @@
 <template>
   <v-edit-dialog lazy persistent ref="newTypeDialog">
-    <div>
-      <v-btn small flat outline icon color="primary">
-        <v-icon>add</v-icon>
-      </v-btn>
-    </div>
+    <v-btn small flat outline icon color="primary">
+      <v-icon>add</v-icon>
+    </v-btn>
     <template v-slot:input>
       <v-text-field v-model="typeName" class="mt-4" label="Type Name"></v-text-field>
       <v-text-field v-model="identificator" label="Identificator"></v-text-field>

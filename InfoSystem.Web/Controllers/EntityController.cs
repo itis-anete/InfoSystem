@@ -23,7 +23,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>ActionResult, depending on operation result.</returns> 
 		[HttpPost]
-		public IActionResult Add(string typeName)
+		public IActionResult Add([FromQuery] string typeName)
 		{
 			if (!_repository.Add(typeName))
 				return BadRequest();

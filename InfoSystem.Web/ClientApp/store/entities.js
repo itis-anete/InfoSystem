@@ -17,6 +17,12 @@ export default {
       setTimeout(() => {
         commit('setLoading', false)
       }, 550)
+    },
+    async addEntity({ commit }, payload) {
+      commit('setLoading', true)
+      let response = await axios.post(`/Entity/Add?typeName=${payload.typeName}&identificator=${payload.identificator}`)
+      //commit('addValue', response.data)
+      commit('setLoading', false)
     }
   },
   getters: {

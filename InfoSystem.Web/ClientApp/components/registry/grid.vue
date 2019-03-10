@@ -1,13 +1,5 @@
 <template>
   <div>
-    <v-toolbar card color="#eee">
-      <v-toolbar-items>
-        <v-btn color="primary" flat>
-          <v-icon class="mr-2">add</v-icon>Add
-        </v-btn>
-        <v-divider inset vertical></v-divider>
-      </v-toolbar-items>
-    </v-toolbar>
     <v-data-table
       :headers="headers"
       :items="items"
