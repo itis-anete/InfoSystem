@@ -17,10 +17,19 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context = dbContext;
         }
 
-        public void Add(Value receivedObj)
+        public bool Add(Value receivedObj)
         {
-            _context.Values.Add(receivedObj);
-            _context.SaveChanges();
+            try
+            {
+                _context.Values.Add(receivedObj);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
 
         public Value GetById(int entityId, string attributeName)
@@ -62,7 +71,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 Console.WriteLine(e);
                 return false;
             }
-            
+
         }
     }
 }

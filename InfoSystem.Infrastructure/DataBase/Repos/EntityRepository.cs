@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
@@ -13,27 +15,55 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context = dbContext;
         }
 
-        public void Add(string typeName)
+        public bool Add(string typeName)
         {
             var newEntity = new Entity();
-            var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
-            if (type == null)
+            try
             {
-                var newType = new EntityType(typeName);
-                _context.Types.Add(newType);
-                var receivedType = _context.Types.FirstOrDefault(t => t.Name == typeName);
-                newEntity.TypeId = receivedType?.Id ?? 1;
+                var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
+                if (type == null)
+                {
+                    var newType = new EntityType(typeName);
+                    _context.Types.Add(newType);
+                    var receivedType = _context.Types.FirstOrDefault(t => t.Name == typeName);
+                    newEntity.TypeId = receivedType?.Id ?? 1;
+                }
+                else
+                    newEntity.TypeId = type.Id;
             }
-            else
-                newEntity.TypeId = type.Id;
+            catch (Exception e)
+            {
+                Console.WriteLine("TYPES FAILED");
+                Console.WriteLine(e);
+                return false;
+            }
 
-            _context.Entities.Add(newEntity);
-            _context.SaveChanges();
+            try
+            {
+                _context.Entities.Add(newEntity);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ENTITIES FAILED");
+                Console.WriteLine(e);
+                return false;
+            }
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            _context.Entities.Remove(_context.Entities.Find(id));
+            try
+            {
+                _context.Entities.Remove(_context.Entities.Find(id));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
 
         public IEnumerable<Entity> Get() => _context.Entities;

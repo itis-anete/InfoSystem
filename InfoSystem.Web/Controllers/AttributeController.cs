@@ -17,16 +17,21 @@ namespace InfoSystem.Web.Controllers
 			_repository = new AttributeRepository(new InfoSystemDbContext());
 		}
 
+		
 		/// <summary>
 		/// Adds a new Attribute to a entityType.
 		/// </summary>
 		/// <param name="attributeName">Name of a new attribute.</param>
 		/// <param name="valueType">Type of data that would be stored.</param>
 		/// <param name="typeName">Entity type name.</param>
+		/// <returns>ActionResult, depending on operation result </returns>
 		[HttpPost]
-		public void Add(string attributeName, string valueType, string typeName)
+		public IActionResult Add(string attributeName, string valueType, string typeName)
 		{
-			_repository.Add(attributeName, valueType, typeName);
+			if (!_repository.Add(attributeName, valueType, typeName))
+				return BadRequest();
+
+			return Ok();
 		}
 
 		/// <summary>

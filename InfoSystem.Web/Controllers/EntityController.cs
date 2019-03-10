@@ -21,10 +21,13 @@ namespace InfoSystem.Web.Controllers
 		/// Add a new instance of type <paramref name="typeName"/>.
 		/// </summary>
 		/// <param name="typeName">Entity type name.</param>
+		/// <returns>ActionResult, depending on operation result.</returns> 
 		[HttpPost]
-		public void Add(string typeName)
+		public IActionResult Add(string typeName)
 		{
-			_repository.Add(typeName);
+			if (!_repository.Add(typeName))
+				return BadRequest();
+			return Ok();
 		}
 
 		/// <summary>

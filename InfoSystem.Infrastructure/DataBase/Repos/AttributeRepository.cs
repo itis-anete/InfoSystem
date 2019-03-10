@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
@@ -15,16 +16,37 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public void Add(string attributeName, string valueType, string typeName)
+		public bool Add(string attributeName, string valueType, string typeName)
 		{
-			var entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
-			if (entityType == null) return;
-			var attribute = new Attribute(attributeName, entityType.Id, Enum.Parse<ValueType>(valueType));
-			_context.Attributes.Add(attribute);
-			_context.SaveChanges();
+			EntityType entityType;
+			try
+			{
+				entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
+				if (entityType == null)
+					return false;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("TYPES FAILED");
+				Console.WriteLine(e);
+				return false;
+			}
+
+			try
+			{
+				var attribute = new Attribute(attributeName, entityType.Id, Enum.Parse<ValueType>(valueType));
+				_context.Attributes.Add(attribute);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("ATTRIBUTE FAIL");
+				Console.WriteLine(e);
+				return false;
+			}
 		}
 
-		[Obsolete]
 		public IEnumerable<Attribute> Get() => _context.Attributes;
 
 		public Attribute GetById(int id)

@@ -24,7 +24,7 @@ namespace InfoSystem.Web.Controllers
 		/// Add a new Value to database.
 		/// </summary>
 		/// <param name="value">Value, example: { "attributeId":"4", "content":"Это же название!", "entityId":"6"}</param>
-		/// <returns>Added value</returns>
+		/// <returns>ActionResult, depending on operation result and added value.</returns>
 		[HttpPost]
 		public IActionResult Add([FromBody] Value value)
 		{
@@ -62,7 +62,7 @@ namespace InfoSystem.Web.Controllers
 		/// Edits existing Value instance.
 		/// </summary>
 		/// <param name="editedValue"></param>
-		/// <returns></returns>
+		/// <returns>ActionResult, depending on operation result and new value.</returns>
 		[HttpPut]
 		public IActionResult EditValue([FromBody] Value editedValue)
 		{
