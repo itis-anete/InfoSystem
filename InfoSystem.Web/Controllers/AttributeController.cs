@@ -16,7 +16,6 @@ namespace InfoSystem.Web.Controllers
 		{
 			_repository = new AttributeRepository(new InfoSystemDbContext());
 		}
-
 		
 		/// <summary>
 		/// Adds a new Attribute to a entityType.

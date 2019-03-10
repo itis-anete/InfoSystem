@@ -28,7 +28,9 @@ namespace InfoSystem.Web.Controllers
 			if (!_repository.Add(typeName))
 				return BadRequest();
 
-			return Ok();
+		    var addedType = _repository.GetByTypeName(typeName);
+
+			return Ok(addedType);
 		}
 
 		/// <summary>

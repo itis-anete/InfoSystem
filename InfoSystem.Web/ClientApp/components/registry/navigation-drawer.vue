@@ -3,9 +3,7 @@
     <v-list two-line subheader>
       <v-subheader>Entity Types
         <v-spacer></v-spacer>
-        <v-btn small flat outline icon color="primary">
-          <v-icon>add</v-icon>
-        </v-btn>
+        <new-type-dialog></new-type-dialog>
       </v-subheader>
       <v-divider></v-divider>
       <template v-for="(type, index) in types">
@@ -24,10 +22,21 @@
 </template>
 
 <script>
+import NewTypeDialog from './new-type-dialog.vue'
 export default {
+  components: {
+    NewTypeDialog
+  },
   props: ['types'],
   data: () => ({
     icons: { market: 'local_grocery_store', product: 'toc' }
-  })
+  }),
+  methods: {}
 }
 </script>
+
+<style>
+.v-small-dialog {
+	width: inherit;
+}
+</style>

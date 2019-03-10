@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
@@ -39,6 +40,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return _context.Types.Find(id);
 		}
 
-		private readonly InfoSystemDbContext _context;
+	    public EntityType GetByTypeName(string typeName)
+	    {
+	        return _context.Types.FirstOrDefault(x => x.Name == typeName);
+	    }
+
+        private readonly InfoSystemDbContext _context;
 	}
 }
