@@ -17,7 +17,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		{
 			try
 			{
-				var newType = new EntityType() {Name = typeName};
+				var newType = new EntityType {Name = typeName};
 				_context.Types.Add(newType);
 				_context.SaveChanges();
 				return true;

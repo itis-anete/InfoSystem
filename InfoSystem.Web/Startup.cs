@@ -34,7 +34,7 @@ namespace InfoSystem.Web
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 			services.AddSwaggerGen(options =>
 			{
-				options.SwaggerDoc("v1", new OpenApiInfo()
+				options.SwaggerDoc("v1", new OpenApiInfo
 				{
 					Title = "InfoSystem API",
 					Version = "v1",

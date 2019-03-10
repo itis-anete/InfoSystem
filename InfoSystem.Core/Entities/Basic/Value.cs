@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace InfoSystem.Core.Entities.Basic
+﻿namespace InfoSystem.Core.Entities.Basic
 {
     public class Value 
     {

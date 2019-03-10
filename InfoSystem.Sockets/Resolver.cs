@@ -19,10 +19,10 @@ namespace InfoSystem.Sockets
 					case 'c':
 						Console.Write("Type message:");
 						var message = Console.ReadLine();
-						RunSafely(() => SocketClient.Start(_clientIp, _port, message));
+						RunSafely(() => SocketClient.Start(ClientIp, Port, message));
 						break;
 					case 's':
-						RunSafely(() => SocketServer.Start(_serverIp, _port));
+						RunSafely(() => SocketServer.Start(ServerIp, Port));
 						break;
 					default:
 						return;
@@ -46,8 +46,8 @@ namespace InfoSystem.Sockets
 			}
 		}
 
-		private static readonly IPAddress _clientIp = IPAddress.Parse("192.168.0.68");
-		private static readonly IPAddress _serverIp = IPAddress.Parse("192.168.0.10");
-		private static readonly int _port = 8080;
+		private static readonly IPAddress ClientIp = IPAddress.Parse("192.168.0.68");
+		private static readonly IPAddress ServerIp = IPAddress.Parse("192.168.0.10");
+		private const int Port = 8080;
 	}
 }
