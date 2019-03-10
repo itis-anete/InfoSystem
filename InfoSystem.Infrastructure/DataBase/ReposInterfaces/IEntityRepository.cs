@@ -5,7 +5,7 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 {
 	public interface IEntityRepository
 	{
-		bool Add(string typeName);
+		bool Add(string typeName, out Entity outEntity);
 		bool Delete(int id);
 		IEnumerable<Entity> Get();
 		Entity GetById(int id);

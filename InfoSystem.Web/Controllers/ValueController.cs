@@ -68,6 +68,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			if (!_valueRepository.Update(editedValue))
 				return BadRequest();
+			editedValue.Attribute = _attributeRepository.GetById(editedValue.AttributeId);
 			return Ok(editedValue);
 		}
 

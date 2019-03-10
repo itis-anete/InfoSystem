@@ -25,12 +25,9 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add(string typeName)
 		{
-			if (!_repository.Add(typeName))
+			if (!_repository.Add(typeName, out var outType))
 				return BadRequest();
-
-		    var addedType = _repository.GetByTypeName(typeName);
-
-			return Ok(addedType);
+			return Ok(outType);
 		}
 
 		/// <summary>
