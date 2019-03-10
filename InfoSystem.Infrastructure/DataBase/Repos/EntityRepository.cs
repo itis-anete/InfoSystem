@@ -19,7 +19,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
             if (type == null)
             {
-                var newType = new EntityType {Name = typeName};
+                var newType = new EntityType(typeName);
                 _context.Types.Add(newType);
                 var receivedType = _context.Types.FirstOrDefault(t => t.Name == typeName);
                 newEntity.TypeId = receivedType?.Id ?? 1;
@@ -42,7 +42,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
         {
             return _context.Entities.Find(id);
         }
-        
+
         public IEnumerable<Entity> GetByTypeId(int typeId) => _context.Entities.Where(e => e.TypeId == typeId);
 
         private readonly InfoSystemDbContext _context;

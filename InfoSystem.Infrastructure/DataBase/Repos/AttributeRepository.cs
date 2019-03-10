@@ -19,12 +19,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		{
 			var entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
 			if (entityType == null) return;
-			var attribute = new Attribute
-			{
-				TypeId = entityType.Id,
-				Name = attributeName,
-				ValueType = Enum.Parse<ValueType>(valueType)
-			};
+			var attribute = new Attribute(attributeName, entityType.Id, Enum.Parse<ValueType>(valueType));
 			_context.Attributes.Add(attribute);
 			_context.SaveChanges();
 		}
@@ -42,13 +37,13 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			bool Func(Attribute a, int attributeName) => a.Id == attributeId;
 			return Get(entityTypeId, attributeId, Func);
 		}
-		
+
 		public Attribute GetByName(int entityTypeId, string attributeName)
 		{
 			bool Func(Attribute a, string name) => a.Name == name;
 			return Get(entityTypeId, attributeName, Func);
 		}
-		
+
 		public IEnumerable<Attribute> GetTypeAttributes(string typeName)
 		{
 			var entityType = _context.Types.FirstOrDefault(t => t.Name == typeName);
@@ -56,7 +51,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				? null
 				: _context.Attributes.Where(a => a.TypeId == entityType.Id);
 		}
-		
+
 		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
 		{
 			return _context.Attributes.Where(a => a.TypeId == typeId);
