@@ -6,6 +6,8 @@
       sort-icon="mdi-menu-down"
       :loading="loading"
       class="elevation-1"
+      :rows-per-page-items="rowsPerPageItems"
+      :pagination.sync="pagination"
     >
       <template v-slot:items="props">
         <td>{{ props.item.id }}</td>
@@ -28,7 +30,11 @@ export default {
     EditEntityDialog
   },
   data: () => ({
-    dialogActive: false
+    dialogActive: false,
+    rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
+    pagination: {
+      rowsPerPage: 10
+    }
   }),
   methods: {
     editItem(item) {

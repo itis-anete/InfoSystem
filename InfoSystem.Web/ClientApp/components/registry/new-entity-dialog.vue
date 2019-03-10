@@ -30,6 +30,8 @@ export default {
         identificator: this.identificator
       }
       this.addEntity(entity)
+      this.identificator = ''
+      this.$refs['newEntityDialog'].isActive = false
     },
     clear() {
       this.identificator = ''

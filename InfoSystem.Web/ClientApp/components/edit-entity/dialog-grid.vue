@@ -6,6 +6,8 @@
       :items="currentValues"
       item-key="id"
       sort-icon="arrow_drop_down"
+      :rows-per-page-items="rowsPerPageItems"
+      :pagination.sync="pagination"
     >
       <template v-slot:items="props">
         <content-edit-dialog
@@ -50,7 +52,11 @@ export default {
         },
         { text: 'Attribute', value: 'attributeId' },
         { text: '', sortable: false }
-      ]
+      ],
+      rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
+      pagination: {
+        rowsPerPage: 10
+      }
     }
   },
   methods: {

@@ -7,6 +7,9 @@ export default {
   mutations: {
     setEntities(state, payload) {
       state.entities = payload
+    },
+    addEntity(state, payload) {
+      state.entities.push(payload)
     }
   },
   actions: {
@@ -21,7 +24,7 @@ export default {
     async addEntity({ commit }, payload) {
       commit('setLoading', true)
       let response = await axios.post(`/Entity/Add?typeName=${payload.typeName}&identificator=${payload.identificator}`)
-      //commit('addValue', response.data)
+      commit('addEntity', response.data)
       commit('setLoading', false)
     }
   },
