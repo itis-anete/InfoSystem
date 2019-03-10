@@ -27,7 +27,7 @@ namespace InfoSystem.Infrastructure.Migrations
 
                     b.Property<int>("TypeId");
 
-                    b.Property<string>("ValueType");
+                    b.Property<int>("ValueType");
 
                     b.HasKey("Id");
 

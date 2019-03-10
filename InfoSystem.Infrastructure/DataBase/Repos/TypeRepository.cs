@@ -27,18 +27,18 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				return false;
 			}
 		}
-		
+
 		public EntityType GetById(int id)
 		{
 			return _context.Types.Find(id);
 		}
 
-	    public IEnumerable<EntityType> Get()
-	    {
-	        return _context.Types;
-	    }
+		public IEnumerable<EntityType> Get()
+		{
+			return _context.Types;
+		}
 
 
-        private readonly InfoSystemDbContext _context;
+		private readonly InfoSystemDbContext _context;
 	}
 }

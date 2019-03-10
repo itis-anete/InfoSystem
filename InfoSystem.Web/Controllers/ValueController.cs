@@ -4,7 +4,6 @@ using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace InfoSystem.Web.Controllers
 {

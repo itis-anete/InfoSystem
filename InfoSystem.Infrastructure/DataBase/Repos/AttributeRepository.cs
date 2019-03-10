@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Infrastructure.DataBase.Context;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
+using ValueType = InfoSystem.Core.Entities.ValueType;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
@@ -21,7 +22,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			{
 				TypeId = entityType.Id,
 				Name = attributeName,
-				ValueType = valueType
+				ValueType = Enum.Parse<ValueType>(valueType)
 			};
 			_context.Attributes.Add(attribute);
 			_context.SaveChanges();

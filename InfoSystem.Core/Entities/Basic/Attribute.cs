@@ -5,6 +5,6 @@ namespace InfoSystem.Core.Entities.Basic
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public int TypeId { get; set; }
-		public string ValueType { get; set; }
+		public ValueType ValueType { get; set; }
 	}
 }

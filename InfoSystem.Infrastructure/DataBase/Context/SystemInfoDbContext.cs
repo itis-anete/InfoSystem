@@ -1,5 +1,4 @@
 using InfoSystem.Core;
-using InfoSystem.Core.Entities;
 using InfoSystem.Core.Entities.Basic;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +20,7 @@ namespace InfoSystem.Infrastructure.DataBase.Context
         {
             modelBuilder.Entity<Entity>().HasIndex(e => e.TypeId);
             modelBuilder.Entity<Attribute>().HasIndex(a => a.Name);
+            modelBuilder.Entity<Attribute>().Property(a => a.ValueType).HasConversion<string>();
             modelBuilder.Entity<EntityType>().HasIndex(t => t.Name);
             modelBuilder.Entity<Value>().HasIndex(v => v.EntityId);
             modelBuilder.Entity<Value>().HasIndex(v => v.AttributeId);
