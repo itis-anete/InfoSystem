@@ -17,7 +17,7 @@
                 <template v-slot:input>
                   <v-text-field
                     v-model="props.item.content"
-                    label="Edit"
+                    label="Value"
                     single-line
                     counter
                     autofocus

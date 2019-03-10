@@ -1,6 +1,5 @@
 <template>
   <div>
-    <edit-entity-dialog :dialogActive.sync="dialogActive"></edit-entity-dialog>
     <v-toolbar flat color="white">
       <v-spacer></v-spacer>
       <template>
@@ -16,6 +15,7 @@
           <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
           <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
+        <edit-entity-dialog :entity="props.item" :dialogActive.sync="dialogActive"></edit-entity-dialog>
       </template>
     </v-data-table>
   </div>
@@ -34,9 +34,9 @@ export default {
   }),
   methods: {
     editItem(item) {
-      this.dialogActive = true
       this.$store.dispatch('getValues', item.id)
       this.$store.dispatch('getAttributes', item.typeId)
+      this.dialogActive = true
     },
     deleteItem(item) {}
   },

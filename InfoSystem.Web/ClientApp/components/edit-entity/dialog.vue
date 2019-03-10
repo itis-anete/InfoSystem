@@ -11,7 +11,7 @@
         <v-toolbar-title class="ml-4">Edit Entity</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="mr-4">
-          <v-btn dark flat @click="localDialogActive = false">Save</v-btn>
+          <v-btn dark flat @click="newValueDialogActive = true">New</v-btn>
           <v-btn icon dark @click="localDialogActive = false">
             <v-icon>close</v-icon>
           </v-btn>
@@ -20,6 +20,7 @@
       <v-card-text>
         <dialog-grid></dialog-grid>
       </v-card-text>
+      <new-value-dialog :entityId="entity.id" :newValueDialogActive.sync="newValueDialogActive"></new-value-dialog>
     </v-card>
   </v-dialog>
 </template>
@@ -27,11 +28,16 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import DialogGrid from './dialog-grid.vue'
+import NewValueDialog from './new-value-dialog.vue'
 export default {
-  props: ['dialogActive'],
+  props: ['dialogActive', 'entity'],
   components: {
-    DialogGrid
+    DialogGrid,
+    NewValueDialog
   },
+  data: () => ({
+    newValueDialogActive: false
+  }),
   computed: {
     localDialogActive: {
       get() {

@@ -20,26 +20,19 @@ namespace InfoSystem.Web.Controllers
 			_entityRepository = new EntityRepository(new InfoSystemDbContext());
 		}
 
-		/// <summary>
-		/// Add a new Value to database.
-		/// </summary>
-		/// <param name="input">JSON, example: { "attributeId":"4", "content":"Это же название!", "entityId":"6"}</param>
-		/// <returns>ActionResult, that indicates success/fail of operation.</returns>
-		[HttpPost]
-		public IActionResult Add(string input)
+        /// <summary>
+        /// Add a new Value to database.
+        /// </summary>
+        /// <param name="value">Value, example: { "attributeId":"4", "content":"Это же название!", "entityId":"6"}</param>
+        /// <returns>Added value</returns>
+        [HttpPost]
+		public IActionResult Add([FromBody] Value value)
 		{
-			var value = JsonConvert.DeserializeObject<Value>(input);
-			var entity = _entityRepository.GetById(value.EntityId);
-			value.Attribute = _attributeRepository.GetById(entity.TypeId, value.AttributeId);
-
-			if (value.Attribute == null)
-			{
-				Response.StatusCode = 500;
-				return BadRequest();
-			}
-
 			_valueRepository.Add(value);
-			return Ok();
+		    var entity = _entityRepository.GetById(value.EntityId);
+            value.Attribute = _attributeRepository.GetById(entity.TypeId, value.AttributeId);
+            
+            return Ok(value);
 		}
 
 		/// <summary>

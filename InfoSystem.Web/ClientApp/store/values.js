@@ -8,6 +8,9 @@ export default {
     setCurrentValues(state, payload) {
       state.currentValues = payload
     },
+    addValue(state, payload) {
+      state.currentValues.push(payload)
+    },
     editCurrentValues(state, payload) {
       var current = state.currentValues
       var index = current.findIndex(x => x.id == payload.id)
@@ -25,6 +28,13 @@ export default {
       commit('setLoading', true)
       let response = await axios.put('/Value/EditValue', payload)
       commit('editCurrentValues', response.data)
+      commit('setLoading', false)
+    },
+    async addValue({ commit }, payload) {
+      commit('setLoading', true)
+      console.log(payload)
+      let response = await axios.post('/Value/Add', payload)
+      commit('addValue', response.data)
       commit('setLoading', false)
     }
   },
