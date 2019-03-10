@@ -3,7 +3,6 @@ using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 
 namespace InfoSystem.Web.Controllers
@@ -18,6 +17,15 @@ namespace InfoSystem.Web.Controllers
 			_repository = new TypeRepository(new InfoSystemDbContext());
 		}
 
+		[HttpPost]
+		public IActionResult Add(string typeName)
+		{
+			if (!_repository.Add(typeName))
+				return BadRequest();
+			
+			return Ok();
+		}
+		
 		/// <summary>
 		/// Gets entity type specified by it's id.
 		/// </summary>
