@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
-	[Route("[controller]/[action]")]
+	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{
 		/// <inheritdoc />
