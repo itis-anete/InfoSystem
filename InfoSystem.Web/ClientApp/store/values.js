@@ -20,19 +20,19 @@ export default {
   actions: {
     async getValues({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.get(`/Value/GetEntityValues?entityId=${payload}`)
+      let response = await axios.get(`api/Value/GetEntityValues?entityId=${payload}`)
       commit('setCurrentValues', response.data)
       commit('setLoading', false)
     },
     async editValue({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.put('/Value/EditValue', payload)
+      let response = await axios.put('api/Value/EditValue', payload)
       commit('editCurrentValues', response.data)
       commit('setLoading', false)
     },
     async addValue({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.post('/Value/Add', payload)
+      let response = await axios.post('api/Value/Add', payload)
       commit('addValue', response.data)
       commit('setLoading', false)
     }

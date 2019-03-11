@@ -12,7 +12,7 @@ export default {
   actions: {
     async getAttributes({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.get(`/Attribute/GetAttributesByTypeId?typeId=${payload}`)
+      let response = await axios.get(`api/Attribute/GetAttributesByTypeId?typeId=${payload}`)
       commit('setAttributes', response.data)
       commit('setLoading', false)
     }
