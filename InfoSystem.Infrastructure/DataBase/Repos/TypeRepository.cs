@@ -4,6 +4,7 @@ using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
@@ -43,6 +44,64 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 	    {
 	        return _context.Types.FirstOrDefault(x => x.Name == typeName);
 	    }
+	    
+	     public void NewAdd(string newTypeName)
+        {
+            #region Scratches
+
+//            var addEntityType = ModelExtensions.AsModel(_context.Model).AddEntityType("newType");
+//            var addProperty = addEntityType.AddProperty("Identificator", typeof(string));
+//            addEntityType.AddKey(addProperty);
+//            addEntityType.AddKey(new Property("Identificator", typeof(string), null, null, addEntityType, ConfigurationSource.Explicit, ConfigurationSource.Explicit));
+//            var entityTypes = _context.Model.GetEntityTypes();
+//            var creator = (RelationalDatabaseCreator) _context.Database.GetService<IDatabaseCreator>();
+//            var generateCreateScript = creator.GenerateCreateScript();
+
+//            CREATE TABLE "Attributes" (
+//                "Id" serial NOT NULL,
+//            "Name" text NULL,
+//            "TypeId" integer NOT NULL,
+//            "ValueType" text NOT NULL,
+//                CONSTRAINT "PK_Attributes" PRIMARY KEY ("Id")
+//                );
+//
+//            CREATE TABLE "Entities" (
+//                "Id" serial NOT NULL,
+//            "TypeId" integer NOT NULL,
+//                CONSTRAINT "PK_Entities" PRIMARY KEY ("Id")
+//                );
+//
+//            CREATE TABLE "Types" (
+//                "Id" serial NOT NULL,
+//            "Name" text NULL,
+//                CONSTRAINT "PK_Types" PRIMARY KEY ("Id")
+//                );
+//
+//            CREATE TABLE "Values" (
+//                "Id" serial NOT NULL,
+//            "Content" text NULL,
+//            "EntityId" integer NOT NULL,
+//            "AttributeId" integer NOT NULL,
+//                CONSTRAINT "PK_Values" PRIMARY KEY ("Id"),
+//            CONSTRAINT "FK_Values_Attributes_AttributeId" FOREIGN KEY ("AttributeId") REFERENCES "Attributes" ("Id") ON DELETE CASCADE
+//                );
+
+            #endregion
+
+            var formattableString = string.Format("CREATE TABLE" + "\"{0}\"(" +
+                                                  $"\"Id\" serial NOT NULL," +
+                                                  $"\"Content\" text NULL," +
+                                                  $"\"EntityId\" integer NOT NULL," +
+                                                  $"\"AttributeId\" integer NOT NULL," +
+                                                  "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"Id\")," +
+                                                  "CONSTRAINT \"FK_{0}_Attributes_AttributeId\" " +
+                                                  $"FOREIGN KEY (\"AttributeId\") REFERENCES \"Attributes\" (\"Id\") ON DELETE CASCADE," +
+                                                  "CONSTRAINT \"FK_{0}_Entities_EntityId\" " +
+                                                  $"FOREIGN KEY (\"EntityId\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
+                                                  $");", newTypeName);
+            _context.Database.ExecuteSqlCommand(new RawSqlString(formattableString));
+            _context.SaveChanges();
+        }
 
         private readonly InfoSystemDbContext _context;
 	}
