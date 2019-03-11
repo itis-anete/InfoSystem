@@ -4,6 +4,7 @@ using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using Microsoft.EntityFrameworkCore;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 using ValueType = InfoSystem.Core.Entities.ValueType;
 

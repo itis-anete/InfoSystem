@@ -16,45 +16,35 @@ namespace InfoSystem.Web.Controllers
     /// </summary>
     public class TokenController : Controller
     {
-        public async Task GetToken()
+        /// <summary>
+        /// Used to receive new JWT.
+        /// </summary>
+        /// <returns>JWT in string format, example : Bearer *token*</returns>
+        [HttpGet]
+        public string GetToken()
         {
-            var username = Request.Form["username"];
-            var password = Request.Form["password"];
-
-            var identity = GetIdentity(username, password);
+            var identity = GetIdentity();
             if (identity == null)
             {
                 Response.StatusCode = 400;
-                await Response.WriteAsync("Invalid username or password.");
-                return;
+                return "";
             }
 
+            var key = AuthentificationOptions.GetSymmetricSecurityKey();
             var now = DateTime.UtcNow;
-            // создаем JWT-токен
             var jwt = new JwtSecurityToken(
                 AuthentificationOptions.Issuer,
                 AuthentificationOptions.Audience,
                 identity.Claims,
                 now,
-                now.Add(TimeSpan.FromMinutes(AuthentificationOptions.Lifetime)),
-                new SigningCredentials(AuthentificationOptions.GetSymmetricSecurityKey(),SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            var response = new
-            {
-                access_token = encodedJwt,
-                username = identity.Name
-            };
-
-            // сериализация ответа
-            Response.ContentType = "application/json";
-            await Response.WriteAsync(JsonConvert.SerializeObject(response,
-                new JsonSerializerSettings {Formatting = Formatting.Indented}));
+                now.AddMinutes(1),
+                new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
+            return "Bearer " + new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        private ClaimsIdentity GetIdentity()
         {
-            var person = new Person() {Login = username, Password = password};
+            var person = new Person() {Login = "admin", Password = "admin"};
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login)

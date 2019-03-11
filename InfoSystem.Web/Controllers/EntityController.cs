@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Xml.XPath;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
+//	[Authenticate]
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{
@@ -16,12 +19,12 @@ namespace InfoSystem.Web.Controllers
 		{
 			_repository = new EntityRepository(new InfoSystemDbContext());
 		}
-
+			
 		/// <summary>
 		/// Add a new instance of type <paramref name="typeName"/>.
 		/// </summary>
 		/// <param name="typeName">Entity type name.</param>
-		/// <returns>ActionResult, depending on operation result and added value.</returns> 
+		/// <returns>ActionResult, depending on operation result and added value.</returns>
 		[HttpPost]
 		public IActionResult Add([FromQuery] string typeName)
 		{
