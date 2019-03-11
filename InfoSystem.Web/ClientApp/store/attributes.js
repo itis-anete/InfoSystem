@@ -2,11 +2,14 @@ import axios from 'axios'
 
 export default {
   state: {
-    attributes: null
+    attributes: []
   },
   mutations: {
     setAttributes(state, payload) {
       state.attributes = payload
+    },
+    addAttribute(state, payload) {
+      state.attributes.push(payload)
     }
   },
   actions: {
@@ -14,6 +17,14 @@ export default {
       commit('setLoading', true)
       let response = await axios.get(`/Attribute/GetAttributesByTypeId?typeId=${payload}`)
       commit('setAttributes', response.data)
+      commit('setLoading', false)
+    },
+    async addAttribute({ commit }, payload) {
+      commit('setLoading', true)
+      let response = await axios.post(
+        `/Attribute/Add?attributeName=${payload.attributeName}&valueType=${payload.valueType}&typeName=${payload.typeName}`
+      )
+      commit('addAttribute', response.data)
       commit('setLoading', false)
     }
   },

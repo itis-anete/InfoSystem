@@ -25,7 +25,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>ActionResult, depending on operation result </returns>
 		[HttpPost]
-		public IActionResult Add(string attributeName, string valueType, string typeName)
+		public IActionResult Add([FromQuery] string attributeName, string valueType, string typeName)
 		{
 			var addedAttribute = _repository.Add(attributeName, valueType, typeName);
 			if (addedAttribute == null)

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default {
   state: {
-    entities: null
+    entities: []
   },
   mutations: {
     setEntities(state, payload) {

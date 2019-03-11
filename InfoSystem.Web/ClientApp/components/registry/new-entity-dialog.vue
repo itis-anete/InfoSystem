@@ -30,8 +30,7 @@ export default {
         identificator: this.identificator
       }
       this.addEntity(entity)
-      this.identificator = ''
-      this.$refs['newEntityDialog'].isActive = false
+      this.clear()
     },
     clear() {
       this.identificator = ''
@@ -40,7 +39,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

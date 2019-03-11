@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default {
   state: {
-    currentValues: null
+    currentValues: []
   },
   mutations: {
     setCurrentValues(state, payload) {
@@ -22,7 +22,9 @@ export default {
       commit('setLoading', true)
       let response = await axios.get(`/Value/GetEntityValues?entityId=${payload}`)
       commit('setCurrentValues', response.data)
-      commit('setLoading', false)
+      setTimeout(() => {
+        commit('setLoading', false)
+      }, 550)
     },
     async editValue({ commit }, payload) {
       commit('setLoading', true)

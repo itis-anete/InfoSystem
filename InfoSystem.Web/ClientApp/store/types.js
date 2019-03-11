@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default {
   state: {
-    types: null
+    types: []
   },
   mutations: {
     setTypes(state, payload) {

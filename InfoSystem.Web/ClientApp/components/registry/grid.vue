@@ -15,9 +15,9 @@
           <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
           <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
-        <edit-entity-dialog :entity="props.item" :dialogActive.sync="dialogActive"></edit-entity-dialog>
       </template>
     </v-data-table>
+    <edit-entity-dialog :entityId="entityId" :dialogActive.sync="dialogActive"></edit-entity-dialog>
   </div>
 </template>
 
@@ -34,12 +34,14 @@ export default {
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
     pagination: {
       rowsPerPage: 10
-    }
+    },
+    entityId: null
   }),
   methods: {
     editItem(item) {
       this.$store.dispatch('getValues', item.id)
       this.$store.dispatch('getAttributes', item.typeId)
+      this.entityId = item.id
       this.dialogActive = true
     },
     deleteItem(item) {}

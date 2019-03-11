@@ -1,5 +1,11 @@
 <template>
-  <v-dialog v-model="localNewValueDialogActive" max-width="500px">
+  <v-dialog v-model="newValueDialogActive" max-width="500px">
+    <template v-slot:activator="{ on }">
+      <v-btn flat v-on="on" color="primary">
+        <v-icon class="mr-2">add</v-icon>Add Value
+      </v-btn>
+      <v-divider inset vertical></v-divider>
+    </template>
     <v-card>
       <v-card-title>
         <span class="headline">Add new value</span>
@@ -8,7 +14,7 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs6>
-              <v-text-field v-model="content" label="Value" single-line counter autofocus></v-text-field>
+              <v-text-field v-model="content" label="Content" single-line counter autofocus></v-text-field>
             </v-flex>
             <v-flex xs6>
               <v-select
@@ -24,7 +30,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="error" flat @click="localNewValueDialogActive = false">Cancel</v-btn>
+        <v-btn color="error" flat @click="clear">Cancel</v-btn>
         <v-btn color="primary" flat @click="create">Create</v-btn>
       </v-card-actions>
     </v-card>
@@ -34,24 +40,16 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-  props: ['newValueDialogActive', 'entityId'],
+  props: ['entityId'],
   data() {
     return {
       content: '',
       attribute: null,
-      types: ['number', 'string', 'boolean']
+      newValueDialogActive: false
     }
   },
   computed: {
-    ...mapGetters(['attributes']),
-    localNewValueDialogActive: {
-      get() {
-        return this.newValueDialogActive
-      },
-      set(value) {
-        this.$emit('update:newValueDialogActive', value)
-      }
-    }
+    ...mapGetters(['attributes'])
   },
   methods: {
     ...mapActions(['addValue']),
@@ -62,12 +60,13 @@ export default {
         content: this.content
       }
       this.addValue(value)
-      this.localNewValueDialogActive = false
+      this.clear()
+    },
+    clear() {
+      this.content = ''
+      this.attribute = null
+      this.newValueDialogActive = false
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

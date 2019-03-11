@@ -22,14 +22,8 @@
             <v-card>
               <v-toolbar card color="#eee">
                 <v-toolbar-items>
-                  <v-btn flat color="primary" @click="newValueDialogActive = true">
-                    <v-icon class="mr-2">add</v-icon>Add Value
-                  </v-btn>
-                  <v-divider inset vertical></v-divider>
-                  <v-btn flat color="primary">
-                    <v-icon class="mr-2">add</v-icon>Add Attribute
-                  </v-btn>
-                  <v-divider inset vertical></v-divider>
+                  <new-value-dialog :entityId="entityId"></new-value-dialog>
+                  <new-attribute-dialog :entityId="entityId"></new-attribute-dialog>
                 </v-toolbar-items>
               </v-toolbar>
               <dialog-grid></dialog-grid>
@@ -37,7 +31,6 @@
           </v-flex>
         </v-layout>
       </v-card-text>
-      <new-value-dialog :entityId="entity.id" :newValueDialogActive.sync="newValueDialogActive"></new-value-dialog>
     </v-card>
   </v-dialog>
 </template>
@@ -46,15 +39,14 @@
 import { mapGetters, mapActions } from 'vuex'
 import DialogGrid from './dialog-grid.vue'
 import NewValueDialog from './new-value-dialog.vue'
+import NewAttributeDialog from './new-attribute-dialog.vue'
 export default {
-  props: ['dialogActive', 'entity'],
+  props: ['dialogActive', 'entityId'],
   components: {
     DialogGrid,
-    NewValueDialog
+    NewValueDialog,
+    NewAttributeDialog
   },
-  data: () => ({
-    newValueDialogActive: false
-  }),
   computed: {
     localDialogActive: {
       get() {

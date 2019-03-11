@@ -1,26 +1,28 @@
 <template>
   <div>
     <v-data-table
-      v-if="currentValues"
       :headers="headers"
       :items="currentValues"
       item-key="id"
       sort-icon="arrow_drop_down"
       :rows-per-page-items="rowsPerPageItems"
       :pagination.sync="pagination"
+      :loading="loading"
     >
       <template v-slot:items="props">
-        <content-edit-dialog
-          :item="props.item"
-          @update:content="props.item.content = $event; save(props.item)"
-        ></content-edit-dialog>
-        <attribute-edit-dialog
-          :item="props.item"
-          @update:attribute="props.item.attribute = $event; save(props.item)"
-        ></attribute-edit-dialog>
-        <td class="justify-end layout px-4">
-          <v-icon small @click="deleteItem()">delete</v-icon>
-        </td>
+        <tr :class="{ complex: props.item.attribute.valueType == 2 }">
+          <content-edit-dialog
+            :item="props.item"
+            @update:content="props.item.content = $event; save(props.item)"
+          ></content-edit-dialog>
+          <attribute-edit-dialog
+            :item="props.item"
+            @update:attribute="props.item.attribute = $event; save(props.item)"
+          ></attribute-edit-dialog>
+          <td class="justify-end layout px-4">
+            <v-icon small @click="deleteItem()">delete</v-icon>
+          </td>
+        </tr>
       </template>
     </v-data-table>
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
@@ -79,11 +81,14 @@ export default {
     deleteItem() {}
   },
   computed: {
-    ...mapGetters(['currentValues', 'attributes'])
+    ...mapGetters(['currentValues', 'attributes', 'loading'])
   }
 }
 </script>
 
 <style scoped>
-
+.complex{
+	background: #52A8B6;
+	color: #fff
+}
 </style>

@@ -23,7 +23,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Name of a new type.</param>
 		/// <returns>ActionResult that refers to operation result.</returns>
 		[HttpPost]
-		public IActionResult Add(string typeName)
+		public IActionResult Add([FromQuery] string typeName)
 		{
 			var addedType = _repository.Add(typeName);
 			if (addedType == null)
