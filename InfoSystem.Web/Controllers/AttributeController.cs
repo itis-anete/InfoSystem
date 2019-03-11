@@ -27,10 +27,11 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add(string attributeName, string valueType, string typeName)
 		{
-			if (!_repository.Add(attributeName, valueType, typeName))
+			var addedAttribute = _repository.Add(attributeName, valueType, typeName);
+			if (addedAttribute == null)
 				return BadRequest();
 
-			return Ok();
+			return Ok(addedAttribute);
 		}
 
 		/// <summary>
@@ -39,10 +40,8 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>Attributes refering to type collection.</returns>
 		[HttpGet]
-		public IEnumerable<Attribute> GetAtttributesByTypeName(string typeName)
-		{
-			return _repository.GetTypeAttributes(typeName);
-		}
+		public IEnumerable<Attribute> GetAtttributesByTypeName(string typeName) => 
+			_repository.GetTypeAttributes(typeName);
 
 		/// <summary>
 		/// Gets all attributes that refers to type.
@@ -50,10 +49,8 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeId">Entity type id.</param>
 		/// <returns>Attributes refering to type collection.</returns>
 		[HttpGet]
-		public IEnumerable<Attribute> GetAttributesByTypeId([FromQuery] int typeId)
-		{
-			return _repository.GetTypeAttributesById(typeId);
-		}
+		public IEnumerable<Attribute> GetAttributesByTypeId([FromQuery] int typeId) =>
+			_repository.GetTypeAttributesById(typeId);
 
 		private readonly IAttributeRepository _repository;
 	}

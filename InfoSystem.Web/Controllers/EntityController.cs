@@ -25,9 +25,10 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add([FromQuery] string typeName)
 		{
-			if (!_repository.Add(typeName, out var newType))
+			var addedEntity = _repository.Add(typeName);
+			if (addedEntity == null)
 				return BadRequest();
-			return Ok(newType);
+			return Ok(addedEntity);
 		}
 
 		/// <summary>
@@ -36,10 +37,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="id">Id of an entity instance.</param>
 		/// <returns>Entity instance.</returns>
 		[HttpGet]
-		public Entity Get([FromQuery] int id)
-		{
-			return _repository.GetById(id);
-		}
+		public Entity Get([FromQuery] int id) => _repository.GetById(id);
 
 		/// <summary>
 		/// Get all instances of one type.
@@ -47,10 +45,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeId">Entity type id.</param>
 		/// <returns>Entities collection of one type.</returns>
 		[HttpGet]
-		public IEnumerable<Entity> GetByType([FromQuery] int typeId)
-		{
-			return _repository.GetByTypeId(typeId);
-		}
+		public IEnumerable<Entity> GetByType([FromQuery] int typeId) => _repository.GetByTypeId(typeId);
 
 		private readonly IEntityRepository _repository;
 	}

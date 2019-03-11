@@ -17,18 +17,18 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context = dbContext;
         }
 
-        public bool Add(Value receivedObj)
+        public Value Add(Value receivedObj)
         {
             try
             {
-                _context.Values.Add(receivedObj);
+                var entityEntry = _context.Values.Add(receivedObj);
                 _context.SaveChanges();
-                return true;
+                return entityEntry.Entity;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
         }
 
@@ -58,18 +58,18 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 .Include(x => x.Attribute);
         }
 
-        public bool Update(Value updatedValue)
+        public Value Update(Value updatedValue)
         {
             try
             {
-                _context.Values.Update(updatedValue);
+                var entityEntry = _context.Values.Update(updatedValue);
                 _context.SaveChanges();
-                return true;
+                return entityEntry.Entity;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return false;
+                return null;
             }
 
         }

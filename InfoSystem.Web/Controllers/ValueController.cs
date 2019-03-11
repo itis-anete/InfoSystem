@@ -28,11 +28,11 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add([FromBody] Value value)
 		{
-			_valueRepository.Add(value);
-			var entity = _entityRepository.GetById(value.EntityId);
-			value.Attribute = _attributeRepository.GetById(entity.TypeId, value.AttributeId);
+			var addedValue = _valueRepository.Add(value);
+			var entity = _entityRepository.GetById(addedValue.EntityId);
+			addedValue.Attribute = _attributeRepository.GetById(entity.TypeId, addedValue.AttributeId);
 
-			return Ok(value);
+			return Ok(addedValue);
 		}
 
 		/// <summary>
@@ -66,10 +66,11 @@ namespace InfoSystem.Web.Controllers
 		[HttpPut]
 		public IActionResult EditValue([FromBody] Value editedValue)
 		{
-			if (!_valueRepository.Update(editedValue))
+			var updatedValue = _valueRepository.Update(editedValue);
+			if (updatedValue == null)
 				return BadRequest();
-			editedValue.Attribute = _attributeRepository.GetById(editedValue.AttributeId);
-			return Ok(editedValue);
+			updatedValue.Attribute = _attributeRepository.GetById(editedValue.AttributeId);
+			return Ok(updatedValue);
 		}
 
 		private readonly IValuesRepository _valueRepository;

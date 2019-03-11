@@ -15,7 +15,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context = dbContext;
         }
 
-        public bool Add(string typeName, out Entity outEntity)
+        public Entity Add(string typeName)
         {
             var newEntity = new Entity();
             try
@@ -35,23 +35,20 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             {
                 Console.WriteLine("TYPES FAILED");
                 Console.WriteLine(e);
-                outEntity = null;
-                return false;
+                return null;
             }
 
             try
             {
                 var entityEntry = _context.Entities.Add(newEntity);
-                var saveChanges = _context.SaveChanges();
-                outEntity = entityEntry.Entity;
-                return true;
+                _context.SaveChanges();
+                return entityEntry.Entity;
             }
             catch (Exception e)
             {
                 Console.WriteLine("ENTITIES FAILED");
                 Console.WriteLine(e);
-                outEntity = null;
-                return false;
+                return null;
             }
         }
 

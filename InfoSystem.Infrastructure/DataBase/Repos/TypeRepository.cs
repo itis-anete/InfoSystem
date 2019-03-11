@@ -14,21 +14,18 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = dbContext;
 		}
 
-		public bool Add(string typeName, out EntityType outType)
+		public EntityType Add(string typeName)
 		{
 			try
 			{
-				var newType = new EntityType(typeName);
-				var entityEntry = _context.Types.Add(newType);
+				var entityEntry = _context.Types.Add(new EntityType(typeName));
 				_context.SaveChanges();
-				outType = entityEntry.Entity;
-				return true;
+				return entityEntry.Entity;
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
-				outType = null;
-				return false;
+				return null;
 			}
 		}
 

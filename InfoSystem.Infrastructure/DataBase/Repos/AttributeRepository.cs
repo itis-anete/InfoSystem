@@ -16,34 +16,34 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public bool Add(string attributeName, string valueType, string typeName)
+		public Attribute Add(string attributeName, string valueType, string typeName)
 		{
 			EntityType entityType;
 			try
 			{
 				entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
 				if (entityType == null)
-					return false;
+					return null;
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine("TYPES FAILED");
 				Console.WriteLine(e);
-				return false;
+				return null;
 			}
 
 			try
 			{
 				var attribute = new Attribute(attributeName, entityType.Id, Enum.Parse<ValueType>(valueType));
-				_context.Attributes.Add(attribute);
+				var entityEntry = _context.Attributes.Add(attribute);
 				_context.SaveChanges();
-				return true;
+				return entityEntry.Entity;
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine("ATTRIBUTE FAIL");
 				Console.WriteLine(e);
-				return false;
+				return null;
 			}
 		}
 
