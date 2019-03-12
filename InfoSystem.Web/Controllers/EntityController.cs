@@ -1,11 +1,15 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Xml.XPath;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace InfoSystem.Web.Controllers
 {
@@ -26,8 +30,12 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>ActionResult, depending on operation result and added value.</returns>
 		[HttpPost]
-		public IActionResult Add([FromQuery] string typeName)
+		public async Task<IActionResult> Add([FromQuery] string typeName)
 		{
+			var authResult =
+				await AuthenticationHttpContextExtensions.AuthenticateAsync(HttpContext,
+					JwtBearerDefaults.AuthenticationScheme);
+			HttpContext.User = authResult.Principal;
 			var addedEntity = _repository.Add(typeName);
 			if (addedEntity == null)
 				return BadRequest();

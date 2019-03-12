@@ -19,7 +19,7 @@ namespace InfoSystem.Web.Controllers
         /// <summary>
         /// Used to receive new JWT.
         /// </summary>
-        /// <returns>JWT in string format, example : Bearer *token*</returns>
+        /// <returns>JWT ready for header format, example : Bearer *token*</returns>
         [HttpGet]
         public string GetToken()
         {
