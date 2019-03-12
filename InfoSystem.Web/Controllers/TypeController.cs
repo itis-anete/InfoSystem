@@ -52,6 +52,6 @@ namespace InfoSystem.Web.Controllers
 			return _repository.Get();
 		}
 
-		private readonly ITypeRepository _repository;
+		private readonly TypeRepository _repository;
 	}
 }

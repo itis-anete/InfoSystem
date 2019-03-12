@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class TypeRepository : ITypeRepository
+	public class TypeRepository 
 	{
 		public TypeRepository(InfoSystemDbContext dbContext)
 		{
@@ -32,7 +32,21 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		public IEnumerable<EntityType> Get()
 		{
-			return _context.Types;
+//			new Database
+//			var x = 1;
+//			var contextDatabase =  _context.Database.
+//			_context.Query<Attri>().Load().ToList();
+			return null;
+//			var x12345 = _context.Model.GetEntityTypes();
+//			var type = Type.GetType("d4n0n_myself");
+////			var dbQuery = _context.Query<ModelType>();
+////			var fromSql = dbQuery.FromSql("SELECT * FROM pg_catalog.pg_tables");
+//
+//			foreach (var x in fromSql)
+//			{
+//				Console.WriteLine(x);
+//			}
+//			return null;
 		}
 
 		public EntityType GetById(int id)
@@ -40,10 +54,10 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return _context.Types.Find(id);
 		}
 
-	    public EntityType GetByTypeName(string typeName)
-	    {
-	        return _context.Types.FirstOrDefault(x => x.Name == typeName);
-	    }
+//	    public EntityType GetByTypeName(string typeName)
+//	    {
+//	        return _context.Types.FirstOrDefault(x => x.Name == typeName);
+//	    }
 	    
 	     public void NewAdd(string newTypeName)
         {
@@ -90,14 +104,15 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
             var formattableString = string.Format("CREATE TABLE" + "\"{0}\"(" +
                                                   $"\"Id\" serial NOT NULL," +
-                                                  $"\"Content\" text NULL," +
+                                                  $"\"Key\" text NULL," +
+                                                  $"\"Value\" text NULL," +
+                                                  $"\"TypeId\" integer NOT NULL," +
                                                   $"\"EntityId\" integer NOT NULL," +
-                                                  $"\"AttributeId\" integer NOT NULL," +
-                                                  "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"Id\")," +
-                                                  "CONSTRAINT \"FK_{0}_Attributes_AttributeId\" " +
-                                                  $"FOREIGN KEY (\"AttributeId\") REFERENCES \"Attributes\" (\"Id\") ON DELETE CASCADE," +
-                                                  "CONSTRAINT \"FK_{0}_Entities_EntityId\" " +
-                                                  $"FOREIGN KEY (\"EntityId\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
+                                                  "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"Id\")" +
+//                                                  "CONSTRAINT \"FK_{0}_Attributes_AttributeId\" " +
+//                                                  $"FOREIGN KEY (\"AttributeId\") REFERENCES \"Attributes\" (\"Id\") ON DELETE CASCADE," +
+//                                                  "CONSTRAINT \"FK_{0}_Entities_EntityId\" " +
+//                                                  $"FOREIGN KEY (\"EntityId\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
                                                   $");", newTypeName);
             _context.Database.ExecuteSqlCommand(new RawSqlString(formattableString));
             _context.SaveChanges();

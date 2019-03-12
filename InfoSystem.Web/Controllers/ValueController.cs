@@ -15,7 +15,7 @@ namespace InfoSystem.Web.Controllers
 		/// <inheritdoc />
 		public ValueController()
 		{
-			_valueRepository = new ValuesRepository(new InfoSystemDbContext());
+//			_valueRepository = new ValuesRepository(new InfoSystemDbContext());
 			_attributeRepository = new AttributeRepository(new InfoSystemDbContext());
 			_entityRepository = new EntityRepository(new InfoSystemDbContext());
 		}
