@@ -17,7 +17,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public void Add(string newTypeName)
 		{
-			_repository.NewAdd(newTypeName);
+			_repository.Add(newTypeName);
 		}
 
 		[HttpGet]
