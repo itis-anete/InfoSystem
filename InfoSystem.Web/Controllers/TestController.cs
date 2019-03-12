@@ -13,17 +13,17 @@ namespace InfoSystem.Web.Controllers
 			_repository = new TypeRepository(new InfoSystemDbContext());
 			_attributeRepository = new AttributeRepository(new InfoSystemDbContext());
 		}
-		
+
 		[HttpGet]
 		public void Add(string newTypeName)
 		{
-			_repository.NewAdd("danontable");
+			_repository.NewAdd(newTypeName);
 		}
 
 		[HttpGet]
-		public void GetAttrbiutes()
+		public void GetAttrbiutes(string typeName)
 		{
-			_attributeRepository.Get();
+			_attributeRepository.Get(typeName);
 		}
 
 		private readonly TypeRepository _repository;

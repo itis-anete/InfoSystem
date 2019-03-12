@@ -5,6 +5,7 @@ using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 using ValueType = InfoSystem.Core.Entities.ValueType;
 
@@ -93,16 +94,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<Attribute> Get()
+		public IEnumerable<Attribute> Get(string typeName)
 		{
-			var attributes = _context.Query<Attribute>().FromSql("SELECT * FROM public.d4n0ntable").ToList();
+			var addQueryType = _context.Model.AsModel().AddQueryType(typeof(Attribute));
+			var attributes = _context.Query<Attribute>().FromSql($"SELECT * FROM public.danon").ToList();
 
-			foreach (var attribute in attributes)
-			{
-				Console.WriteLine(attribute.Key + " "+ attribute.Value);
-			}
-
-			return null;
+			return attributes;
 		}
 
 		public Attribute GetById(int id)

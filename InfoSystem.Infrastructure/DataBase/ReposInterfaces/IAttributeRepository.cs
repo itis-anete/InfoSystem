@@ -6,7 +6,7 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 	public interface IAttributeRepository
 	{
 		Attribute Add(string attributeName, string valueType, string typeName);
-		IEnumerable<Attribute> Get();
+		IEnumerable<Attribute> Get(string typeName);
 		Attribute GetById(int id);
 		Attribute GetById(int entityTypeId, int attributeId);
 		Attribute GetByName(int entityTypeId, string attributeName);

@@ -18,7 +18,6 @@ namespace InfoSystem.Infrastructure.DataBase.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Attribute>();
             modelBuilder.Entity<Entity>().HasIndex(e => e.TypeId);
 //            modelBuilder.Entity<Attribute>().HasIndex(a => a.Name);
 //            modelBuilder.Entity<Attribute>().Property(a => a.ValueType).HasConversion<string>();
