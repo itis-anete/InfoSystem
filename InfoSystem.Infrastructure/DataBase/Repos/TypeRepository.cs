@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
@@ -14,11 +15,25 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = dbContext;
 		}
 
-		public EntityType Add(string typeName)
+		public EntityType Add(string newTypeName)
 		{
 			try
 			{
-				var entityEntry = _context.Types.Add(new EntityType(typeName));
+				var entityEntry = _context.Types.Add(new EntityType(newTypeName));
+
+				var formattableString = string.Format("CREATE TABLE" + "\"{0}\"(" +
+				                                      $"\"Id\" serial NOT NULL," +
+				                                      $"\"Key\" text NULL," +
+				                                      $"\"Value\" text NULL," +
+				                                      $"\"TypeId\" integer NOT NULL," +
+				                                      $"\"EntityId\" integer NOT NULL," +
+				                                      "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"Id\")," +
+				                                      "CONSTRAINT \"FK_{0}_Types_AttributeId\" " +
+				                                      $"FOREIGN KEY (\"TypeId\") REFERENCES \"Types\" (\"Id\") ON DELETE CASCADE," +
+				                                      "CONSTRAINT \"FK_{0}_Entities_EntityId\" " +
+				                                      $"FOREIGN KEY (\"EntityId\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
+				                                      $");", newTypeName);
+				_context.Database.ExecuteSqlCommand(new RawSqlString(formattableString));
 				_context.SaveChanges();
 				return entityEntry.Entity;
 			}
@@ -29,21 +44,10 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			}
 		}
 
-		public IEnumerable<EntityType> Get()
-		{
-			return _context.Types;
-		}
+		public IEnumerable<EntityType> Get() => _context.Types;
 
-		public EntityType GetById(int id)
-		{
-			return _context.Types.Find(id);
-		}
+		public EntityType GetById(int id) => _context.Types.Find(id);
 
-	    public EntityType GetByTypeName(string typeName)
-	    {
-	        return _context.Types.FirstOrDefault(x => x.Name == typeName);
-	    }
-
-        private readonly InfoSystemDbContext _context;
+		private readonly InfoSystemDbContext _context;
 	}
 }

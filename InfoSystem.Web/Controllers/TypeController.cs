@@ -37,20 +37,14 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="id">Type's id.</param>
 		/// <returns>EntityType object</returns>
 		[HttpGet]
-		public EntityType GetById(int id)
-		{
-			return _repository.GetById(id);
-		}
+		public EntityType GetById(int id) => _repository.GetById(id);
 
 		/// <summary>
 		/// Gets all entity type's
 		/// </summary>
 		/// <returns>EntityTypes's collection.</returns>
 		[HttpGet]
-		public IEnumerable<EntityType> Get(int id)
-		{
-			return _repository.Get();
-		}
+		public IEnumerable<EntityType> Get() => _repository.Get();
 
 		private readonly ITypeRepository _repository;
 	}
