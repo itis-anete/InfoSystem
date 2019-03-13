@@ -6,7 +6,7 @@
         <v-divider inset vertical></v-divider>
       </v-toolbar-items>
     </v-toolbar>
-    <registry-grid :headers="headers" :items="entities"></registry-grid>
+    <registry-grid :headers="headers" :entities="entities"></registry-grid>
   </v-card>
 </template>
 

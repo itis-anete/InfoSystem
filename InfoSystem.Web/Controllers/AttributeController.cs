@@ -53,7 +53,7 @@ namespace InfoSystem.Web.Controllers
 			_repository.GetTypeAttributesById(typeId);
 
 		[HttpGet]
-		public IEnumerable<Attribute> GetByEntityId(int entityId, string typeName) =>
+		public IEnumerable<Attribute> GetByEntityId([FromQuery] int entityId, string typeName) =>
 			_repository.GetByEntityId(entityId, typeName);
 
 		private readonly IAttributeRepository _repository;

@@ -23,7 +23,6 @@
               <v-toolbar card color="#eee">
                 <v-toolbar-items>
                   <new-value-dialog :entityId="entityId"></new-value-dialog>
-                  <new-attribute-dialog :entityId="entityId"></new-attribute-dialog>
                 </v-toolbar-items>
               </v-toolbar>
               <dialog-grid></dialog-grid>
@@ -39,13 +38,11 @@
 import { mapGetters, mapActions } from 'vuex'
 import DialogGrid from './dialog-grid.vue'
 import NewValueDialog from './new-value-dialog.vue'
-import NewAttributeDialog from './new-attribute-dialog.vue'
 export default {
-  props: ['dialogActive', 'entityId'],
+  props: ['dialogActive'],
   components: {
     DialogGrid,
-    NewValueDialog,
-    NewAttributeDialog
+    NewValueDialog
   },
   computed: {
     localDialogActive: {

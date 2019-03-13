@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="currentValues"
+      :items="attributes"
       item-key="id"
       sort-icon="arrow_drop_down"
       :rows-per-page-items="rowsPerPageItems"
@@ -10,15 +10,17 @@
       :loading="loading"
     >
       <template v-slot:items="props">
-        <tr :class="{ complex: props.item.attribute.valueType == 2 }">
-          <content-edit-dialog
+        <tr :class="{ complex: props.item.isComplex}">
+          <td>{{props.item.key}}</td>
+          <td>{{props.item.value}}</td>
+          <!-- <content-edit-dialog
             :item="props.item"
             @update:content="props.item.content = $event; save(props.item)"
           ></content-edit-dialog>
           <attribute-edit-dialog
             :item="props.item"
             @update:attribute="props.item.attribute = $event; save(props.item)"
-          ></attribute-edit-dialog>
+          ></attribute-edit-dialog>-->
           <td class="justify-end layout px-4">
             <v-icon small @click="deleteItem()">delete</v-icon>
           </td>
@@ -48,11 +50,11 @@ export default {
       snackText: '',
       headers: [
         {
-          text: 'Content',
+          text: 'Key',
           align: 'left',
           sortable: false
         },
-        { text: 'Attribute', value: 'attributeId' },
+        { text: 'Value', value: 'attributeId' },
         { text: '', sortable: false }
       ],
       rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
@@ -81,7 +83,7 @@ export default {
     deleteItem() {}
   },
   computed: {
-    ...mapGetters(['currentValues', 'attributes', 'loading'])
+    ...mapGetters(['attributes', 'loading'])
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="items"
+      :items="entities"
       sort-icon="mdi-menu-down"
       :loading="loading"
       class="elevation-1"
@@ -17,7 +17,7 @@
         </td>
       </template>
     </v-data-table>
-    <edit-entity-dialog :entityId="entityId" :dialogActive.sync="dialogActive"></edit-entity-dialog>
+    <edit-entity-dialog :dialogActive.sync="dialogActive"></edit-entity-dialog>
   </div>
 </template>
 
@@ -25,7 +25,7 @@
 import EditEntityDialog from '~/components/edit-entity/dialog.vue'
 import { mapGetters } from 'vuex'
 export default {
-  props: ['headers', 'items'],
+  props: ['headers', 'entities'],
   components: {
     EditEntityDialog
   },
@@ -39,15 +39,13 @@ export default {
   }),
   methods: {
     editItem(item) {
-      this.$store.dispatch('getValues', item.id)
-      this.$store.dispatch('getAttributes', item.typeId)
-      this.entityId = item.id
+      this.$store.dispatch('getAttributes', { entityId: item.id, typeName: this.types.find(x => x.id == this.$route.params.id).name })
       this.dialogActive = true
     },
     deleteItem(item) {}
   },
   computed: {
-    ...mapGetters(['loading'])
+    ...mapGetters(['loading', 'types'])
   }
 }
 </script>
