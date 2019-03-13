@@ -25,23 +25,13 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>ActionResult, depending on operation result </returns>
 		[HttpPost]
-		public IActionResult Add([FromQuery] string attributeName, string valueType, string typeName)
+		public IActionResult Add(string typeName, string attributeName, string value, int typeId, int entityId)
 		{
-			var addedAttribute = _repository.Add(attributeName, valueType, typeName);
-			if (addedAttribute == null)
+			var addedAttribute = _repository.Add(typeName, attributeName, value, typeId, entityId);
+			if (!addedAttribute)
 				return BadRequest();
-
-			return Ok(addedAttribute);
+			return Ok();
 		}
-
-		/// <summary>
-		/// Gets all attributes that refers to type.
-		/// </summary>
-		/// <param name="typeName">Entity type name.</param>
-		/// <returns>Attributes refering to type collection.</returns>
-		[HttpGet]
-		public IEnumerable<Attribute> GetAtttributesByTypeName(string typeName) =>
-			_repository.GetTypeAttributes(typeName);
 
 		/// <summary>
 		/// Gets all attributes that refers to type.
@@ -53,8 +43,13 @@ namespace InfoSystem.Web.Controllers
 			_repository.GetTypeAttributesById(typeId);
 
 		[HttpGet]
+<<<<<<< HEAD
 		public IEnumerable<Attribute> GetByEntityId([FromQuery] int entityId, string typeName) =>
 			_repository.GetByEntityId(entityId, typeName);
+=======
+		public IEnumerable<Attribute> GetByEntityId(int entityId, int typeId) =>
+			_repository.GetByEntityId(entityId, typeId);
+>>>>>>> origin/master
 
 		private readonly IAttributeRepository _repository;
 	}
