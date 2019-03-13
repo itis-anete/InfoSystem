@@ -8,21 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class TypeRepository
+	public class TypeRepository : ITypeRepository
 	{
 		public TypeRepository(InfoSystemDbContext dbContext)
 		{
 			_context = dbContext;
-		}
-
-		public IEnumerable<EntityType> Get()
-		{
-			return _context.Types;
-		}
-
-		public EntityType GetById(int id)
-		{
-			return _context.Types.Find(id);
 		}
 
 		public EntityType Add(string newTypeName)
@@ -53,6 +43,10 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				return null;
 			}
 		}
+
+		public IEnumerable<EntityType> Get() => _context.Types;
+
+		public EntityType GetById(int id) => _context.Types.Find(id);
 
 		private readonly InfoSystemDbContext _context;
 	}
