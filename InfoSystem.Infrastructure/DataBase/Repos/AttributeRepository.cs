@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
-using ValueType = InfoSystem.Core.Entities.ValueType;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
@@ -18,77 +15,6 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		{
 			_context = context;
 		}
-
-//		public Attribute Add(string attributeName, string valueType, string typeName)
-//		{
-//			EntityType entityType;
-//			try
-//			{
-//				entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
-//				if (entityType == null)
-//					return null;
-//			}
-//			catch (Exception e)
-//			{
-//				Console.WriteLine("TYPES FAILED");
-//				Console.WriteLine(e);
-//				return null;
-//			}
-//
-//			try
-//			{
-//				var attribute = new Attribute(attributeName, entityType.Id, Enum.Parse<ValueType>(valueType));
-//				var entityEntry = _context.Attributes.Add(attribute);
-//				_context.SaveChanges();
-//				return entityEntry.Entity;
-//			}
-//			catch (Exception e)
-//			{
-//				Console.WriteLine("ATTRIBUTE FAIL");
-//				Console.WriteLine(e);
-//				return null;
-//			}
-//		}
-//
-//		public IEnumerable<Attribute> Get() => _context.Attributes;
-//
-//		public Attribute GetById(int id)
-//		{
-//			return _context.Attributes.FirstOrDefault(a => a.Id == id);
-//		}
-//
-//		public Attribute GetById(int entityTypeId, int attributeId)
-//		{
-//			bool Func(Attribute a, int attributeName) => a.Id == attributeId;
-//			return Get(entityTypeId, attributeId, Func);
-//		}
-//
-//		public Attribute GetByName(int entityTypeId, string attributeName)
-//		{
-//			bool Func(Attribute a, string name) => a.Name == name;
-//			return Get(entityTypeId, attributeName, Func);
-//		}
-//
-//		public IEnumerable<Attribute> GetTypeAttributes(string typeName)
-//		{
-//			var entityType = _context.Types.FirstOrDefault(t => t.Name == typeName);
-//			return entityType == null
-//				? null
-//				: _context.Attributes.Where(a => a.TypeId == entityType.Id);
-//		}
-//
-//		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
-//		{
-//			return _context.Attributes.Where(a => a.TypeId == typeId);
-//		}
-//
-//		private Attribute Get<T>(int entityTypeId, T searchParameter, Func<Attribute, T, bool> selector)
-//		{
-//			var type = _context.Types.FirstOrDefault(t => t.Id == entityTypeId);
-//			return type != null
-//				? _context.Attributes.FirstOrDefault(a => selector(a, searchParameter) && a.TypeId == type.Id)
-//				: null;
-//		}
 
 		public bool Add(string typeName, string attributeName, string value, int typeId, int entityId)
 		{
@@ -106,8 +32,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			}
 		}
 
-		public IEnumerable<Attribute> Get(string typeName)
+		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
 		{
+			var typeName = _context.Types.Find(typeId)?.Id;
 			if (!_context.Model.GetEntityTypes().Any(type =>
 				type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute"))
 				_context.Model.AsModel().AddQueryType(typeof(Attribute));
@@ -116,34 +43,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return _context.Query<Attribute>().FromSql(query).ToList();
 		}
 
-		public IEnumerable<Attribute> GetByEntityId(int entityId, string typeName)
+		public IEnumerable<Attribute> GetByEntityId(int entityId, int typeId)
 		{
-			return Get(typeName).Where(a => a.EntityId == entityId);
-		}
-
-		public Attribute GetById(int id)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Attribute GetById(int entityTypeId, int attributeId)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Attribute GetByName(int entityTypeId, string attributeName)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IEnumerable<Attribute> GetTypeAttributes(string typeName)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
-		{
-			throw new NotImplementedException();
+			return GetTypeAttributesById(typeId).Where(a => a.EntityId == entityId);
 		}
 
 		private readonly InfoSystemDbContext _context;

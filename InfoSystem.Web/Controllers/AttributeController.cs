@@ -36,15 +36,6 @@ namespace InfoSystem.Web.Controllers
 		/// <summary>
 		/// Gets all attributes that refers to type.
 		/// </summary>
-		/// <param name="typeName">Entity type name.</param>
-		/// <returns>Attributes refering to type collection.</returns>
-		[HttpGet]
-		public IEnumerable<Attribute> GetAtttributesByTypeName(string typeName) =>
-			_repository.GetTypeAttributes(typeName);
-
-		/// <summary>
-		/// Gets all attributes that refers to type.
-		/// </summary>
 		/// <param name="typeId">Entity type id.</param>
 		/// <returns>Attributes refering to type collection.</returns>
 		[HttpGet]
