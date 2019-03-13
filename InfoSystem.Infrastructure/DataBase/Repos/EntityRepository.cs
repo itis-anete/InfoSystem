@@ -22,10 +22,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
                 if (type == null)
                 {
-                    var newType = new EntityType(typeName);
-                    _context.Types.Add(newType);
-                    var receivedType = _context.Types.FirstOrDefault(t => t.Name == typeName);
-                    newEntity.TypeId = receivedType?.Id ?? 1;
+                    var typeRepository = new TypeRepository(new InfoSystemDbContext());
+                    var newType = typeRepository.Add(typeName);
+                    newEntity.TypeId = newType?.Id ?? 1;
                 }
                 else
                     newEntity.TypeId = type.Id;
@@ -67,13 +66,10 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         public IEnumerable<Entity> Get() => _context.Entities;
 
-        public Entity GetById(int id)
-        {
-            return _context.Entities.Find(id);
-        }
+        public Entity GetById(int id) => _context.Entities.Find(id);
 
-        public IEnumerable<Entity> GetByTypeId(int typeId) => _context.Entities.Where(e => e.TypeId == typeId);
-
+        public IEnumerable<Entity> GetByTypeId(int typeId) =>
+            _context.Entities.Where(e => e.TypeId == typeId);
 
         private readonly InfoSystemDbContext _context;
     }
