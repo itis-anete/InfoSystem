@@ -10,7 +10,7 @@
       :pagination.sync="pagination"
     >
       <template v-slot:items="props">
-        <tr @click="onExpand(props)">
+        <tr @click.stop="onExpand(props)">
           <td>{{ props.item.id }}</td>
           <td class="justify-end layout px-4">
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
@@ -22,7 +22,7 @@
       <template v-slot:expand="props">
         <v-layout justify-end>
           <v-flex v-if="!loading" xs10>
-            <dialog-grid></dialog-grid>
+            <dialog-grid :items="attributes"></dialog-grid>
           </v-flex>
         </v-layout>
       </template>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import EditEntityDialog from '~/components/edit-entity/dialog.vue'
 import DialogGrid from '~/components/edit-entity/dialog-grid.vue'
 import { mapGetters } from 'vuex'
@@ -47,7 +48,7 @@ export default {
     pagination: {
       rowsPerPage: 10
     },
-    entityId: null
+    attributes: []
   }),
   methods: {
     editItem(item) {
@@ -57,7 +58,9 @@ export default {
     deleteItem(item) {},
     onExpand(props) {
       props.expanded = !props.expanded
-      this.$store.dispatch('getAttributes', { entityId: props.item.id, typeId: props.item.typeId })
+      axios
+        .get(`/api/Attribute/GetByEntityId?entityId=${props.item.id}&typeId=${props.item.typeId}`)
+        .then(response => (this.attributes = response.data))
     }
   },
   computed: {

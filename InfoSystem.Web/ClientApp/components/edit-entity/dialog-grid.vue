@@ -2,13 +2,13 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="currentAttributes"
+      :items="items"
       item-key="id"
       sort-icon="arrow_drop_down"
       hide-actions
     >
       <template v-slot:items="props">
-        <tr @click="attributeExpand(props)" :class="{ complex: props.item.isComplex}">
+        <tr @click.stop="attributeExpand(props)" :class="{ complex: props.item.isComplex}">
           <td>{{props.item.key}}</td>
           <td>{{props.item.value}}</td>
           <!-- <content-edit-dialog
@@ -26,8 +26,8 @@
       </template>
       <template v-slot:expand="props">
         <v-layout justify-end>
-          <v-flex v-if="!loading" xs10>
-            <grid></grid>
+          <v-flex xs10>
+            <dialog-grid :items="attributes"></dialog-grid>
           </v-flex>
         </v-layout>
       </template>
@@ -40,17 +40,17 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapActions, mapGetters } from 'vuex'
 import ContentEditDialog from './edit-value-dialog/content-edit-dialog.vue'
 import AttributeEditDialog from './edit-value-dialog/attribute-edit-dialog.vue'
-import DialogGrid from '~/components/edit-entity/dialog-grid.vue'
 export default {
-  name: 'grid',
+  name: 'dialog-grid',
   components: {
     ContentEditDialog,
-    AttributeEditDialog,
-    DialogGrid
+    AttributeEditDialog
   },
+  props: ['items'],
   data() {
     return {
       snack: false,
@@ -65,7 +65,7 @@ export default {
         { text: 'Value', value: 'attributeId', sortable: false },
         { text: '', sortable: false }
       ],
-      currentAttributes: []
+      attributes: []
     }
   },
   methods: {
@@ -89,15 +89,14 @@ export default {
     attributeExpand(props) {
       if (props.item.isComplex) {
         props.expanded = !props.expanded
-        this.$store.dispatch('getAttributesByTypeName', { entityId: props.item.value, typeName: props.item.key.substring(8) })
+        axios
+          .get(`/api/Attribute/GetByTypeName?entityId=${props.item.value}&typeName=${props.item.key.substring(8)}`)
+          .then(response => (this.attributes = response.data))
       }
     }
   },
   computed: {
-    ...mapGetters(['attributes', 'loading'])
-  },
-  mounted() {
-    this.currentAttributes = this.attributes
+    ...mapGetters(['loading'])
   }
 }
 </script>

@@ -37,6 +37,9 @@ export default {
   getters: {
     attributes(state) {
       return state.attributes
+    },
+    current(state) {
+      return state.current
     }
   }
 }
