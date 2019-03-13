@@ -34,7 +34,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
 		{
-			var typeName = _context.Types.Find(typeId)?.Id;
+			var typeName = _context.Types.Find(typeId)?.Name;
 			if (!_context.Model.GetEntityTypes().Any(type =>
 				type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute"))
 				_context.Model.AsModel().AddQueryType(typeof(Attribute));

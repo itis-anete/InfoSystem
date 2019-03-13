@@ -39,13 +39,13 @@ export default {
   }),
   methods: {
     editItem(item) {
-      this.$store.dispatch('getAttributes', { entityId: item.id, typeName: this.types.find(x => x.id == this.$route.params.id).name })
+      this.$store.dispatch('getAttributes', { entityId: item.id, typeId: this.$route.params.id })
       this.dialogActive = true
     },
     deleteItem(item) {}
   },
   computed: {
-    ...mapGetters(['loading', 'types'])
+    ...mapGetters(['loading'])
   }
 }
 </script>

@@ -22,7 +22,7 @@
             <v-card>
               <v-toolbar card color="#eee">
                 <v-toolbar-items>
-                  <new-value-dialog :entityId="entityId"></new-value-dialog>
+                  <!-- <new-value-dialog :entityId="entityId"></new-value-dialog> -->
                 </v-toolbar-items>
               </v-toolbar>
               <dialog-grid></dialog-grid>

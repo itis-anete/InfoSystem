@@ -15,7 +15,7 @@ export default {
   actions: {
     async getAttributes({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.get(`/api/Attribute/GetByEntityId?entityId=${payload.entityId}&typeName=${payload.typeName}`)
+      let response = await axios.get(`/api/Attribute/GetByEntityId?entityId=${payload.entityId}&typeId=${payload.typeId}`)
       commit('setAttributes', response.data)
       commit('setLoading', false)
     },
