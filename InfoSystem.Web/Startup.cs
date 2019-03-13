@@ -67,7 +67,6 @@ namespace InfoSystem.Web
 				routes.MapRoute(
 					name: "default",
 					template: "{controller}/{action=Index}/{id?}"));
-
 			app.UseSpa(spa =>
 			{
 				spa.Options.SourcePath = "ClientApp";

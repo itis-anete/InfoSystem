@@ -58,7 +58,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				                                      $"\"Value\" text NULL," +
 				                                      $"\"TypeId\" integer NOT NULL," +
 				                                      $"\"EntityId\" integer NOT NULL," +
-				                                      "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"Id\")" +
+				                                      "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"Id\")," +
 				                                      "CONSTRAINT \"FK_{0}_Types_AttributeId\" " +
 				                                      $"FOREIGN KEY (\"TypeId\") REFERENCES \"Types\" (\"Id\") ON DELETE CASCADE," +
 				                                      "CONSTRAINT \"FK_{0}_Entities_EntityId\" " +
