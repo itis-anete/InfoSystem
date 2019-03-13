@@ -55,6 +55,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             try
             {
                 _context.Entities.Remove(_context.Entities.Find(id));
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception e)

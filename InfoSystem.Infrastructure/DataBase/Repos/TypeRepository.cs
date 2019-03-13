@@ -17,22 +17,6 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		public IEnumerable<EntityType> Get()
 		{
-//			new Database
-//			var x = 1;
-//			var contextDatabase =  _context.Database.
-//			_context.Query<Attri>().Load().ToList();
-//			return null;
-//			var x12345 = _context.Model.GetEntityTypes();
-//			var type = Type.GetType("d4n0n_myself");
-////			var dbQuery = _context.Query<ModelType>();
-////			var fromSql = dbQuery.FromSql("SELECT * FROM pg_catalog.pg_tables");
-//
-//			foreach (var x in fromSql)
-//			{
-//				Console.WriteLine(x);
-//			}
-//			return null;
-
 			return _context.Types;
 		}
 
@@ -40,11 +24,6 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		{
 			return _context.Types.Find(id);
 		}
-
-//	    public EntityType GetByTypeName(string typeName)
-//	    {
-//	        return _context.Types.FirstOrDefault(x => x.Name == typeName);
-//	    }
 
 		public EntityType Add(string newTypeName)
 		{

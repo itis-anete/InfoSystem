@@ -31,13 +31,21 @@ namespace InfoSystem.Web.Controllers
 			return Ok(addedEntity);
 		}
 
+		[HttpGet]
+		public IActionResult Delete(int id)
+		{
+			if (!_repository.Delete(id))
+				return BadRequest();
+			return Ok();
+		}
+		
 		/// <summary>
 		/// Gets entity by it's id.
 		/// </summary>
 		/// <param name="id">Id of an entity instance.</param>
 		/// <returns>Entity instance.</returns>
 		[HttpGet]
-		public Entity Get([FromQuery] int id) => _repository.GetById(id);
+		public Entity GetById([FromQuery] int id) => _repository.GetById(id);
 
 		/// <summary>
 		/// Get all instances of one type.
