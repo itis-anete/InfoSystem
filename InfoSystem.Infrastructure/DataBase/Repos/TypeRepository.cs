@@ -22,16 +22,16 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				var entityEntry = _context.Types.Add(new EntityType(newTypeName));
 
 				var formattableString = string.Format("CREATE TABLE" + "\"{0}\"(" +
-				                                      $"\"Id\" serial NOT NULL," +
-				                                      $"\"Key\" text NULL," +
-				                                      $"\"Value\" text NULL," +
-				                                      $"\"TypeId\" integer NOT NULL," +
-				                                      $"\"EntityId\" integer NOT NULL," +
-				                                      "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"Id\")," +
-				                                      "CONSTRAINT \"FK_{0}_Types_AttributeId\" " +
-				                                      $"FOREIGN KEY (\"TypeId\") REFERENCES \"Types\" (\"Id\") ON DELETE CASCADE," +
-				                                      "CONSTRAINT \"FK_{0}_Entities_EntityId\" " +
-				                                      $"FOREIGN KEY (\"EntityId\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
+				                                      $"\"id\" serial NOT NULL," +
+				                                      $"\"key\" text NULL," +
+				                                      $"\"value\" text NULL," +
+				                                      $"\"typeid\" integer NOT NULL," +
+				                                      $"\"entityid\" integer NOT NULL," +
+				                                      "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"id\")," +
+				                                      "CONSTRAINT \"FK_{0}_Types_typeid\" " +
+				                                      $"FOREIGN KEY (\"typeid\") REFERENCES \"Types\" (\"Id\") ON DELETE CASCADE," +
+				                                      "CONSTRAINT \"FK_{0}_Entities_entityid\" " +
+				                                      $"FOREIGN KEY (\"entityid\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
 				                                      $");", newTypeName);
 				_context.Database.ExecuteSqlCommand(new RawSqlString(formattableString));
 				_context.SaveChanges();
