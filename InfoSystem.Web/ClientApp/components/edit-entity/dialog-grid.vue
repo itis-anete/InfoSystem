@@ -2,15 +2,13 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="attributes"
+      :items="currentAttributes"
       item-key="id"
       sort-icon="arrow_drop_down"
-      :rows-per-page-items="rowsPerPageItems"
-      :pagination.sync="pagination"
-      :loading="loading"
+      hide-actions
     >
       <template v-slot:items="props">
-        <tr :class="{ complex: props.item.isComplex}">
+        <tr @click="attributeExpand(props)" :class="{ complex: props.item.isComplex}">
           <td>{{props.item.key}}</td>
           <td>{{props.item.value}}</td>
           <!-- <content-edit-dialog
@@ -26,6 +24,13 @@
           </td>
         </tr>
       </template>
+      <template v-slot:expand="props">
+        <v-layout justify-end>
+          <v-flex v-if="!loading" xs10>
+            <grid></grid>
+          </v-flex>
+        </v-layout>
+      </template>
     </v-data-table>
     <v-snackbar v-model="snack" :timeout="3000" :color="snackColor">
       {{ snackText }}
@@ -38,10 +43,13 @@
 import { mapActions, mapGetters } from 'vuex'
 import ContentEditDialog from './edit-value-dialog/content-edit-dialog.vue'
 import AttributeEditDialog from './edit-value-dialog/attribute-edit-dialog.vue'
+import DialogGrid from '~/components/edit-entity/dialog-grid.vue'
 export default {
+  name: 'grid',
   components: {
     ContentEditDialog,
-    AttributeEditDialog
+    AttributeEditDialog,
+    DialogGrid
   },
   data() {
     return {
@@ -54,13 +62,10 @@ export default {
           align: 'left',
           sortable: false
         },
-        { text: 'Value', value: 'attributeId' },
+        { text: 'Value', value: 'attributeId', sortable: false },
         { text: '', sortable: false }
       ],
-      rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
-      pagination: {
-        rowsPerPage: 10
-      }
+      currentAttributes: []
     }
   },
   methods: {
@@ -80,17 +85,26 @@ export default {
       this.snackColor = color
       this.snackText = text
     },
-    deleteItem() {}
+    deleteItem() {},
+    attributeExpand(props) {
+      if (props.item.isComplex) {
+        props.expanded = !props.expanded
+        this.$store.dispatch('getAttributesByTypeName', { entityId: props.item.value, typeName: props.item.key.substring(8) })
+      }
+    }
   },
   computed: {
     ...mapGetters(['attributes', 'loading'])
+  },
+  mounted() {
+    this.currentAttributes = this.attributes
   }
 }
 </script>
 
 <style scoped>
-.complex{
-	background: #52A8B6;
-	color: #fff
+.complex {
+  background: #52a8b6;
+  color: #fff;
 }
 </style>

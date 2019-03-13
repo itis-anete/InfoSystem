@@ -8,5 +8,6 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 		bool Add(string typeName, string attributeName, string value, int typeId, int entityId);
 		IEnumerable<Attribute> GetTypeAttributesById(int typeId);
 		IEnumerable<Attribute> GetByEntityId(int entityId, int typeId);
-	}
+	    IEnumerable<Attribute> GetByTypeName(int entityId, string typeName);
+    }
 }

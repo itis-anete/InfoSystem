@@ -13,6 +13,12 @@ export default {
     }
   },
   actions: {
+    async getAttributesByTypeName({ commit }, payload) {
+      commit('setLoading', true)
+      let response = await axios.get(`/api/Attribute/GetByTypeName?entityId=${payload.entityId}&typeName=${payload.typeName}`)
+      commit('setAttributes', response.data)
+      commit('setLoading', false)
+    },
     async getAttributes({ commit }, payload) {
       commit('setLoading', true)
       let response = await axios.get(`/api/Attribute/GetByEntityId?entityId=${payload.entityId}&typeId=${payload.typeId}`)

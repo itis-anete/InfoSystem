@@ -10,11 +10,21 @@
       :pagination.sync="pagination"
     >
       <template v-slot:items="props">
-        <td>{{ props.item.id }}</td>
-        <td class="justify-end layout px-4">
-          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
-        </td>
+        <tr @click="onExpand(props)">
+          <td>{{ props.item.id }}</td>
+          <td class="justify-end layout px-4">
+            <v-icon small @click="deleteItem(props.item)">delete</v-icon>
+            <v-icon v-if="!props.expanded">arrow_drop_down</v-icon>
+            <v-icon v-else>arrow_drop_up</v-icon>
+          </td>
+        </tr>
+      </template>
+      <template v-slot:expand="props">
+        <v-layout justify-end>
+          <v-flex v-if="!loading" xs10>
+            <dialog-grid></dialog-grid>
+          </v-flex>
+        </v-layout>
       </template>
     </v-data-table>
     <edit-entity-dialog :dialogActive.sync="dialogActive"></edit-entity-dialog>
@@ -23,11 +33,13 @@
 
 <script>
 import EditEntityDialog from '~/components/edit-entity/dialog.vue'
+import DialogGrid from '~/components/edit-entity/dialog-grid.vue'
 import { mapGetters } from 'vuex'
 export default {
   props: ['headers', 'entities'],
   components: {
-    EditEntityDialog
+    EditEntityDialog,
+    DialogGrid
   },
   data: () => ({
     dialogActive: false,
@@ -42,7 +54,11 @@ export default {
       this.$store.dispatch('getAttributes', { entityId: item.id, typeId: this.$route.params.id })
       this.dialogActive = true
     },
-    deleteItem(item) {}
+    deleteItem(item) {},
+    onExpand(props) {
+      props.expanded = !props.expanded
+      this.$store.dispatch('getAttributes', { entityId: props.item.id, typeId: props.item.typeId })
+    }
   },
   computed: {
     ...mapGetters(['loading'])

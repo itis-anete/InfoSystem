@@ -48,6 +48,21 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return GetTypeAttributesById(typeId).Where(a => a.EntityId == entityId);
 		}
 
-		private readonly InfoSystemDbContext _context;
+	    public IEnumerable<Attribute> GetTypeAttributesByName(string typeName)
+	    {
+	        if (!_context.Model.GetEntityTypes().Any(type =>
+	            type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute"))
+	            _context.Model.AsModel().AddQueryType(typeof(Attribute));
+
+	        var query = $"SELECT * FROM \"{typeName}\"";
+	        return _context.Query<Attribute>().FromSql(query).ToList();
+	    }
+
+        public IEnumerable<Attribute> GetByTypeName(int entityId, string typeName)
+	    {
+	        return GetTypeAttributesByName(typeName).Where(a => a.EntityId == entityId);
+	    }
+
+        private readonly InfoSystemDbContext _context;
 	}
 }
