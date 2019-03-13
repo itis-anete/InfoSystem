@@ -7,5 +7,7 @@ namespace InfoSystem.Core.Entities.Basic
 		public string Value { get; set; }
 		public int TypeId { get; set; }
 		public int EntityId { get; set; }
+		
+		public bool IsComplex => Key.StartsWith("Complex:");
 	}
 }

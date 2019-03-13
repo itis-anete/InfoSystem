@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Net;
+using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +23,15 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		[HttpGet]
-		public void GetAttrbiutes(string typeName)
+		public IEnumerable<Attribute> GetAttrbiutes(string typeName)
 		{
-			_attributeRepository.Get(typeName);
+			return _attributeRepository.Get(typeName);
+		}
+		
+		[HttpGet]
+		public void GetAttrbiutesByEntityId(int entityId, string typeName)
+		{
+			_attributeRepository.GetByEntityId(entityId, typeName);
 		}
 
 		private readonly TypeRepository _repository;

@@ -12,5 +12,6 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 		Attribute GetByName(int entityTypeId, string attributeName);
 		IEnumerable<Attribute> GetTypeAttributes(string typeName);
 		IEnumerable<Attribute> GetTypeAttributesById(int typeId);
+		IEnumerable<Attribute> GetByEntityId(int entityId, string typeName);
 	}
 }

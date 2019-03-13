@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
@@ -96,10 +97,17 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		public IEnumerable<Attribute> Get(string typeName)
 		{
-			var addQueryType = _context.Model.AsModel().AddQueryType(typeof(Attribute));
-			var attributes = _context.Query<Attribute>().FromSql($"SELECT * FROM public.danon").ToList();
+			if (!_context.Model.GetEntityTypes().Any(type =>
+				type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute"))
+				_context.Model.AsModel().AddQueryType(typeof(Attribute));
 
-			return attributes;
+			var query = $"SELECT * FROM \"{typeName}\"";
+			return _context.Query<Attribute>().FromSql(query).ToList();
+		}
+
+		public IEnumerable<Attribute> GetByEntityId(int entityId, string typeName)
+		{
+			return Get(typeName).Where(a => a.EntityId == entityId);
 		}
 
 		public Attribute GetById(int id)

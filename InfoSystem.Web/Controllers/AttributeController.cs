@@ -16,7 +16,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			_repository = new AttributeRepository(new InfoSystemDbContext());
 		}
-		
+
 		/// <summary>
 		/// Adds a new Attribute to a entityType.
 		/// </summary>
@@ -40,7 +40,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>Attributes refering to type collection.</returns>
 		[HttpGet]
-		public IEnumerable<Attribute> GetAtttributesByTypeName(string typeName) => 
+		public IEnumerable<Attribute> GetAtttributesByTypeName(string typeName) =>
 			_repository.GetTypeAttributes(typeName);
 
 		/// <summary>
@@ -51,6 +51,10 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IEnumerable<Attribute> GetAttributesByTypeId([FromQuery] int typeId) =>
 			_repository.GetTypeAttributesById(typeId);
+
+		[HttpGet]
+		public IEnumerable<Attribute> GetByEntityId(int entityId, string typeName) =>
+			_repository.GetByEntityId(entityId, typeName);
 
 		private readonly IAttributeRepository _repository;
 	}

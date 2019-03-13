@@ -47,7 +47,7 @@ namespace InfoSystem.Web.Controllers
 		/// </summary>
 		/// <returns>EntityTypes's collection.</returns>
 		[HttpGet]
-		public IEnumerable<EntityType> Get(int id)
+		public IEnumerable<EntityType> Get()
 		{
 			return _repository.Get();
 		}
