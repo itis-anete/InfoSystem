@@ -90,9 +90,20 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 //				: null;
 //		}
 
-		public Attribute Add(string attributeName, string valueType, string typeName)
+		public bool Add(string typeName, string attributeName, string value, int typeId, int entityId)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var sql =
+					$"INSERT INTO {typeName} (key,value,typeid,entityid) VALUES ('{attributeName}','{value}',{typeId},{entityId});";
+				_context.Database.ExecuteSqlCommand(sql);
+				return true;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return false;
+			}
 		}
 
 		public IEnumerable<Attribute> Get(string typeName)

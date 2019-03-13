@@ -5,7 +5,7 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 {
 	public interface IAttributeRepository
 	{
-		Attribute Add(string attributeName, string valueType, string typeName);
+		bool Add(string typeName, string attributeName, string value, int typeId, int entityId);
 		IEnumerable<Attribute> Get(string typeName);
 		Attribute GetById(int id);
 		Attribute GetById(int entityTypeId, int attributeId);
