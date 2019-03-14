@@ -16,12 +16,13 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public bool Add(string typeName, string attributeName, string value, int typeId, int entityId)
+		public bool Add(Attribute newAttribute)
 		{
 			try
 			{
+				var typeName = _context.Types.Find(newAttribute.TypeId)?.Name;
 				var sql =
-					$"INSERT INTO {typeName} (key,value,typeid,entityid) VALUES ('{attributeName}','{value}',{typeId},{entityId});";
+					$"INSERT INTO {typeName} (key,value,typeid,entityid) VALUES ('{newAttribute.Key}','{newAttribute.Value}',{newAttribute.TypeId},{newAttribute.EntityId});";
 				_context.Database.ExecuteSqlCommand(sql);
 				return true;
 			}
@@ -35,12 +36,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
 		{
 			var typeName = _context.Types.Find(typeId)?.Name;
-			if (!_context.Model.GetEntityTypes().Any(type =>
-				type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute"))
-				_context.Model.AsModel().AddQueryType(typeof(Attribute));
-
-			var query = $"SELECT * FROM \"{typeName}\"";
-			return _context.Query<Attribute>().FromSql(query).ToList();
+			return GetTypeAttributesByName(typeName);
 		}
 
 		public IEnumerable<Attribute> GetByEntityId(int entityId, int typeId)

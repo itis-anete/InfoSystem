@@ -19,6 +19,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		{
 			try
 			{
+				newTypeName = newTypeName.ToLower();
 				var entityEntry = _context.Types.Add(new EntityType(newTypeName));
 
 				var formattableString = string.Format("CREATE TABLE" + "\"{0}\"(" +

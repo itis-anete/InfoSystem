@@ -25,9 +25,9 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>ActionResult, depending on operation result </returns>
 		[HttpPost]
-		public IActionResult Add(string typeName, string attributeName, string value, int typeId, int entityId)
+		public IActionResult Add(Attribute newAttribute)
 		{
-			var addedAttribute = _repository.Add(typeName, attributeName, value, typeId, entityId);
+			var addedAttribute = _repository.Add(newAttribute);
 			if (!addedAttribute)
 				return BadRequest();
 			return Ok();
@@ -42,6 +42,12 @@ namespace InfoSystem.Web.Controllers
 		public IEnumerable<Attribute> GetAttributesByTypeId([FromQuery] int typeId) =>
 			_repository.GetTypeAttributesById(typeId);
 
+		/// <summary>
+		/// Gets attributes list 
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <param name="typeId"></param>
+		/// <returns></returns>
 		[HttpGet]
 		public IEnumerable<Attribute> GetByEntityId([FromQuery] int entityId, int typeId) =>
 			_repository.GetByEntityId(entityId, typeId);
