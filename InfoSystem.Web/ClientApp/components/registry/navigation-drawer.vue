@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer style="margin-top: 1px">
+  <v-navigation-drawer style="margin-top: 81px" fixed :class="{left: drawer}" width="250">
     <v-list two-line subheader>
       <v-subheader>Entity Types
         <v-spacer></v-spacer>
@@ -23,6 +23,7 @@
 
 <script>
 import NewTypeDialog from './new-type-dialog.vue'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     NewTypeDialog
@@ -31,12 +32,18 @@ export default {
   data: () => ({
     icons: { market: 'local_grocery_store', product: 'toc' }
   }),
-  methods: {}
+  computed: {
+    ...mapGetters(['drawer'])
+  }
 }
 </script>
 
 <style>
 .v-small-dialog {
-	width: inherit;
+  width: inherit;
+}
+.left {
+  transform: translateX(80px) !important;
+  transition: transform 1s linear;
 }
 </style>

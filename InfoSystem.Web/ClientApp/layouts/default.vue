@@ -1,6 +1,6 @@
 <template>
   <v-app style="background-color: #F4F6F9">
-    <v-navigation-drawer mini-variant fixed app clipped v-model="drawer">
+    <v-navigation-drawer mini-variant fixed app clipped v-model="drawerActive">
       <v-list two-line class="pt-0">
         <v-list-tile v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-tile-action>
@@ -23,7 +23,7 @@
       clipped-left
     >
       <div class="side-icon">
-        <v-toolbar-side-icon @click="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click="drawerActive = !drawerActive"></v-toolbar-side-icon>
       </div>
       <img src="../assets/logo.png" alt="logo" style="height: 50px" class="ml-4">
       <v-toolbar-title v-text="title"/>
@@ -36,11 +36,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
       title: 'InfoSystem',
-      drawer: false,
       items: [
         {
           icon: 'home',
@@ -56,6 +56,15 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['drawer']),
+    drawerActive: {
+      get() {
+        return this.drawer
+      },
+      set(value) {
+        this.$store.dispatch('setDrawer', value)
+      }
+    },
     isActive() {
       return this.$nuxt.$route.path.includes('registries')
     }
@@ -64,18 +73,18 @@ export default {
 </script>
 
 <style>
-.v-toolbar__content{
-	padding: 0px 0px !important;
+.v-toolbar__content {
+  padding: 0px 0px !important;
 }
-.side-icon{
-	height: 100%;
-	width: 80px;
-	border-right: 1px solid #eaeaea;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.side-icon {
+  height: 100%;
+  width: 80px;
+  border-right: 1px solid #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.active{
-	color: #52a8b6 !important
+.active {
+  color: #52a8b6 !important;
 }
 </style>

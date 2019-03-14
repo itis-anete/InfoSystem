@@ -1,13 +1,19 @@
 <template>
-  <v-card v-if="entities">
-    <v-toolbar card color="#eee">
-      <v-toolbar-items>
-        <new-entity-dialog></new-entity-dialog>
-        <v-divider inset vertical></v-divider>
-      </v-toolbar-items>
-    </v-toolbar>
-    <registry-grid :headers="headers" :entities="entities"></registry-grid>
-  </v-card>
+  <v-container class="ma-0" style="margin-left: 250px !important">
+    <v-layout justify-center>
+      <v-flex xs12>
+        <v-card v-if="entities">
+          <v-toolbar card color="#eee">
+            <v-toolbar-items>
+              <new-entity-dialog></new-entity-dialog>
+              <v-divider inset vertical></v-divider>
+            </v-toolbar-items>
+          </v-toolbar>
+          <registry-grid :headers="headers" :entities="entities"></registry-grid>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
