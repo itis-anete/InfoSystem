@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
@@ -27,10 +28,15 @@ namespace InfoSystem.Web.Controllers
 		{
 			var addedEntity = _repository.Add(typeName);
 			if (addedEntity == null)
-				return BadRequest();
+				return NotFound();
 			return Ok(addedEntity);
 		}
 
+		/// <summary>
+		/// Deletes an instance.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		[HttpGet]
 		public IActionResult Delete(int id)
 		{
@@ -38,14 +44,29 @@ namespace InfoSystem.Web.Controllers
 				return BadRequest();
 			return Ok();
 		}
-		
+
 		/// <summary>
 		/// Gets entity by it's id.
 		/// </summary>
 		/// <param name="id">Id of an entity instance.</param>
 		/// <returns>Entity instance.</returns>
 		[HttpGet]
-		public Entity GetById([FromQuery] int id) => _repository.GetById(id);
+		public IActionResult GetById([FromQuery] int id)
+		{
+			Entity entity;
+			try
+			{
+				entity = _repository.GetById(id);
+				if (entity == null)
+					return NotFound();
+				return Ok(entity);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
 
 		/// <summary>
 		/// Get all instances of one type.
@@ -53,7 +74,22 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeId">Entity type id.</param>
 		/// <returns>Entities collection of one type.</returns>
 		[HttpGet]
-		public IEnumerable<Entity> GetByType([FromQuery] int typeId) => _repository.GetByTypeId(typeId);
+		public IActionResult GetByType([FromQuery] int typeId)
+		{
+			IEnumerable<Entity> entities;
+			try
+			{
+				entities = _repository.GetByTypeId(typeId);
+				if (entities == null)
+					return NotFound();
+				return Ok(entities);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
 
 		private readonly IEntityRepository _repository;
 	}

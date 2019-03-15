@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
-using InfoSystem.Core.Entities.Basic;
+using System.Linq;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 
 namespace InfoSystem.Web.Controllers
 {
@@ -18,12 +20,10 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
-		/// Adds a new Attribute to a entityType.
+		/// Add a new Attribute to database.
 		/// </summary>
-		/// <param name="attributeName">Name of a new attribute.</param>
-		/// <param name="valueType">Type of data that would be stored.</param>
-		/// <param name="typeName">Entity type name.</param>
-		/// <returns>ActionResult, depending on operation result </returns>
+		/// <param name="newAttribute"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public IActionResult Add(Attribute newAttribute)
 		{
@@ -39,24 +39,72 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeId">Entity type id.</param>
 		/// <returns>Attributes refering to type collection.</returns>
 		[HttpGet]
-		public IEnumerable<Attribute> GetAttributesByTypeId([FromQuery] int typeId) =>
-			_repository.GetTypeAttributesById(typeId);
+		public IActionResult GetAttributesByTypeId([FromQuery] int typeId)
+		{
+			IEnumerable<Attribute> attributes;
+			try
+			{
+				attributes = _repository.GetTypeAttributesById(typeId);
+				if (attributes == null)
+					return NotFound();
+				return Ok(attributes);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
 
 		/// <summary>
-		/// Gets attributes list 
+		/// Gets attributes list of one instance.
 		/// </summary>
 		/// <param name="entityId"></param>
 		/// <param name="typeId"></param>
 		/// <returns></returns>
 		[HttpGet]
-		public IEnumerable<Attribute> GetByEntityId([FromQuery] int entityId, int typeId) =>
-			_repository.GetByEntityId(entityId, typeId);
+		public IActionResult GetByEntityId([FromQuery] int entityId, int typeId)
+		{
+			IEnumerable<Attribute> attributes;
+			try
+			{
+				attributes = _repository.GetByEntityId(entityId, typeId);
+				if (attributes == null || !attributes.Any())
+					return NotFound();
+				return Ok(attributes);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
 
-	    [HttpGet]
-	    public IEnumerable<Attribute> GetByTypeName([FromQuery] int entityId, string typeName) =>
-	        _repository.GetByTypeName(entityId, typeName);
+		/// <summary>
+		/// Gets all attributes of all entities in one type.
+		/// </summary>
+		/// <param name="entityId"></param>
+		/// <param name="typeName"></param>
+		/// <returns></returns>
+		[HttpGet]
+		public IActionResult GetByTypeName([FromQuery] int entityId, string typeName)
+		{
+			IEnumerable<Attribute> attributes;
+			try
+			{
+				attributes = _repository.GetByTypeName(entityId, typeName);
+				if (attributes == null || !attributes.Any())
+					return NotFound();
+				return Ok(attributes);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
 
 
-        private readonly IAttributeRepository _repository;
+		private readonly IAttributeRepository _repository;
 	}
 }
