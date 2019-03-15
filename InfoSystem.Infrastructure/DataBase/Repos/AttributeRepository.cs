@@ -21,8 +21,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			try
 			{
 				var typeName = _context.Types.Find(newAttribute.TypeId)?.Name;
-				var sql =
-					$"INSERT INTO {typeName} (key,value,typeid,entityid) VALUES ('{newAttribute.Key}','{newAttribute.Value}',{newAttribute.TypeId},{newAttribute.EntityId});";
+				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newAttribute);
 				_context.Database.ExecuteSqlCommand(sql);
 				return true;
 			}
@@ -39,26 +38,24 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return GetTypeAttributesByName(typeName);
 		}
 
-		public IEnumerable<Attribute> GetByEntityId(int entityId, int typeId)
+		public IEnumerable<Attribute> GetByEntityId(int entityId, int typeId) => 
+			GetTypeAttributesById(typeId).Where(a => a.EntityId == entityId);
+
+		public IEnumerable<Attribute> GetTypeAttributesByName(string typeName)
 		{
-			return GetTypeAttributesById(typeId).Where(a => a.EntityId == entityId);
+			if (ModelDoesntHaveAttributeQueryType())
+				_context.Model.AsModel().AddQueryType(typeof(Attribute));
+
+			var query = SqlOptions.GenerateSelectScript(typeName);
+			return _context.Query<Attribute>().FromSql(query).ToList();
 		}
 
-	    public IEnumerable<Attribute> GetTypeAttributesByName(string typeName)
-	    {
-	        if (!_context.Model.GetEntityTypes().Any(type =>
-	            type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute"))
-	            _context.Model.AsModel().AddQueryType(typeof(Attribute));
+		public IEnumerable<Attribute> GetByTypeName(int entityId, string typeName) => 
+			GetTypeAttributesByName(typeName).Where(a => a.EntityId == entityId);
 
-	        var query = $"SELECT * FROM \"{typeName}\"";
-	        return _context.Query<Attribute>().FromSql(query).ToList();
-	    }
+		private readonly InfoSystemDbContext _context;
 
-        public IEnumerable<Attribute> GetByTypeName(int entityId, string typeName)
-	    {
-	        return GetTypeAttributesByName(typeName).Where(a => a.EntityId == entityId);
-	    }
-
-        private readonly InfoSystemDbContext _context;
+		private bool ModelDoesntHaveAttributeQueryType() => !_context.Model.GetEntityTypes().Any(type =>
+			type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute");
 	}
 }

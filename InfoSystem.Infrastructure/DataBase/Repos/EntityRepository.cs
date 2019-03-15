@@ -31,7 +31,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             }
             catch (Exception e)
             {
-                Console.WriteLine("TYPES FAILED");
+                Console.WriteLine("RETARD ALERT! TYPES FAILED");
                 Console.WriteLine(e);
                 return null;
             }
@@ -44,7 +44,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             }
             catch (Exception e)
             {
-                Console.WriteLine("ENTITIES FAILED");
+                Console.WriteLine("RETARD ALERT! ENTITIES FAILED");
                 Console.WriteLine(e);
                 return null;
             }

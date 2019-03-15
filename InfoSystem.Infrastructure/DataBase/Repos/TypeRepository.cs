@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Npgsql;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
@@ -17,32 +19,14 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		public EntityType Add(string newTypeName)
 		{
-			try
-			{
-				newTypeName = newTypeName.ToLower();
-				var entityEntry = _context.Types.Add(new EntityType(newTypeName));
-
-				var formattableString = string.Format("CREATE TABLE" + "\"{0}\"(" +
-				                                      $"\"id\" serial NOT NULL," +
-				                                      $"\"key\" text NULL," +
-				                                      $"\"value\" text NULL," +
-				                                      $"\"typeid\" integer NOT NULL," +
-				                                      $"\"entityid\" integer NOT NULL," +
-				                                      "CONSTRAINT \"PK_{0}\" PRIMARY KEY (\"id\")," +
-				                                      "CONSTRAINT \"FK_{0}_Types_typeid\" " +
-				                                      $"FOREIGN KEY (\"typeid\") REFERENCES \"Types\" (\"Id\") ON DELETE CASCADE," +
-				                                      "CONSTRAINT \"FK_{0}_Entities_entityid\" " +
-				                                      $"FOREIGN KEY (\"entityid\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
-				                                      $");", newTypeName);
-				_context.Database.ExecuteSqlCommand(new RawSqlString(formattableString));
-				_context.SaveChanges();
-				return entityEntry.Entity;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return null;
-			}
+			newTypeName = newTypeName.ToLower();
+			if (_context.Types.Any(t => t.Name == newTypeName))
+				throw new NpgsqlException("EntityType already exists");
+			var entityEntry = _context.Types.Add(new EntityType(newTypeName));
+			var formattableString = SqlOptions.GenerateCreateTableScript(newTypeName);
+			_context.Database.ExecuteSqlCommand(new RawSqlString(formattableString));
+			_context.SaveChanges();
+			return entityEntry.Entity;
 		}
 
 		public IEnumerable<EntityType> Get() => _context.Types;
