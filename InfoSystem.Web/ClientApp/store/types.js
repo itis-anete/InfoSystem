@@ -21,7 +21,7 @@ export default {
     },
     async addType({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(`api/Type/Add?typeName=${payload.typeName}&identificator=${payload.identificator}`)
+      let response = await axios.post(`api/Type/Add?typeName=${payload}`)
       commit('addType', response.data)
       commit('setLoading', false)
     }

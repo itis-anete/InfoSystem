@@ -82,8 +82,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				types = _repository.Get();
-				if (types == null || !types.Any())
-					return NotFound();
 				return Ok(types);
 			}
 			catch (Exception e)

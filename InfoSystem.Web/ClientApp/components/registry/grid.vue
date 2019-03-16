@@ -3,47 +3,43 @@
     <v-data-table
       :headers="headers"
       :items="entities"
-      sort-icon="mdi-menu-down"
       :loading="loading"
-      class="elevation-1"
       :rows-per-page-items="rowsPerPageItems"
       :pagination.sync="pagination"
     >
       <template v-slot:items="props">
-        <tr @click.stop="onExpand(props)">
+        <tr @click.stop="expand(props)" style="cursor: pointer">
           <td>{{ props.item.id }}</td>
           <td class="justify-end layout px-4">
             <v-icon small @click="deleteItem(props.item)">delete</v-icon>
-            <v-icon v-if="!props.expanded">arrow_drop_down</v-icon>
-            <v-icon v-else>arrow_drop_up</v-icon>
+            <v-icon :class="{rotated:props.expanded}">arrow_drop_down</v-icon>
           </td>
         </tr>
       </template>
       <template v-slot:expand="props">
-        <v-layout justify-end>
-          <v-flex v-if="!loading" xs10>
-            <dialog-grid :items="attributes"></dialog-grid>
-          </v-flex>
-        </v-layout>
+        <v-container :class="{expanded:props.expanded}">
+          <v-layout justify-end>
+            <v-flex xs12>
+              <attribute-grid :items="attributes"></attribute-grid>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </template>
     </v-data-table>
-    <edit-entity-dialog :dialogActive.sync="dialogActive"></edit-entity-dialog>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import EditEntityDialog from '~/components/edit-entity/dialog.vue'
-import DialogGrid from '~/components/edit-entity/dialog-grid.vue'
-import { mapGetters } from 'vuex'
+import AttributeGrid from '~/components/attribute/grid.vue'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  props: ['headers', 'entities'],
+  props: ['entities'],
   components: {
-    EditEntityDialog,
-    DialogGrid
+    AttributeGrid
   },
   data: () => ({
-    dialogActive: false,
+    headers: [{ text: 'Id', sortable: false }, { text: '', sortable: false }],
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
     pagination: {
       rowsPerPage: 10
@@ -51,16 +47,13 @@ export default {
     attributes: []
   }),
   methods: {
-    editItem(item) {
-      this.$store.dispatch('getAttributes', { entityId: item.id, typeId: this.$route.params.id })
-      this.dialogActive = true
-    },
+    ...mapActions(['getAttributes']),
     deleteItem(item) {},
-    onExpand(props) {
+    async expand(props) {
+      if (!props.expanded) {
+        this.attributes = await this.getAttributes({ id: props.item.id, typeId: props.item.typeId })
+      }
       props.expanded = !props.expanded
-      axios
-        .get(`/api/Attribute/GetByEntityId?entityId=${props.item.id}&typeId=${props.item.typeId}`)
-        .then(response => (this.attributes = response.data))
     }
   },
   computed: {
@@ -68,3 +61,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.expanded{
+	border-bottom: 1px solid rgba(0,0,0,0.12)
+}
+.rotated{
+	transition: transform 0.2s;
+	transform: rotate(180deg);
+}
+</style>

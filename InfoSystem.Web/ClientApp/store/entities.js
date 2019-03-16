@@ -23,7 +23,7 @@ export default {
     },
     async addEntity({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(`api/Entity/Add?typeName=${payload.typeName}&identificator=${payload.identificator}`)
+      let response = await axios.post(`/api/Entity/Add?typeName=${payload}`)
       commit('addEntity', response.data)
       commit('setLoading', false)
     }
