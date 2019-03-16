@@ -28,7 +28,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			var addedEntity = _repository.Add(typeName);
 			if (addedEntity == null)
-				return NotFound();
+				return BadRequest();
 			return Ok(addedEntity);
 		}
 
@@ -58,7 +58,7 @@ namespace InfoSystem.Web.Controllers
 			{
 				entity = _repository.GetById(id);
 				if (entity == null)
-					return NotFound();
+					return BadRequest();
 				return Ok(entity);
 			}
 			catch (Exception e)
@@ -81,7 +81,7 @@ namespace InfoSystem.Web.Controllers
 			{
 				entities = _repository.GetByTypeId(typeId);
 				if (entities == null)
-					return NotFound();
+					return BadRequest();
 				return Ok(entities);
 			}
 			catch (Exception e)

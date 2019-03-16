@@ -61,7 +61,7 @@ namespace InfoSystem.Web.Controllers
 			{
 				type = _repository.GetById(id);
 				if (type == null)
-					return NotFound();
+					return BadRequest();
 				return Ok(type);
 			}
 			catch (Exception e)
@@ -82,6 +82,8 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				types = _repository.Get();
+				if (types == null)
+					return BadRequest();
 				return Ok(types);
 			}
 			catch (Exception e)

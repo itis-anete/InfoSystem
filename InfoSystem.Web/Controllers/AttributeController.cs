@@ -47,7 +47,7 @@ namespace InfoSystem.Web.Controllers
 			{
 				attributes = _repository.GetTypeAttributesById(typeId);
 				if (attributes == null)
-					return NotFound();
+					return BadRequest();
 				return Ok(attributes);
 			}
 			catch (Exception e)
@@ -71,7 +71,7 @@ namespace InfoSystem.Web.Controllers
 			{
 				attributes = _repository.GetByEntityId(entityId, typeId);
 				if (attributes == null || !attributes.Any())
-					return NotFound();
+					return BadRequest();
 				return Ok(attributes);
 			}
 			catch (Exception e)
@@ -95,7 +95,7 @@ namespace InfoSystem.Web.Controllers
 			{
 				attributes = _repository.GetByTypeName(entityId, typeName);
 				if (attributes == null || !attributes.Any())
-					return NotFound();
+					return BadRequest();
 				return Ok(attributes);
 			}
 			catch (Exception e)
