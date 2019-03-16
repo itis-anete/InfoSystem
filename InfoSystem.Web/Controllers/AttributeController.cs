@@ -5,6 +5,7 @@ using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 
 namespace InfoSystem.Web.Controllers
@@ -28,9 +29,9 @@ namespace InfoSystem.Web.Controllers
 		public IActionResult Add(Attribute newAttribute)
 		{
 			var addedAttribute = _repository.Add(newAttribute);
-			if (!addedAttribute)
+			if (addedAttribute == null)
 				return BadRequest();
-			return Ok();
+			return Ok(addedAttribute);
 		}
 
 		/// <summary>
@@ -104,6 +105,14 @@ namespace InfoSystem.Web.Controllers
 			}
 		}
 
+		[HttpPost]
+		public IActionResult Update(string typeName, string newValue, int attributeId)
+		{
+			var updatedAttribute = _repository.Update(typeName, newValue, attributeId);
+			if (updatedAttribute == null)
+				return BadRequest();
+			return Ok(updatedAttribute);
+		}
 
 		private readonly IAttributeRepository _repository;
 	}

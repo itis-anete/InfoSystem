@@ -23,5 +23,10 @@ namespace InfoSystem.Infrastructure
 			$"VALUES ('{newAttribute.Key}','{newAttribute.Value}',{newAttribute.TypeId},{newAttribute.EntityId});";
 		
 		public static string GenerateSelectScript(string typeName) => $"SELECT * FROM \"{typeName}\"";
+
+		public static string GenerateSelectWhereScript(string typeName, string predicate) => $"SELECT * FROM {typeName} WHERE {predicate};";
+
+		public static string GenerateUpdateScript(string typeName, string newValue, int attributeId) =>
+			$"UPDATE {typeName} SET value = \'{newValue}\' WHERE id = {attributeId};";
 	}
 }
