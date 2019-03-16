@@ -23,9 +23,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				var typeName = _context.Types.Find(newAttribute.TypeId)?.Name;
 				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newAttribute);
 				_context.Database.ExecuteSqlCommand(sql);
+				
 				if (ModelDoesntHaveAttributeQueryType())
 					_context.Model.AsModel().AddQueryType(typeof(Attribute));
-
 				var query = SqlOptions.GenerateSelectScript(typeName);
 				return _context.Query<Attribute>().FromSql(query).ToList().FirstOrDefault(a => a.Key == newAttribute.Key);
 			}
@@ -57,6 +57,25 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		public IEnumerable<Attribute> GetByTypeName(int entityId, string typeName) => 
 			GetTypeAttributesByName(typeName).Where(a => a.EntityId == entityId);
 
+		public Attribute Update(string typeName, string newValue, int attributeId)
+		{
+			try
+			{
+				typeName = typeName.ToLower();
+				var sql = SqlOptions.GenerateUpdateScript(typeName, newValue, attributeId);
+				_context.Database.ExecuteSqlCommand(sql);
+				
+				if (ModelDoesntHaveAttributeQueryType())
+					_context.Model.AsModel().AddQueryType(typeof(Attribute));
+				var query = SqlOptions.GenerateSelectScript(typeName);
+				return _context.Query<Attribute>().FromSql(query).ToList().FirstOrDefault(a => a.Id == attributeId);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return null;
+			}
+		}
 		private readonly InfoSystemDbContext _context;
 
 		private bool ModelDoesntHaveAttributeQueryType() => !_context.Model.GetEntityTypes().Any(type =>

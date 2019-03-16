@@ -19,6 +19,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             var newEntity = new Entity();
             try
             {
+                typeName = typeName.ToLower();
                 var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
                 if (type == null)
                 {

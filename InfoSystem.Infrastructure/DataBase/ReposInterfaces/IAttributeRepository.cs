@@ -9,5 +9,6 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 		IEnumerable<Attribute> GetTypeAttributesById(int typeId);
 		IEnumerable<Attribute> GetByEntityId(int entityId, int typeId);
 	    IEnumerable<Attribute> GetByTypeName(int entityId, string typeName);
-    }
+	    Attribute Update(string typeName, string newValue, int attributeId);
+	}
 }
