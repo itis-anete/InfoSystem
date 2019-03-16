@@ -16,19 +16,23 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public bool Add(Attribute newAttribute)
+		public Attribute Add(Attribute newAttribute)
 		{
 			try
 			{
 				var typeName = _context.Types.Find(newAttribute.TypeId)?.Name;
 				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newAttribute);
 				_context.Database.ExecuteSqlCommand(sql);
-				return true;
+				if (ModelDoesntHaveAttributeQueryType())
+					_context.Model.AsModel().AddQueryType(typeof(Attribute));
+
+				var query = SqlOptions.GenerateSelectScript(typeName);
+				return _context.Query<Attribute>().FromSql(query).ToList().FirstOrDefault(a => a.Key == newAttribute.Key);
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
-				return false;
+				return null;
 			}
 		}
 
