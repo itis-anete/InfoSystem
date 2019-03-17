@@ -28,7 +28,11 @@ export default {
     ...mapGetters(['entities'])
   },
   async fetch({ store, params }) {
+    console.log(1)
     await store.dispatch('getEntities', params.id)
+    console.log(2)
+    await store.dispatch('getTypes')
+    console.log(3)
   }
 }
 </script>
