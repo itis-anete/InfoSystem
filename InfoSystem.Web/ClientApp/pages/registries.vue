@@ -2,7 +2,7 @@
   <v-container class="pl-0 py-0 ml-0 mt-0" fill-height>
     <v-layout>
       <registry-navigation-drawer :types="types"></registry-navigation-drawer>
-      <nuxt-child></nuxt-child>
+      <nuxt-child :key="$route.params.typeName"></nuxt-child>
     </v-layout>
   </v-container>
 </template>

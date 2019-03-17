@@ -2,7 +2,6 @@
   <v-data-table
     :headers="headers"
     :items="entities"
-    :loading="loading"
     :rows-per-page-items="rowsPerPageItems"
     :pagination.sync="pagination"
   >
@@ -19,7 +18,6 @@
 
 <script>
 import AttributeGrid from '~/components/attribute/grid.vue'
-import { mapGetters } from 'vuex'
 export default {
   props: ['entities'],
   components: {
@@ -34,9 +32,6 @@ export default {
   }),
   methods: {
     deleteItem(item) {}
-  },
-  computed: {
-    ...mapGetters(['loading'])
   }
 }
 </script>

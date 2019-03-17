@@ -14,10 +14,8 @@ export default {
   },
   actions: {
     async getTypes({ commit }) {
-      //commit('setLoading', true)
       let response = await axios.get('/api/Type/Get')
       commit('setTypes', response.data)
-      //commit('setLoading', false)
     },
     async addType({ commit }, payload) {
       commit('setLoading', true)

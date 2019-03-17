@@ -21,6 +21,9 @@ export default {
     RegistryGrid,
     RegistryToolbar
   },
+  transition: {
+    mode: 'out-in'
+  },
   computed: {
     ...mapGetters(['entities'])
   },

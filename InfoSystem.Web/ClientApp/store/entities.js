@@ -14,12 +14,10 @@ export default {
   },
   actions: {
     async getEntities({ commit }, payload) {
-      commit('setLoading', true)
       let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`)
-      commit('setEntities', response.data)
       setTimeout(() => {
-        commit('setLoading', false)
-      }, 550)
+        commit('setEntities', response.data)
+      }, 0)
     },
     async addEntity({ commit }, payload) {
       commit('setLoading', true)
