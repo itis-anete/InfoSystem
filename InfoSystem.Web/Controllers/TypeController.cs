@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
@@ -56,12 +54,11 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetById(int id)
 		{
-			EntityType type;
 			try
 			{
-				type = _repository.GetById(id);
+				var type = _repository.GetById(id);
 				if (type == null)
-					return BadRequest();
+					return StatusCode(500);
 				return Ok(type);
 			}
 			catch (Exception e)
@@ -78,12 +75,11 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			IEnumerable<EntityType> types;
 			try
 			{
-				types = _repository.Get();
+				var types = _repository.Get();
 				if (types == null)
-					return BadRequest();
+					return StatusCode(500);
 				return Ok(types);
 			}
 			catch (Exception e)

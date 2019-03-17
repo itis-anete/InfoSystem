@@ -73,6 +73,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
         public IEnumerable<Entity> GetByTypeId(int typeId) =>
             _context.Entities.Where(e => e.TypeId == typeId);
 
+        public IEnumerable<Entity> GetByTypeName(string typeName)
+        {
+            var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
+            return _context.Entities.Where(e => e.TypeId == type.Id);
+        }
+
         private readonly InfoSystemDbContext _context;
     }
 }

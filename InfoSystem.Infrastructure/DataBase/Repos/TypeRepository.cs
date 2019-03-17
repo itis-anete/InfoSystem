@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
@@ -23,8 +21,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			if (_context.Types.Any(t => t.Name == newTypeName))
 				throw new NpgsqlException("EntityType already exists");
 			var entityEntry = _context.Types.Add(new EntityType(newTypeName));
-			var formattableString = SqlOptions.GenerateCreateTableScript(newTypeName);
-			_context.Database.ExecuteSqlCommand(new RawSqlString(formattableString));
+			var sqlQuery = SqlOptions.GenerateCreateTableScript(newTypeName);
+			_context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
 			_context.SaveChanges();
 			return entityEntry.Entity;
 		}

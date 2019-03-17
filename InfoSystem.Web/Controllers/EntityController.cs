@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using InfoSystem.Core.Entities.Basic;
+using System.Linq;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
@@ -28,7 +27,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			var addedEntity = _repository.Add(typeName);
 			if (addedEntity == null)
-				return BadRequest();
+				return StatusCode(500);
 			return Ok(addedEntity);
 		}
 
@@ -40,9 +39,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult Delete(int id)
 		{
-			if (!_repository.Delete(id))
-				return BadRequest();
-			return Ok();
+			return !_repository.Delete(id) ? StatusCode(500) : Ok();
 		}
 
 		/// <summary>
@@ -53,12 +50,11 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetById([FromQuery] int id)
 		{
-			Entity entity;
 			try
 			{
-				entity = _repository.GetById(id);
+				var entity = _repository.GetById(id);
 				if (entity == null)
-					return BadRequest();
+					return StatusCode(500);
 				return Ok(entity);
 			}
 			catch (Exception e)
@@ -74,14 +70,13 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeId">Entity type id.</param>
 		/// <returns>Entities collection of one type.</returns>
 		[HttpGet]
-		public IActionResult GetByType([FromQuery] int typeId)
+		public IActionResult GetByTypeId([FromQuery] int typeId)
 		{
-			IEnumerable<Entity> entities;
 			try
 			{
-				entities = _repository.GetByTypeId(typeId);
-				if (entities == null)
-					return BadRequest();
+				var entities = _repository.GetByTypeId(typeId);
+				if (entities == null || !entities.Any())
+					return StatusCode(500);
 				return Ok(entities);
 			}
 			catch (Exception e)
@@ -89,6 +84,29 @@ namespace InfoSystem.Web.Controllers
 				Console.WriteLine(e);
 				return StatusCode(500, e.Message);
 			}
+		}
+
+		/// <summary>
+		/// Get all instances of one type.
+		/// </summary>
+		/// <param name="typeName">Entity type name.</param>
+		/// <returns>Entities collection of one type.</returns>
+		[HttpGet]
+		public IActionResult GetByTypeName(string typeName)
+		{
+			try
+			{
+				var entities = _repository.GetByTypeName(typeName);
+				if (entities == null || !entities.Any())
+					return StatusCode(500);
+				return Ok(entities);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+
 		}
 
 		private readonly IEntityRepository _repository;

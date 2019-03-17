@@ -9,5 +9,6 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 		bool Delete(int id);
 		Entity GetById(int id);
 		IEnumerable<Entity> GetByTypeId(int typeId);
+		IEnumerable<Entity> GetByTypeName(string typeName);
 	}
 }
