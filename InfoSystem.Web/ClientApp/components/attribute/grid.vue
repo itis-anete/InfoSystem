@@ -5,9 +5,7 @@
         <td>{{props.item.key}}</td>
         <td v-if="props.item.isComplex">{{props.item.value}}</td>
         <attribute-edit-dialog v-else :item="props.item"></attribute-edit-dialog>
-        <td class="justify-end layout px-4">
-          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
-        </td>
+        <attribute-delete-dialog :item="props.item"></attribute-delete-dialog>
       </tr>
     </template>
   </v-data-table>
@@ -16,11 +14,13 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import AttributeEditDialog from '~/components/attribute/attribute-edit-dialog.vue'
+import AttributeDeleteDialog from '~/components/attribute/attribute-delete-dialog.vue'
 export default {
   name: 'attribute-grid',
   props: ['attributes'],
   components: {
-    AttributeEditDialog
+    AttributeEditDialog,
+    AttributeDeleteDialog
   },
   data: () => ({
     headers: [
@@ -34,7 +34,6 @@ export default {
     ]
   }),
   methods: {
-    deleteItem(item) {},
     linkTo(item) {
       if (item.isComplex) this.$router.push(`../${item.key.substring(8)}/${item.value}`)
     }
@@ -43,7 +42,7 @@ export default {
 </script>
 
 <style scoped>
-.link{
-	cursor: pointer;
+.link {
+  cursor: pointer;
 }
 </style>
