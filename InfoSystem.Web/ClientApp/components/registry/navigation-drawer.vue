@@ -43,7 +43,7 @@ export default {
       return `${name.charAt(0).toUpperCase()}${name.slice(1)}s`
     },
     isActive(name) {
-      return this.$route.params.name == name
+      return this.$route.params.typeName == name
     }
   }
 }

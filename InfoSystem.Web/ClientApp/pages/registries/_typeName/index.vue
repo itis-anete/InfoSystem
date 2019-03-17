@@ -26,7 +26,7 @@ export default {
   },
   async fetch({ store, params }) {
     await store.dispatch('getTypes')
-    await store.dispatch('getEntities', params.name)
+    await store.dispatch('getEntities', params.typeName)
   }
 }
 </script>

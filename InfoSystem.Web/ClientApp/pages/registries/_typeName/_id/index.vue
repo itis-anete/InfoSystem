@@ -29,7 +29,7 @@ export default {
   },
   async fetch({ store, params }) {
     await store.dispatch('getTypes')
-    await store.dispatch('getAttributes', { entityId: params.id, typeName: params.name })
+    await store.dispatch('getAttributes', { entityId: params.id, typeName: params.typeName })
   }
 }
 </script>

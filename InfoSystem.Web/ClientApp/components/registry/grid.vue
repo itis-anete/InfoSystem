@@ -7,7 +7,7 @@
     :pagination.sync="pagination"
   >
     <template v-slot:items="props">
-      <nuxt-link :to="`${$route.params.name}/${props.item.id}`" tag="tr" style="cursor:pointer">
+      <nuxt-link :to="`${$route.params.typeName}/${props.item.id}`" tag="tr" style="cursor:pointer">
         <td>{{ props.item.id }}</td>
         <td class="justify-end layout px-4">
           <v-icon small @click="deleteItem(props.item)">delete</v-icon>

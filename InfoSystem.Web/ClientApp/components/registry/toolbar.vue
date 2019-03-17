@@ -15,7 +15,7 @@ export default {
   methods: {
     ...mapActions(['addEntity']),
     create() {
-      this.addEntity(this.$route.params.name)
+      this.addEntity(this.$route.params.typeName)
     }
   }
 }
