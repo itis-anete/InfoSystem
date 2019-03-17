@@ -15,7 +15,7 @@ export default {
   actions: {
     async getEntities({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.get(`/api/Entity/GetByType?typeId=${payload}`)
+      let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`)
       commit('setEntities', response.data)
       setTimeout(() => {
         commit('setLoading', false)

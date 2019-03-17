@@ -1,7 +1,7 @@
 <template>
   <v-container class="ma-0" style="margin-left: 250px !important">
     <v-layout justify-center>
-      <v-flex xs12>
+      <v-flex xs10>
         <v-card v-if="entities">
           <registry-toolbar></registry-toolbar>
           <registry-grid :entities="entities"></registry-grid>
@@ -17,9 +17,6 @@ import RegistryGrid from '~/components/registry/grid.vue'
 import RegistryToolbar from '~/components/registry/toolbar.vue'
 export default {
   name: 'Registry',
-  validate({ params }) {
-    return !isNaN(+params.id)
-  },
   components: {
     RegistryGrid,
     RegistryToolbar
@@ -28,11 +25,8 @@ export default {
     ...mapGetters(['entities'])
   },
   async fetch({ store, params }) {
-    console.log(1)
-    await store.dispatch('getEntities', params.id)
-    console.log(2)
     await store.dispatch('getTypes')
-    console.log(3)
+    await store.dispatch('getEntities', params.name)
   }
 }
 </script>

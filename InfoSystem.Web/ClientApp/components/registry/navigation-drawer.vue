@@ -7,12 +7,15 @@
       </v-subheader>
       <v-divider></v-divider>
       <template v-for="(type, index) in types">
-        <v-list-tile :key="type.name" :to="'/registries/'+type.id" router exact>
+        <v-list-tile :key="type.name" :to="`/registries/${type.name}`">
           <v-list-tile-action>
-            <v-icon>{{icons[type.name.toLowerCase()]}}</v-icon>
+            <v-icon :class="{active: isActive(type.name)}">{{icons[type.name.toLowerCase()]}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="`${type.name}s`"/>
+            <v-list-tile-title
+              :class="{active: isActive(type.name)}"
+              v-html="formatName(type.name)"
+            />
           </v-list-tile-content>
         </v-list-tile>
         <v-divider :key="type.id"></v-divider>
@@ -34,6 +37,14 @@ export default {
   }),
   computed: {
     ...mapGetters(['drawer'])
+  },
+  methods: {
+    formatName(name) {
+      return `${name.charAt(0).toUpperCase()}${name.slice(1)}s`
+    },
+    isActive(name) {
+      return this.$route.params.name == name
+    }
   }
 }
 </script>

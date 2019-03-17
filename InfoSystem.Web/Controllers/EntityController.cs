@@ -92,7 +92,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>
 		/// <returns>Entities collection of one type.</returns>
 		[HttpGet]
-		public IActionResult GetByTypeName(string typeName)
+		public IActionResult GetByTypeName([FromQuery] string typeName)
 		{
 			try
 			{
