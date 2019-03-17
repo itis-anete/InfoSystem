@@ -19,16 +19,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['editValue']),
+    ...mapActions(['updateAttribute']),
     save() {
       const attribute = {
-        id: this.item.id,
-        key: this.item.key,
-        value: this.value,
-        entityId: this.item.entityId,
-        typeId: this.item.typeId
+        attributeId: this.item.id,
+        typeName: this.$route.params.typeName,
+        newValue: this.value
       }
-      //this.editValue(attribute)
+      this.updateAttribute(attribute)
     },
     cancel() {
       this.value = this.item.value
