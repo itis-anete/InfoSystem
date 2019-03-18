@@ -25,7 +25,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				_context.Database.ExecuteSqlCommand(sql);
 
 				return GetTypeAttributesByName(typeName)
-					.Last(a => a.Key == newAttribute.Key); //.FirstOrDefault(a => a.Key == newAttribute.Key);
+					.FirstOrDefault(a =>
+						a.Key == newAttribute.Key &&
+						a.TypeId == newAttribute.TypeId &&
+						a.EntityId == newAttribute.EntityId &&
+						a.Value == newAttribute.Value);
 			}
 			catch (Exception e)
 			{
