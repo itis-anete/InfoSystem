@@ -24,7 +24,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newAttribute);
 				_context.Database.ExecuteSqlCommand(sql);
 
-				return GetTypeAttributesByName(typeName).FirstOrDefault(a => a.Key == newAttribute.Key);
+				return GetTypeAttributesByName(typeName)
+					.Last(a => a.Key == newAttribute.Key); //.FirstOrDefault(a => a.Key == newAttribute.Key);
 			}
 			catch (Exception e)
 			{
