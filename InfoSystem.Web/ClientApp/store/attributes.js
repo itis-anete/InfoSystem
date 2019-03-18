@@ -9,7 +9,8 @@ export default {
       state.attributes = payload
     },
     deleteAttribute(state, payload) {
-      state.attributes.splice(state.attributes.indexOf(payload))
+      let index = state.attributes.indexOf(state.attributes.find(x => x.id == payload.attributeId))
+      state.attributes.splice(index, 1)
     },
     addAttribute(state, payload) {
       state.attributes.push(payload)
@@ -46,8 +47,8 @@ export default {
     },
     async deleteAttribute({ commit }, payload) {
       commit('setLoading', true)
-      //let response = await axios.delete(`/api/Attribute/Delete?id=${payload.id}&typeName=${payload.typeName}`)
-      //commit('deleteAttribute', response.data)
+      await axios.delete(`/api/Attribute/Delete?typeName=${payload.typeName}&attributeId=${payload.attributeId}`)
+      commit('deleteAttribute', payload)
       setTimeout(() => {
         commit('setLoading', false)
       }, 550)

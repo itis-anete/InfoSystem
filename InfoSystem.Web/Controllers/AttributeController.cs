@@ -34,8 +34,8 @@ namespace InfoSystem.Web.Controllers
 			return Ok(addedAttribute);
 		}
 
-		[HttpPost]
-		public IActionResult Delete(string typeName, int attributeId) => 
+		[HttpDelete]
+		public IActionResult Delete([FromQuery] string typeName, int attributeId) => 
 			!_repository.Delete(typeName, attributeId) ? StatusCode(500) : Ok();
 
 		/// <summary>

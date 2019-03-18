@@ -2,12 +2,14 @@
   <v-data-table
     :headers="headers"
     :items="attributes"
-    item-key="id"
     :rows-per-page-items="rowsPerPageItems"
     :pagination.sync="pagination"
+    prev-icon="arrow-left"
+    next-icon="arrow-right"
+    sort-icon="arrow_drop_down"
   >
     <template v-slot:items="props">
-      <tr @click="linkTo(props.item)" :class="{link : props.item.isComplex}">
+      <tr @click="linkTo(props.item)" :key="props.index" :class="{link : props.item.isComplex}">
         <td>{{props.item.key}}</td>
         <td v-if="props.item.isComplex">{{props.item.value}}</td>
         <attribute-edit-dialog v-else :item="props.item"></attribute-edit-dialog>
@@ -33,7 +35,7 @@ export default {
       {
         text: 'Key',
         align: 'left',
-        sortable: false
+        value: 'key'
       },
       { text: 'Value', sortable: false },
       { text: '', sortable: false }
@@ -53,7 +55,7 @@ export default {
 
 <style scoped>
 .link {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 tbody tr:nth-of-type(even) {
    background-color: #F4F6F9;

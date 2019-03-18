@@ -36,8 +36,8 @@ namespace InfoSystem.Web.Controllers
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		[HttpGet]
-		public IActionResult Delete(int id)
+		[HttpDelete]
+		public IActionResult Delete([FromQuery] int id)
 		{
 			return !_repository.Delete(id) ? StatusCode(500) : Ok();
 		}

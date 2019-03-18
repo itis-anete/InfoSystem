@@ -1,9 +1,11 @@
 <template>
   <td>
-    <v-edit-dialog large lazy persistent @save="save" @cancel="cancel">
-      <div>{{ value }}</div>
+    <v-edit-dialog lazy persistent ref="attributeEditDialog">
+      <div>{{ item.value }}</div>
       <template v-slot:input>
         <v-text-field v-model="value" label="Value" single-line counter autofocus></v-text-field>
+        <v-btn color="error" flat @click="cancel">Cancel</v-btn>
+        <v-btn color="primary" flat @click="save">save</v-btn>
       </template>
     </v-edit-dialog>
   </td>
@@ -27,9 +29,11 @@ export default {
         newValue: this.value
       }
       this.updateAttribute(attribute)
+      this.$refs['attributeEditDialog'].isActive = false
     },
     cancel() {
       this.value = this.item.value
+      this.$refs['attributeEditDialog'].isActive = false
     }
   }
 }

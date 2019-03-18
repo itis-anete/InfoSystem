@@ -18,10 +18,8 @@ export default {
       commit('setTypes', response.data)
     },
     async addType({ commit }, payload) {
-      commit('setLoading', true)
       let response = await axios.post(`/api/Type/Add?typeName=${payload}`)
       commit('addType', response.data)
-      commit('setLoading', false)
     }
   },
   getters: {
