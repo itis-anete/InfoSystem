@@ -1,4 +1,4 @@
-namespace ServicesMonitoringSystem.Web.Models
+namespace InfoSystem.Web
 {
     public class Person
     {

@@ -6,7 +6,7 @@ namespace InfoSystem.Web
     /// <summary>
     /// Contains default values for Bearer authentification.
     /// </summary>
-    public class AuthentificationOptions
+    public static class AuthentificationOptions
     {
         /// <summary>
         /// Token provider.

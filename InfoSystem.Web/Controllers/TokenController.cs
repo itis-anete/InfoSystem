@@ -2,18 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using ServicesMonitoringSystem.Web.Models;
 
 namespace InfoSystem.Web.Controllers
 {
     /// <summary>
     /// Used to give tokens
     /// </summary>
+    [Route("[controller]/[action]")]
     public class TokenController : Controller
     {
         /// <summary>
@@ -21,6 +19,7 @@ namespace InfoSystem.Web.Controllers
         /// </summary>
         /// <returns>JWT ready for header format, example : Bearer *token*</returns>
         [HttpGet]
+        [AllowAnonymous]
         public string GetToken()
         {
             var identity = GetIdentity();
@@ -37,17 +36,19 @@ namespace InfoSystem.Web.Controllers
                 AuthentificationOptions.Audience,
                 identity.Claims,
                 now,
-                now.AddMinutes(1),
+                now.AddMinutes(AuthentificationOptions.Lifetime),
                 new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
-            return "Bearer " + new JwtSecurityTokenHandler().WriteToken(jwt);
+            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            return "Bearer " + token;
         }
 
         private ClaimsIdentity GetIdentity()
         {
-            var person = new Person() {Login = "admin", Password = "admin"};
+            var person = new Person() {Login = "admin", Password = "admin", Role = "admin"};
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login)
+                new Claim("Name", person.Login),
+                new Claim("Role", person.Role)
             };
             var claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
