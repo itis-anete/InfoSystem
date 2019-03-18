@@ -1,9 +1,7 @@
 <template>
   <v-toolbar card color="#eee">
     <v-toolbar-items>
-      <v-btn color="primary" flat @click="add">
-        <v-icon class="mr-2">add</v-icon>Add
-      </v-btn>
+      <attribute-new-dialog></attribute-new-dialog>
       <v-divider inset vertical></v-divider>
     </v-toolbar-items>
   </v-toolbar>
@@ -11,9 +9,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import AttributeNewDialog from '~/components/attribute/new-dialog.vue'
 export default {
-  methods: {
-    add() {}
+  components: {
+    AttributeNewDialog
   }
 }
 </script>

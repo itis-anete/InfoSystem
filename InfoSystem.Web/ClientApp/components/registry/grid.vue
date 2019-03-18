@@ -35,3 +35,10 @@ export default {
   }
 }
 </script>
+
+<style>
+tbody tr:nth-of-type(even) {
+   background-color: #F4F6F9;
+ }
+</style>
+

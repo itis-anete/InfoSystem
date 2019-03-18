@@ -13,8 +13,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import AttributeEditDialog from '~/components/attribute/attribute-edit-dialog.vue'
-import AttributeDeleteDialog from '~/components/attribute/attribute-delete-dialog.vue'
+import AttributeEditDialog from '~/components/attribute/edit-dialog.vue'
+import AttributeDeleteDialog from '~/components/attribute/delete-dialog.vue'
 export default {
   name: 'attribute-grid',
   props: ['attributes'],

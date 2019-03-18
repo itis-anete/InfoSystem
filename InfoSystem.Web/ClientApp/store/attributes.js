@@ -11,6 +11,9 @@ export default {
     deleteAttribute(state, payload) {
       state.attributes.splice(state.attributes.indexOf(payload))
     },
+    addAttribute(state, payload) {
+      state.attributes.push(payload)
+    },
     updateAttribute(state, payload) {
       let attribute = state.attributes.find(x => x.id == payload.id)
       attribute.value = payload.value
@@ -29,6 +32,14 @@ export default {
         `/api/Attribute/Update?typeName=${payload.typeName}&newValue=${payload.newValue}&attributeId=${payload.attributeId}`
       )
       commit('updateAttribute', response.data)
+      setTimeout(() => {
+        commit('setLoading', false)
+      }, 550)
+    },
+    async addAttribute({ commit }, payload) {
+      commit('setLoading', true)
+      let response = await axios.post(`/api/Attribute/Add`, payload)
+      commit('addAttribute', response.data)
       setTimeout(() => {
         commit('setLoading', false)
       }, 550)

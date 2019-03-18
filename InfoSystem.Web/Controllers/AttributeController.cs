@@ -26,7 +26,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="newAttribute"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public IActionResult Add(Attribute newAttribute)
+		public IActionResult Add([FromBody] Attribute newAttribute)
 		{
 			var addedAttribute = _repository.Add(newAttribute);
 			if (addedAttribute == null)
