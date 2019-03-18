@@ -33,6 +33,22 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			}
 		}
 
+		public bool Delete(string typeName, int attributeId)
+		{
+			try
+			{
+				typeName = typeName.ToLower();
+				var sql = SqlOptions.GenerateDeleteScript(typeName, attributeId);
+				_context.Database.ExecuteSqlCommand(sql);
+				return true;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return false;
+			}
+		}
+
 		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
 		{
 			var typeName = _context.Types.Find(typeId)?.Name;

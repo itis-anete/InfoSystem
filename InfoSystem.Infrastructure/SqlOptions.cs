@@ -18,6 +18,8 @@ namespace InfoSystem.Infrastructure
 			              $"FOREIGN KEY (\"entityid\") REFERENCES \"Entities\" (\"Id\") ON DELETE CASCADE" +
 			              $");", typeName);
 
+		public static string GenerateDeleteScript(string typeName, int attributeId) => $"DELETE FROM {typeName} WHERE id={attributeId};";
+
 		public static string GenerateInsertIntoScript(string typeName, Attribute newAttribute) =>
 			$"INSERT INTO {typeName} (key,value,typeid,entityid) " +
 			$"VALUES ('{newAttribute.Key}','{newAttribute.Value}',{newAttribute.TypeId},{newAttribute.EntityId});";
