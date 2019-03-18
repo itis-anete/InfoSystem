@@ -1,8 +1,6 @@
 using System;
 using InfoSystem.Core.Entities.Basic;
-using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -15,7 +13,7 @@ namespace InfoSystem.Web.Controllers
 		/// <inheritdoc />
 		public TypeController()
 		{
-			_repository = new TypeRepository(new InfoSystemDbContext());
+			_service = new TypeDomainService();
 		}
 
 		/// <summary>
@@ -29,7 +27,7 @@ namespace InfoSystem.Web.Controllers
 			EntityType addedType = null;
 			try
 			{
-				addedType = _repository.Add(typeName);
+				addedType = _service.Add(typeName);
 			}
 			catch (NpgsqlException e)
 			{
@@ -56,7 +54,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var type = _repository.GetById(id);
+				var type = _service.GetById(id);
 				if (type == null)
 					return StatusCode(500);
 				return Ok(type);
@@ -77,7 +75,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var types = _repository.Get();
+				var types = _service.Get();
 				if (types == null)
 					return StatusCode(500);
 				return Ok(types);
@@ -88,6 +86,6 @@ namespace InfoSystem.Web.Controllers
 			}
 		}
 
-		private readonly ITypeRepository _repository;
+		private readonly TypeDomainService _service;
 	}
 }

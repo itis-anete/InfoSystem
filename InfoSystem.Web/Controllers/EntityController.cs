@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
-using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
@@ -14,7 +12,7 @@ namespace InfoSystem.Web.Controllers
 		/// <inheritdoc />
 		public EntityController()
 		{
-			_repository = new EntityRepository(new InfoSystemDbContext());
+			_repository = new EntityDomainService();
 		}
 
 		/// <summary>
@@ -106,9 +104,8 @@ namespace InfoSystem.Web.Controllers
 				Console.WriteLine(e);
 				return StatusCode(500, e.Message);
 			}
-
 		}
 
-		private readonly IEntityRepository _repository;
+		private readonly EntityDomainService _repository;
 	}
 }

@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 
 namespace InfoSystem.Web.Controllers
@@ -17,7 +14,7 @@ namespace InfoSystem.Web.Controllers
 		/// <inheritdoc />
 		public AttributeController()
 		{
-			_repository = new AttributeRepository(new InfoSystemDbContext());
+			_repository = new AttributeDomainService();
 		}
 
 		/// <summary>
@@ -35,7 +32,7 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		[HttpDelete]
-		public IActionResult Delete([FromQuery] string typeName, int attributeId) => 
+		public IActionResult Delete([FromQuery] string typeName, int attributeId) =>
 			!_repository.Delete(typeName, attributeId) ? StatusCode(500) : Ok();
 
 		/// <summary>
@@ -123,6 +120,6 @@ namespace InfoSystem.Web.Controllers
 			return Ok(updatedAttribute);
 		}
 
-		private readonly IAttributeRepository _repository;
+		private readonly AttributeDomainService _repository;
 	}
 }
