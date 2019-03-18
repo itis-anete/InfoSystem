@@ -1,5 +1,11 @@
 <template>
-  <v-data-table :headers="headers" :items="attributes" item-key="id" sort-icon="arrow_drop_down">
+  <v-data-table
+    :headers="headers"
+    :items="attributes"
+    item-key="id"
+    :rows-per-page-items="rowsPerPageItems"
+    :pagination.sync="pagination"
+  >
     <template v-slot:items="props">
       <tr @click="linkTo(props.item)" :class="{link : props.item.isComplex}">
         <td>{{props.item.key}}</td>
@@ -31,7 +37,11 @@ export default {
       },
       { text: 'Value', sortable: false },
       { text: '', sortable: false }
-    ]
+    ],
+    rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
+    pagination: {
+      rowsPerPage: 10
+    }
   }),
   methods: {
     linkTo(item) {
@@ -45,4 +55,7 @@ export default {
 .link {
   cursor: pointer;
 }
+tbody tr:nth-of-type(even) {
+   background-color: #F4F6F9;
+ }
 </style>

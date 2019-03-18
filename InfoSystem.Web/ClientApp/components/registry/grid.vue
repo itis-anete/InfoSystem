@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 tbody tr:nth-of-type(even) {
    background-color: #F4F6F9;
  }
