@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default {
   state: {
-    entities: null
+    entities: []
   },
   mutations: {
     setEntities(state, payload) {
@@ -14,16 +14,14 @@ export default {
   },
   actions: {
     async getEntities({ commit }, payload) {
-      commit('setLoading', true)
-      let response = await axios.get(`api/Entity/GetByType?typeId=${payload}`)
-      commit('setEntities', response.data)
+      let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`)
       setTimeout(() => {
-        commit('setLoading', false)
-      }, 550)
+        commit('setEntities', response.data)
+      }, 0)
     },
     async addEntity({ commit }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(`api/Entity/Add?typeName=${payload.typeName}&identificator=${payload.identificator}`)
+      let response = await axios.post(`/api/Entity/Add?typeName=${payload}`)
       commit('addEntity', response.data)
       commit('setLoading', false)
     }

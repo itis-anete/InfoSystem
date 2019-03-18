@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml.XPath;
@@ -14,7 +16,6 @@ using Microsoft.Extensions.Options;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
-//	[Authenticate]
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{
@@ -23,12 +24,12 @@ namespace InfoSystem.Web.Controllers
 		{
 			_repository = new EntityRepository(new InfoSystemDbContext());
 		}
-			
+
 		/// <summary>
 		/// Add a new instance of type <paramref name="typeName"/>.
 		/// </summary>
 		/// <param name="typeName">Entity type name.</param>
-		/// <returns>ActionResult, depending on operation result and added value.</returns>
+		/// <returns>ActionResult, depending on operation result and added value.</returns> 
 		[HttpPost]
 		public async Task<IActionResult> Add([FromQuery] string typeName)
 		{
@@ -38,8 +39,19 @@ namespace InfoSystem.Web.Controllers
 			HttpContext.User = authResult.Principal;
 			var addedEntity = _repository.Add(typeName);
 			if (addedEntity == null)
-				return BadRequest();
+				return StatusCode(500);
 			return Ok(addedEntity);
+		}
+
+		/// <summary>
+		/// Deletes an instance.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		[HttpDelete]
+		public IActionResult Delete([FromQuery] int id)
+		{
+			return !_repository.Delete(id) ? StatusCode(500) : Ok();
 		}
 
 		/// <summary>
@@ -48,7 +60,21 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="id">Id of an entity instance.</param>
 		/// <returns>Entity instance.</returns>
 		[HttpGet]
-		public Entity Get([FromQuery] int id) => _repository.GetById(id);
+		public IActionResult GetById([FromQuery] int id)
+		{
+			try
+			{
+				var entity = _repository.GetById(id);
+				if (entity == null)
+					return StatusCode(500);
+				return Ok(entity);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
 
 		/// <summary>
 		/// Get all instances of one type.
@@ -56,7 +82,44 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeId">Entity type id.</param>
 		/// <returns>Entities collection of one type.</returns>
 		[HttpGet]
-		public IEnumerable<Entity> GetByType([FromQuery] int typeId) => _repository.GetByTypeId(typeId);
+		public IActionResult GetByTypeId([FromQuery] int typeId)
+		{
+			try
+			{
+				var entities = _repository.GetByTypeId(typeId);
+				if (entities == null || !entities.Any())
+					return StatusCode(500);
+				return Ok(entities);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
+
+		/// <summary>
+		/// Get all instances of one type.
+		/// </summary>
+		/// <param name="typeName">Entity type name.</param>
+		/// <returns>Entities collection of one type.</returns>
+		[HttpGet]
+		public IActionResult GetByTypeName([FromQuery] string typeName)
+		{
+			try
+			{
+				var entities = _repository.GetByTypeName(typeName);
+				if (entities == null || !entities.Any())
+					return StatusCode(500);
+				return Ok(entities);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+
+		}
 
 		private readonly IEntityRepository _repository;
 	}

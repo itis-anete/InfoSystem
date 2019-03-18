@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer style="margin-top: 1px">
+  <v-navigation-drawer style="margin-top: 81px" fixed :class="{left: drawer}" width="250">
     <v-list two-line subheader>
       <v-subheader>Entity Types
         <v-spacer></v-spacer>
@@ -7,12 +7,15 @@
       </v-subheader>
       <v-divider></v-divider>
       <template v-for="(type, index) in types">
-        <v-list-tile :key="type.name" :to="'/registries/'+type.id" router exact>
+        <v-list-tile :key="type.name" :to="`/registries/${type.name}`">
           <v-list-tile-action>
-            <v-icon>{{icons[type.name.toLowerCase()]}}</v-icon>
+            <v-icon :class="{active: isActive(type.name)}">{{icons[type.name.toLowerCase()]}}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="`${type.name}s`"/>
+            <v-list-tile-title
+              :class="{active: isActive(type.name)}"
+              v-html="formatName(type.name)"
+            />
           </v-list-tile-content>
         </v-list-tile>
         <v-divider :key="type.id"></v-divider>
@@ -23,6 +26,7 @@
 
 <script>
 import NewTypeDialog from './new-type-dialog.vue'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     NewTypeDialog
@@ -31,12 +35,26 @@ export default {
   data: () => ({
     icons: { market: 'local_grocery_store', product: 'toc' }
   }),
-  methods: {}
+  computed: {
+    ...mapGetters(['drawer'])
+  },
+  methods: {
+    formatName(name) {
+      return `${name.charAt(0).toUpperCase()}${name.slice(1)}s`
+    },
+    isActive(name) {
+      return this.$route.params.typeName == name
+    }
+  }
 }
 </script>
 
 <style>
 .v-small-dialog {
-	width: inherit;
+  width: inherit;
+}
+.left {
+  transform: translateX(80px) !important;
+  transition: transform 1s linear;
 }
 </style>

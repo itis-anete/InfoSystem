@@ -1,51 +1,44 @@
 <template>
-  <div>
-    <v-data-table
-      :headers="headers"
-      :items="items"
-      sort-icon="mdi-menu-down"
-      :loading="loading"
-      class="elevation-1"
-      :rows-per-page-items="rowsPerPageItems"
-      :pagination.sync="pagination"
-    >
-      <template v-slot:items="props">
+  <v-data-table
+    :headers="headers"
+    :items="entities"
+    :rows-per-page-items="rowsPerPageItems"
+    :pagination.sync="pagination"
+  >
+    <template v-slot:items="props">
+      <nuxt-link :to="`${$route.params.typeName}/${props.item.id}`" tag="tr" style="cursor:pointer">
         <td>{{ props.item.id }}</td>
         <td class="justify-end layout px-4">
-          <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
           <v-icon small @click="deleteItem(props.item)">delete</v-icon>
         </td>
-        <edit-entity-dialog :entity="props.item" :dialogActive.sync="dialogActive"></edit-entity-dialog>
-      </template>
-    </v-data-table>
-  </div>
+      </nuxt-link>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
-import EditEntityDialog from '~/components/edit-entity/dialog.vue'
-import { mapGetters } from 'vuex'
+import AttributeGrid from '~/components/attribute/grid.vue'
 export default {
-  props: ['headers', 'items'],
+  props: ['entities'],
   components: {
-    EditEntityDialog
+    AttributeGrid
   },
   data: () => ({
-    dialogActive: false,
+    headers: [{ text: 'Id', sortable: false }, { text: '', sortable: false }],
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
     pagination: {
       rowsPerPage: 10
     }
   }),
   methods: {
-    editItem(item) {
-      this.$store.dispatch('getValues', item.id)
-      this.$store.dispatch('getAttributes', item.typeId)
-      this.dialogActive = true
-    },
     deleteItem(item) {}
-  },
-  computed: {
-    ...mapGetters(['loading'])
   }
 }
 </script>
+
+<style scoped>
+tbody tr:nth-of-type(even) {
+   background-color: #F4F6F9;
+ }
+</style>
+

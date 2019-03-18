@@ -6,7 +6,6 @@ Vue.use(Vuex)
 import common from './common'
 import attributes from './attributes'
 import entities from './entities'
-import values from './values'
 import types from './types'
 
 const createStore = () => {
@@ -15,7 +14,6 @@ const createStore = () => {
       common,
       attributes,
       entities,
-      values,
       types
     }
   })

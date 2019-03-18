@@ -8,6 +8,5 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 		EntityType Add(string typeName);
 		IEnumerable<EntityType> Get();
 		EntityType GetById(int id);
-	    EntityType GetByTypeName(string typeName);
     }
 }

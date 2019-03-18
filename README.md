@@ -1,20 +1,20 @@
 # InfoSystem
 
 ## Команда по учётной записи
-* Erichzann1 - Front-end
-* d4n0n-myself - Back-end
-* Polina17 - Team Leader
+* Helmoz - PIAR manager x Front
+* d4n0n-myself - Back-eback
+* Halloneo - front-efront
+* Vaulz - back
 
 ## Технологии
 - Технология - .NET Core
 - Хранилище - PostgreSQL
-- UI - ExtJS
-- Аут + авт - своё
-- In/Out - смешанное (обьект + автоматическая загрузка)
-- Error - later
+- UI - Nuxt.js
+- Аут + авт - JWT
+- In/Out - смешанное (обьект + автоматическая загрузка) ???
+- Error - later ???
 
-Взять готовое хранилище и UI
-
+Ознакомиться с api можно на `*site-address*/swagger`
 
 # Задачи
 [GitHub Board Project](https://github.com/orgs/itis-anete/projects/3)

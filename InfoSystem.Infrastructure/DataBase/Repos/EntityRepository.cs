@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
@@ -20,20 +19,20 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             var newEntity = new Entity();
             try
             {
+                typeName = typeName.ToLower();
                 var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
                 if (type == null)
                 {
-                    var newType = new EntityType(typeName);
-                    _context.Types.Add(newType);
-                    var receivedType = _context.Types.FirstOrDefault(t => t.Name == typeName);
-                    newEntity.TypeId = receivedType?.Id ?? 1;
+                    var typeRepository = new TypeRepository(new InfoSystemDbContext());
+                    var newType = typeRepository.Add(typeName);
+                    newEntity.TypeId = newType?.Id ?? 1;
                 }
                 else
                     newEntity.TypeId = type.Id;
             }
             catch (Exception e)
             {
-                Console.WriteLine("TYPES FAILED");
+                Console.WriteLine("RETARD ALERT! TYPES FAILED");
                 Console.WriteLine(e);
                 return null;
             }
@@ -46,7 +45,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             }
             catch (Exception e)
             {
-                Console.WriteLine("ENTITIES FAILED");
+                Console.WriteLine("RETARD ALERT! ENTITIES FAILED");
                 Console.WriteLine(e);
                 return null;
             }
@@ -57,6 +56,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             try
             {
                 _context.Entities.Remove(_context.Entities.Find(id));
+                _context.SaveChanges();
                 return true;
             }
             catch (Exception e)
@@ -68,12 +68,16 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         public IEnumerable<Entity> Get() => _context.Entities;
 
-        public Entity GetById(int id)
-        {
-            return _context.Entities.Find(id);
-        }
+        public Entity GetById(int id) => _context.Entities.Find(id);
 
-        public IEnumerable<Entity> GetByTypeId(int typeId) => _context.Entities.Where(e => e.TypeId == typeId);
+        public IEnumerable<Entity> GetByTypeId(int typeId) =>
+            _context.Entities.Where(e => e.TypeId == typeId);
+
+        public IEnumerable<Entity> GetByTypeName(string typeName)
+        {
+            var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
+            return _context.Entities.Where(e => e.TypeId == type.Id);
+        }
 
         private readonly InfoSystemDbContext _context;
     }

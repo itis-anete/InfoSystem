@@ -5,12 +5,11 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 {
 	public interface IAttributeRepository
 	{
-		Attribute Add(string attributeName, string valueType, string typeName);
-		IEnumerable<Attribute> Get();
-		Attribute GetById(int id);
-		Attribute GetById(int entityTypeId, int attributeId);
-		Attribute GetByName(int entityTypeId, string attributeName);
-		IEnumerable<Attribute> GetTypeAttributes(string typeName);
+		Attribute Add(Attribute newAttribute);
+		bool Delete(string typeName, int attributeId);
 		IEnumerable<Attribute> GetTypeAttributesById(int typeId);
+		IEnumerable<Attribute> GetByEntityId(int entityId, int typeId);
+	    IEnumerable<Attribute> GetByTypeName(int entityId, string typeName);
+	    Attribute Update(string typeName, string newValue, int attributeId);
 	}
 }

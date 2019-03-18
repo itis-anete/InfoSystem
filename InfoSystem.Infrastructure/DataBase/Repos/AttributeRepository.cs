@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
-using ValueType = InfoSystem.Core.Entities.ValueType;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
@@ -17,77 +17,89 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public Attribute Add(string attributeName, string valueType, string typeName)
+		public Attribute Add(Attribute newAttribute)
 		{
-			EntityType entityType;
 			try
 			{
-				entityType = _context.Types.FirstOrDefault(type => type.Name == typeName);
-				if (entityType == null)
-					return null;
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("TYPES FAILED");
-				Console.WriteLine(e);
-				return null;
-			}
+				var typeName = _context.Types.Find(newAttribute.TypeId)?.Name;
+				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newAttribute);
+				_context.Database.ExecuteSqlCommand(sql);
 
-			try
-			{
-				var attribute = new Attribute(attributeName, entityType.Id, Enum.Parse<ValueType>(valueType));
-				var entityEntry = _context.Attributes.Add(attribute);
-				_context.SaveChanges();
-				return entityEntry.Entity;
+				return GetTypeAttributesByName(typeName)
+					.FirstOrDefault(a =>
+						a.Key == newAttribute.Key &&
+						a.TypeId == newAttribute.TypeId &&
+						a.EntityId == newAttribute.EntityId &&
+						a.Value == newAttribute.Value);
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("ATTRIBUTE FAIL");
 				Console.WriteLine(e);
 				return null;
 			}
 		}
 
-		public IEnumerable<Attribute> Get() => _context.Attributes;
-
-		public Attribute GetById(int id)
+		public bool Delete(string typeName, int attributeId)
 		{
-			return _context.Attributes.FirstOrDefault(a => a.Id == id);
-		}
-
-		public Attribute GetById(int entityTypeId, int attributeId)
-		{
-			bool Func(Attribute a, int attributeName) => a.Id == attributeId;
-			return Get(entityTypeId, attributeId, Func);
-		}
-
-		public Attribute GetByName(int entityTypeId, string attributeName)
-		{
-			bool Func(Attribute a, string name) => a.Name == name;
-			return Get(entityTypeId, attributeName, Func);
-		}
-
-		public IEnumerable<Attribute> GetTypeAttributes(string typeName)
-		{
-			var entityType = _context.Types.FirstOrDefault(t => t.Name == typeName);
-			return entityType == null
-				? null
-				: _context.Attributes.Where(a => a.TypeId == entityType.Id);
+			try
+			{
+				typeName = typeName.ToLower();
+				var sql = SqlOptions.GenerateDeleteScript(typeName, attributeId);
+				_context.Database.ExecuteSqlCommand(sql);
+				return true;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return false;
+			}
 		}
 
 		public IEnumerable<Attribute> GetTypeAttributesById(int typeId)
 		{
-			return _context.Attributes.Where(a => a.TypeId == typeId);
+			var typeName = _context.Types.Find(typeId)?.Name;
+			return GetTypeAttributesByName(typeName);
 		}
 
-		private Attribute Get<T>(int entityTypeId, T searchParameter, Func<Attribute, T, bool> selector)
+		public IEnumerable<Attribute> GetByEntityId(int entityId, int typeId) =>
+			GetTypeAttributesById(typeId).Where(a => a.EntityId == entityId);
+
+		public IEnumerable<Attribute> GetByTypeName(int entityId, string typeName) =>
+			GetTypeAttributesByName(typeName).Where(a => a.EntityId == entityId);
+
+		public Attribute Update(string typeName, string newValue, int attributeId)
 		{
-			var type = _context.Types.FirstOrDefault(t => t.Id == entityTypeId);
-			return type != null
-				? _context.Attributes.FirstOrDefault(a => selector(a, searchParameter) && a.TypeId == type.Id)
-				: null;
+			try
+			{
+				typeName = typeName.ToLower();
+				var sql = SqlOptions.GenerateUpdateScript(typeName, newValue, attributeId);
+				_context.Database.ExecuteSqlCommand(sql);
+
+				return GetTypeAttributesByName(typeName).FirstOrDefault(a => a.Id == attributeId);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return null;
+			}
 		}
 
 		private readonly InfoSystemDbContext _context;
+
+		private IEnumerable<Attribute> GetTypeAttributesByName(string typeName)
+		{
+			ManageQueryType();
+			var query = SqlOptions.GenerateSelectScript(typeName);
+			return _context.Query<Attribute>().FromSql(query).ToList();
+		}
+
+		private void ManageQueryType()
+		{
+			if (ModelDoesntHaveAttributeQueryType())
+				_context.Model.AsModel().AddQueryType(typeof(Attribute));
+		}
+
+		private bool ModelDoesntHaveAttributeQueryType() => !_context.Model.GetEntityTypes().Any(type =>
+			type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute");
 	}
 }

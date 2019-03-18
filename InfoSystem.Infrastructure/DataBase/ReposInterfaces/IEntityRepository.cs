@@ -7,8 +7,8 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 	{
 		Entity Add(string typeName);
 		bool Delete(int id);
-		IEnumerable<Entity> Get();
 		Entity GetById(int id);
 		IEnumerable<Entity> GetByTypeId(int typeId);
+		IEnumerable<Entity> GetByTypeName(string typeName);
 	}
 }
