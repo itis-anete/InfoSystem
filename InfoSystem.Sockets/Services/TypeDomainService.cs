@@ -13,20 +13,11 @@ namespace InfoSystem.Sockets.Services
 			_repository = new TypeRepository(new InfoSystemDbContext());
 		}
 
-		public EntityType Add(string typeName)
-		{
-			return _repository.Add(typeName);
-		}
+		public EntityType Add(string typeName) => _repository.Add(typeName);
 
-		public IEnumerable<EntityType> Get()
-		{
-			return _repository.Get();
-		}
+		public IEnumerable<EntityType> Get() => _repository.Get();
 
-		public EntityType GetById(int id)
-		{
-			return _repository.GetById(id);
-		}
+		public EntityType GetById(int id) => _repository.GetById(id);
 
 		private readonly ITypeRepository _repository;
 	}

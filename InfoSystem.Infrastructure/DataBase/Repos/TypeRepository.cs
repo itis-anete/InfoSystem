@@ -10,9 +10,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 {
 	public class TypeRepository : ITypeRepository
 	{
-		public TypeRepository(InfoSystemDbContext dbContext)
+		public TypeRepository(InfoSystemDbContext context)
 		{
-			_context = dbContext;
+			_context = context;
 		}
 
 		public EntityType Add(string newTypeName)
