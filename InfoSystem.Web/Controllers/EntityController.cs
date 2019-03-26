@@ -73,8 +73,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				var entities = _repository.GetByTypeId(typeId);
-				if (entities == null || !entities.Any())
-					return StatusCode(500);
 				return Ok(entities);
 			}
 			catch (Exception e)
@@ -95,8 +93,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				var entities = _repository.GetByTypeName(typeName);
-				if (entities == null || !entities.Any())
-					return StatusCode(500);
 				return Ok(entities);
 			}
 			catch (Exception e)

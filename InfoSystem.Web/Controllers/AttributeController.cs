@@ -43,12 +43,9 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetAttributesByTypeId([FromQuery] int typeId)
 		{
-			IEnumerable<Attribute> attributes;
 			try
 			{
-				attributes = _repository.GetTypeAttributesById(typeId);
-				if (attributes == null)
-					return StatusCode(500);
+				var attributes = _repository.GetTypeAttributesById(typeId);
 				return Ok(attributes);
 			}
 			catch (Exception e)
@@ -70,8 +67,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				var attributes = _repository.GetByEntityId(entityId, typeId);
-				if (attributes == null || !attributes.Any())
-					return StatusCode(500);
 				return Ok(attributes);
 			}
 			catch (Exception e)
@@ -93,8 +88,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				var attributes = _repository.GetByTypeName(entityId, typeName);
-				if (attributes == null || !attributes.Any())
-					return StatusCode(500);
 				return Ok(attributes);
 			}
 			catch (Exception e)

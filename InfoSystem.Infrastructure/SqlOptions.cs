@@ -23,10 +23,11 @@ namespace InfoSystem.Infrastructure
 		public static string GenerateInsertIntoScript(string typeName, Attribute newAttribute) =>
 			$"INSERT INTO {typeName} (key,value,typeid,entityid) " +
 			$"VALUES ('{newAttribute.Key}','{newAttribute.Value}',{newAttribute.TypeId},{newAttribute.EntityId});";
-		
+
 		public static string GenerateSelectScript(string typeName) => $"SELECT * FROM \"{typeName}\"";
 
-		public static string GenerateSelectWhereScript(string typeName, string predicate) => $"SELECT * FROM {typeName} WHERE {predicate};";
+		public static string GenerateSelectWhereScript(string typeName, string predicate) =>
+			$"SELECT * FROM {typeName} WHERE {predicate};";
 
 		public static string GenerateUpdateScript(string typeName, string newValue, int attributeId) =>
 			$"UPDATE {typeName} SET value = \'{newValue}\' WHERE id = {attributeId};";

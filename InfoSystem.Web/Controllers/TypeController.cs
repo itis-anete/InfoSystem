@@ -76,8 +76,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				var types = _service.Get();
-				if (types == null)
-					return StatusCode(500);
 				return Ok(types);
 			}
 			catch (Exception e)
