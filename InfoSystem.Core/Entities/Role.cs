@@ -1,5 +1,3 @@
-using System.Diagnostics.SymbolStore;
-
 namespace InfoSystem.Core.Entities
 {
 	public class Role

@@ -32,8 +32,8 @@ namespace InfoSystem.Web.Controllers
 		/// <summary>
 		/// Deletes an instance.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="id">Instance's id.</param>
+		/// <returns>IActionResult depending on result.</returns>
 		[HttpDelete]
 		public IActionResult Delete([FromQuery] int id)
 		{

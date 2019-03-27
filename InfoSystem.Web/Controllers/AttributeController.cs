@@ -20,8 +20,8 @@ namespace InfoSystem.Web.Controllers
 		/// <summary>
 		/// Add a new Attribute to database.
 		/// </summary>
-		/// <param name="newAttribute"></param>
-		/// <returns></returns>
+		/// <param name="newAttribute">New Attribute instance.</param>
+		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpPost]
 		public IActionResult Add([FromBody] Attribute newAttribute)
 		{
@@ -31,6 +31,12 @@ namespace InfoSystem.Web.Controllers
 			return Ok(addedAttribute);
 		}
 
+		/// <summary>
+		/// Removes attribute.
+		/// </summary>
+		/// <param name="typeName">EntityType name.</param>
+		/// <param name="attributeId">Instance id.</param>
+		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpDelete]
 		public IActionResult Delete([FromQuery] string typeName, int attributeId) =>
 			!_repository.Delete(typeName, attributeId) ? StatusCode(500) : Ok();
@@ -58,9 +64,9 @@ namespace InfoSystem.Web.Controllers
 		/// <summary>
 		/// Gets attributes list of one instance.
 		/// </summary>
-		/// <param name="entityId"></param>
+		/// <param name="entityId">Entity instance id.</param>
 		/// <param name="typeId">Entity's type id.</param>
-		/// <returns></returns>
+		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpGet]
 		public IActionResult GetByEntityId([FromQuery] int entityId, int typeId)
 		{
@@ -79,9 +85,9 @@ namespace InfoSystem.Web.Controllers
 		/// <summary>
 		/// Gets all attributes of all entities in one type.
 		/// </summary>
-		/// <param name="entityId"></param>
-		/// <param name="typeName"></param>
-		/// <returns></returns>
+		/// <param name="entityId">Entity's id.</param>
+		/// <param name="typeName">EntityType name.</param>
+		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpGet]
 		public IActionResult GetByTypeName([FromQuery] int entityId, string typeName)
 		{
