@@ -15,5 +15,6 @@ namespace InfoSystem.Core.Entities
 		public int Id { get; set; }
 		public bool CanRead { get; set; }
 		public bool CanWrite { get; set; }
+		public string Name { get; set; }
 	}
 }

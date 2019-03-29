@@ -13,5 +13,6 @@ namespace InfoSystem.Core.Entities.Basic
 
 		public int Id { get; set; }
 		public string Name { get; set; }
+		public string RequiredAttribute { get; set; }
 	}
 }

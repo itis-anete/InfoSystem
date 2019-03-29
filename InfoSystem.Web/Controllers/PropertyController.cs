@@ -1,58 +1,58 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
-using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
 	[Route("api/[controller]/[action]")]
-	public class AttributeController : Controller
+	public class PropertyController : Controller
 	{
 		/// <inheritdoc />
-		public AttributeController()
+		public PropertyController()
 		{
-			_repository = new AttributeDomainService();
+			_repository = new PropertyDomainService();
 		}
 
 		/// <summary>
-		/// Add a new Attribute to database.
+		/// Add a new Property to database.
 		/// </summary>
-		/// <param name="newAttribute">New Attribute instance.</param>
+		/// <param name="newProperty">New Property instance.</param>
 		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpPost]
-		public IActionResult Add([FromBody] Attribute newAttribute)
+		public IActionResult Add([FromBody] Property newProperty)
 		{
-			var addedAttribute = _repository.Add(newAttribute);
-			if (addedAttribute == null)
+			var addedProperty = _repository.Add(newProperty);
+			if (addedProperty == null)
 				return StatusCode(500);
-			return Ok(addedAttribute);
+			return Ok(addedProperty);
 		}
 
 		/// <summary>
-		/// Removes attribute.
+		/// Removes Property.
 		/// </summary>
 		/// <param name="typeName">EntityType name.</param>
-		/// <param name="attributeId">Instance id.</param>
+		/// <param name="propertyId">Instance id.</param>
 		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpDelete]
-		public IActionResult Delete([FromQuery] string typeName, int attributeId) =>
-			!_repository.Delete(typeName, attributeId) ? StatusCode(500) : Ok();
+		public IActionResult Delete([FromQuery] string typeName, int propertyId) =>
+			!_repository.Delete(typeName, propertyId) ? StatusCode(500) : Ok();
 
 		/// <summary>
-		/// Gets all attributes that refers to type.
+		/// Gets all Properties that refers to type.
 		/// </summary>
 		/// <param name="typeId">Entity type id.</param>
-		/// <returns>Attributes refering to type collection.</returns>
+		/// <returns>Properties refering to type collection.</returns>
 		[HttpGet]
-		public IActionResult GetAttributesByTypeId([FromQuery] int typeId)
+		public IActionResult GetPropertiesByTypeId([FromQuery] int typeId)
 		{
 			try
 			{
-				var attributes = _repository.GetTypeAttributesById(typeId);
-				return Ok(attributes);
+				var Propertys = _repository.GetTypePropertiesById(typeId);
+				return Ok(Propertys);
 			}
 			catch (Exception e)
 			{
@@ -62,7 +62,7 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
-		/// Gets attributes list of one instance.
+		/// Gets Properties list of one instance.
 		/// </summary>
 		/// <param name="entityId">Entity instance id.</param>
 		/// <param name="typeId">Entity's type id.</param>
@@ -72,8 +72,8 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var attributes = _repository.GetByEntityId(entityId, typeId);
-				return Ok(attributes);
+				var properties = _repository.GetByEntityId(entityId, typeId);
+				return Ok(properties);
 			}
 			catch (Exception e)
 			{
@@ -83,7 +83,7 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
-		/// Gets all attributes of all entities in one type.
+		/// Gets all Properties of all entities in one type.
 		/// </summary>
 		/// <param name="entityId">Entity's id.</param>
 		/// <param name="typeName">EntityType name.</param>
@@ -93,8 +93,8 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var attributes = _repository.GetByTypeName(entityId, typeName);
-				return Ok(attributes);
+				var properties = _repository.GetByTypeName(entityId, typeName);
+				return Ok(properties);
 			}
 			catch (Exception e)
 			{
@@ -104,21 +104,21 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
-		/// Update Attribute value.
+		/// Update Property value.
 		/// </summary>
-		/// <param name="typeName">Attribute's type name.</param>
+		/// <param name="typeName">Property's type name.</param>
 		/// <param name="newValue">New value.</param>
-		/// <param name="attributeId">Attribute's id.</param>
-		/// <returns>IActionResult, containing either updatedAttribute or error status code.</returns>
+		/// <param name="propertyId">Property's id.</param>
+		/// <returns>IActionResult, containing either updatedProperty or error status code.</returns>
 		[HttpPost]
-		public IActionResult Update(string typeName, string newValue, int attributeId)
+		public IActionResult Update(string typeName, string newValue, int propertyId)
 		{
-			var updatedAttribute = _repository.Update(typeName, newValue, attributeId);
-			if (updatedAttribute == null)
+			var updatedProperty = _repository.Update(typeName, newValue, propertyId);
+			if (updatedProperty == null)
 				return StatusCode(500);
-			return Ok(updatedAttribute);
+			return Ok(updatedProperty);
 		}
 
-		private readonly AttributeDomainService _repository;
+		private readonly PropertyDomainService _repository;
 	}
 }

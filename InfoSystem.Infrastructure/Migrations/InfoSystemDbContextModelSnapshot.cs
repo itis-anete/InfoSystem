@@ -39,6 +39,8 @@ namespace InfoSystem.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("RequiredAttribute");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
@@ -54,6 +56,8 @@ namespace InfoSystem.Infrastructure.Migrations
                     b.Property<bool>("CanRead");
 
                     b.Property<bool>("CanWrite");
+
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 

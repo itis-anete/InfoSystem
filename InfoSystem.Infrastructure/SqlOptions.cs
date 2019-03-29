@@ -20,9 +20,9 @@ namespace InfoSystem.Infrastructure
 
 		public static string GenerateDeleteScript(string typeName, int attributeId) => $"DELETE FROM {typeName} WHERE id={attributeId};";
 
-		public static string GenerateInsertIntoScript(string typeName, Attribute newAttribute) =>
+		public static string GenerateInsertIntoScript(string typeName, Property newProperty) =>
 			$"INSERT INTO {typeName} (key,value,typeid,entityid) " +
-			$"VALUES ('{newAttribute.Key}','{newAttribute.Value}',{newAttribute.TypeId},{newAttribute.EntityId});";
+			$"VALUES ('{newProperty.Key}','{newProperty.Value}',{newProperty.TypeId},{newProperty.EntityId});";
 
 		public static string GenerateSelectScript(string typeName) => $"SELECT * FROM \"{typeName}\"";
 
