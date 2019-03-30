@@ -51,6 +51,11 @@ export default {
           icon: 'view_list',
           title: 'Registries',
           to: '/registries'
+        },
+        {
+          icon: 'people',
+          title: 'Roles',
+          to: '/roles'
         }
       ]
     }

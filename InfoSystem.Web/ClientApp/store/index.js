@@ -7,6 +7,7 @@ import common from './common'
 import properties from './properties'
 import entities from './entities'
 import types from './types'
+import roles from './roles'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -14,7 +15,8 @@ const createStore = () => {
       common,
       properties,
       entities,
-      types
+      types,
+      roles
     }
   })
 }

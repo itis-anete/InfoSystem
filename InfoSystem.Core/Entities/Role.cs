@@ -6,8 +6,9 @@ namespace InfoSystem.Core.Entities
 		{
 		}
 
-		public Role(bool canRead, bool canWrite)
+		public Role(string name, bool canRead, bool canWrite)
 		{
+		    Name = name;
 			CanRead = canRead;
 			CanWrite = canWrite;
 		}

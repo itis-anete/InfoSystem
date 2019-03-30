@@ -12,7 +12,7 @@ namespace InfoSystem.Sockets.Services
 			_repository = new RoleRepository(new InfoSystemDbContext());
 		}
 
-		public Role Create(bool canRead, bool canWrite) => _repository.Create(canRead, canWrite);
+		public Role Create(string name, bool canRead, bool canWrite) => _repository.Create(name, canRead, canWrite);
 
 		public bool Delete(int roleId) => _repository.Delete(roleId);
 

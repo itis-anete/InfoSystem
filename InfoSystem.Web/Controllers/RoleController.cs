@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
-	[Route("[controller]/[action]")]
+	[Route("api/[controller]/[action]")]
 	public class RoleController : Controller
 	{
 		/// <inheritdoc />
@@ -14,16 +14,17 @@ namespace InfoSystem.Web.Controllers
 			_service = new RoleDomainService();
 		}
 
-		/// <summary>
-		/// Add a new role.
-		/// </summary>
-		/// <param name="canRead">Permission to read.</param>
-		/// <param name="canWrite">Permission to write.</param>
-		/// <returns>IActionResult depending on result of operation.</returns>
-		[HttpPost]
-		public IActionResult Create(bool canRead, bool canWrite)
+	    /// <summary>
+	    /// Add a new role.
+	    /// </summary>
+	    /// <param name="name">Name of the role.</param>
+	    /// <param name="canRead">Permission to read.</param>
+	    /// <param name="canWrite">Permission to write.</param>
+	    /// <returns>IActionResult depending on result of operation.</returns>
+	    [HttpPost]
+		public IActionResult Create(string name, bool canRead, bool canWrite)
 		{
-			var newRole = _service.Create(canRead, canWrite);
+			var newRole = _service.Create(name, canRead, canWrite);
 			if (newRole == null)
 				return BadRequest();
 			return Ok(newRole);

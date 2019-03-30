@@ -13,11 +13,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public Role Create(bool canRead, bool canWrite)
+		public Role Create(string name, bool canRead, bool canWrite)
 		{
 			try
 			{
-				var entry = _context.Roles.Add(new Role(canRead, canWrite));
+				var entry = _context.Roles.Add(new Role(name, canRead, canWrite));
 				_context.SaveChanges();
 				return entry.Entity;
 			}
