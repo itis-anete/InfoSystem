@@ -20,15 +20,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             try
             {
                 typeName = typeName.ToLower();
-                var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
-                if (type == null)
-                {
-                    var typeRepository = new TypeRepository(new InfoSystemDbContext());
-                    var newType = typeRepository.Add(typeName, "lolwtf?");
-                    newEntity.TypeId = newType?.Id ?? 1;
-                }
-                else
-                    newEntity.TypeId = type.Id;
+                var type = _context.Types.FirstOrDefault(t => t.Name == typeName) ??
+                           throw new ArgumentException("No such type found in db");
+                newEntity.TypeId = type.Id;
             }
             catch (Exception e)
             {
