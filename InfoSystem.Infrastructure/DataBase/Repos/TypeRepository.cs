@@ -15,12 +15,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			_context = context;
 		}
 
-		public EntityType Add(string newTypeName)
+		public EntityType Add(string newTypeName, string requiredProperty)
 		{
 			newTypeName = newTypeName.ToLower();
 			if (_context.Types.Any(t => t.Name == newTypeName))
 				throw new NpgsqlException("EntityType already exists");
-			var entityEntry = _context.Types.Add(new EntityType(newTypeName));
+			var entityEntry = _context.Types.Add(new EntityType(newTypeName, requiredProperty));
 			var sqlQuery = SqlOptions.GenerateCreateTableScript(newTypeName);
 			_context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
 			_context.SaveChanges();

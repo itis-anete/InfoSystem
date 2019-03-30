@@ -24,7 +24,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newProperty);
 				_context.Database.ExecuteSqlCommand(sql);
 
-				return GetTypeAttributesByName(typeName)
+				return GetTypePropertiesByName(typeName)
 					.FirstOrDefault(a =>
 						a.Key == newProperty.Key &&
 						a.TypeId == newProperty.TypeId &&
@@ -57,14 +57,14 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		public IEnumerable<Property> GetTypePropertiesById(int typeId)
 		{
 			var typeName = _context.Types.Find(typeId)?.Name;
-			return GetTypeAttributesByName(typeName);
+			return GetTypePropertiesByName(typeName);
 		}
 
 		public IEnumerable<Property> GetByEntityId(int entityId, int typeId) =>
 			GetTypePropertiesById(typeId).Where(a => a.EntityId == entityId);
 
 		public IEnumerable<Property> GetByTypeName(int entityId, string typeName) =>
-			GetTypeAttributesByName(typeName).Where(a => a.EntityId == entityId);
+			GetTypePropertiesByName(typeName).Where(a => a.EntityId == entityId);
 
 		public Property Update(string typeName, string newValue, int attributeId)
 		{
@@ -74,7 +74,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				var sql = SqlOptions.GenerateUpdateScript(typeName, newValue, attributeId);
 				_context.Database.ExecuteSqlCommand(sql);
 
-				return GetTypeAttributesByName(typeName).FirstOrDefault(a => a.Id == attributeId);
+				return GetTypePropertiesByName(typeName).FirstOrDefault(a => a.Id == attributeId);
 			}
 			catch (Exception e)
 			{
@@ -85,7 +85,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		private readonly InfoSystemDbContext _context;
 
-		private IEnumerable<Property> GetTypeAttributesByName(string typeName)
+		private IEnumerable<Property> GetTypePropertiesByName(string typeName)
 		{
 			ManageQueryType();
 			var query = SqlOptions.GenerateSelectScript(typeName);
@@ -94,11 +94,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 		private void ManageQueryType()
 		{
-			if (ModelDoesntHaveAttributeQueryType())
+			if (ModelDoesntHavePropertyQueryType())
 				_context.Model.AsModel().AddQueryType(typeof(Property));
 		}
 
-		private bool ModelDoesntHaveAttributeQueryType() => !_context.Model.GetEntityTypes().Any(type =>
-			type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Attribute");
+		private bool ModelDoesntHavePropertyQueryType() => !_context.Model.GetEntityTypes().Any(type =>
+			type.IsQueryType && type.Name == "InfoSystem.Core.Entities.Basic.Property");
 	}
 }

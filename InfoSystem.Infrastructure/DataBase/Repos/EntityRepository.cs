@@ -24,7 +24,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 if (type == null)
                 {
                     var typeRepository = new TypeRepository(new InfoSystemDbContext());
-                    var newType = typeRepository.Add(typeName);
+                    var newType = typeRepository.Add(typeName, "lolwtf?");
                     newEntity.TypeId = newType?.Id ?? 1;
                 }
                 else

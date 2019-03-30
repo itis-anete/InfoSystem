@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import common from './common'
-import attributes from './attributes'
+import properties from './properties'
 import entities from './entities'
 import types from './types'
 
@@ -12,7 +12,7 @@ const createStore = () => {
   return new Vuex.Store({
     modules: {
       common,
-      attributes,
+      properties,
       entities,
       types
     }

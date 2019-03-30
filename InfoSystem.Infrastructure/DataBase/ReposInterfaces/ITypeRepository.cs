@@ -5,7 +5,7 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 {
 	public interface ITypeRepository
 	{
-		EntityType Add(string typeName);
+		EntityType Add(string typeName, string requiredProperty);
 		IEnumerable<EntityType> Get();
 		EntityType GetById(int id);
     }

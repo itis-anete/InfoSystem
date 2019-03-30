@@ -17,12 +17,8 @@
 </template>
 
 <script>
-import AttributeGrid from '~/components/attribute/grid.vue'
 export default {
   props: ['entities'],
-  components: {
-    AttributeGrid
-  },
   data: () => ({
     headers: [{ text: 'Id', sortable: false }, { text: '', sortable: false }],
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],

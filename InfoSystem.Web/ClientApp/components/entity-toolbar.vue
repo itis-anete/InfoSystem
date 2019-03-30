@@ -1,7 +1,7 @@
 <template>
   <v-toolbar card color="#eee">
     <v-toolbar-items>
-      <attribute-new-dialog></attribute-new-dialog>
+      <property-new-dialog></property-new-dialog>
       <v-divider inset vertical></v-divider>
     </v-toolbar-items>
     <v-spacer></v-spacer>
@@ -11,10 +11,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import AttributeNewDialog from '~/components/attribute/new-dialog.vue'
+import PropertyNewDialog from '~/components/property/new-dialog.vue'
 export default {
   components: {
-    AttributeNewDialog
+    PropertyNewDialog
   },
   computed: {
     ...mapGetters(['loading'])

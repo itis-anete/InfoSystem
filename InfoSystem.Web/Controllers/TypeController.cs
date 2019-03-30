@@ -16,18 +16,19 @@ namespace InfoSystem.Web.Controllers
 			_service = new TypeDomainService();
 		}
 
-		/// <summary>
-		/// Adds a new entity type.
-		/// </summary>
-		/// <param name="typeName">Name of a new type.</param>
-		/// <returns>ActionResult that refers to operation result.</returns>
-		[HttpPost]
-		public IActionResult Add([FromQuery] string typeName)
+	    /// <summary>
+	    /// Adds a new entity type.
+	    /// </summary>
+	    /// <param name="typeName">Name of a new type.</param>
+	    /// <param name="requiredProperty">Key of required property for attributes</param>
+	    /// <returns>ActionResult that refers to operation result.</returns>
+	    [HttpPost]
+		public IActionResult Add([FromQuery] string typeName, string requiredProperty)
 		{
 			EntityType addedType = null;
 			try
 			{
-				addedType = _service.Add(typeName);
+				addedType = _service.Add(typeName, requiredProperty);
 			}
 			catch (NpgsqlException e)
 			{

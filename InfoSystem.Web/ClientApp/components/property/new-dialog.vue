@@ -6,7 +6,7 @@
       </v-btn>
     </template>
     <v-card>
-      <v-card-title class="headline">Add attribute</v-card-title>
+      <v-card-title class="headline">Add property</v-card-title>
       <v-card-text>
         <v-switch v-model="complex" color="primary" :label="`${complex ? 'Complex' : 'Simple'}`"></v-switch>
         <v-layout align-center justify-space-between>
@@ -63,15 +63,15 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addAttribute']),
+    ...mapActions(['addProperty']),
     add() {
-      const attribute = {
+      const property = {
         key: this.complex ? `Complex:${this.type.name}` : this.key,
         value: this.complex ? this.entity.id : this.value,
         typeId: this.types.find(x => x.name == this.$route.params.typeName).id,
         entityId: this.$route.params.id
       }
-      this.addAttribute(attribute)
+      this.addProperty(property)
       this.clear()
     },
     clear() {

@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="attributes"
+    :items="properties"
     :rows-per-page-items="rowsPerPageItems"
     :pagination.sync="pagination"
     prev-icon="arrow-left"
@@ -12,8 +12,8 @@
       <tr @click="linkTo(props.item)" :key="props.index" :class="{link : props.item.isComplex}">
         <td>{{props.item.key}}</td>
         <td v-if="props.item.isComplex">{{props.item.value}}</td>
-        <attribute-edit-dialog v-else :item="props.item"></attribute-edit-dialog>
-        <attribute-delete-dialog :item="props.item"></attribute-delete-dialog>
+        <property-edit-dialog v-else :item="props.item"/>
+        <property-delete-dialog :item="props.item"/>
       </tr>
     </template>
   </v-data-table>
@@ -21,14 +21,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import AttributeEditDialog from '~/components/attribute/edit-dialog.vue'
-import AttributeDeleteDialog from '~/components/attribute/delete-dialog.vue'
+import PropertyEditDialog from '~/components/property/edit-dialog.vue'
+import PropertyDeleteDialog from '~/components/property/delete-dialog.vue'
 export default {
   name: 'attribute-grid',
-  props: ['attributes'],
+  props: ['properties'],
   components: {
-    AttributeEditDialog,
-    AttributeDeleteDialog
+    PropertyEditDialog,
+    PropertyDeleteDialog
   },
   data: () => ({
     headers: [
