@@ -7,6 +7,7 @@ using Npgsql;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
+	//	[Authorize]
 	[Route("api/[controller]/[action]")]
 	public class TypeController : Controller
 	{

@@ -6,6 +6,8 @@ using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Property = InfoSystem.Core.Entities.Basic.Property;
+using Microsoft.EntityFrameworkCore;
+using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
