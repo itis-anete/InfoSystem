@@ -13,7 +13,7 @@ namespace InfoSystem.Sockets.Services
 			_repository = new EntityRepository(new InfoSystemDbContext());
 		}
 
-		public Entity Add(string typeName, string value) => _repository.Add(typeName, value);
+		public Entity Add(string typeName, string requiredAttributeValue) => 	_repository.Add(typeName, requiredAttributeValue);
 
 		public bool Delete(int id) => _repository.Delete(id);
 

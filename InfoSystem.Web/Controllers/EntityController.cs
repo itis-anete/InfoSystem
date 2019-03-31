@@ -19,12 +19,12 @@ namespace InfoSystem.Web.Controllers
         /// Add a new instance of type <paramref name="typeName"/>.
         /// </summary>
         /// <param name="typeName">Entity type name.</param>
-        /// <param name="value">Value of required property</param>
-        /// <returns>ActionResult, depending on operation result and added value.</returns> 
+        /// <param name="requiredAttributeValue">Value of required property</param>
+        /// <returns>ActionResult, depending on operation result and added entity.</returns> 
         [HttpPost]
-		public IActionResult Add([FromQuery] string typeName, string value)
+		public IActionResult Add([FromQuery] string typeName, string requiredAttributeValue)
 		{
-			var addedEntity = _repository.Add(typeName, value);
+			var addedEntity = _repository.Add(typeName, requiredAttributeValue);
 			if (addedEntity == null)
 				return StatusCode(500);
 			return Ok(addedEntity);

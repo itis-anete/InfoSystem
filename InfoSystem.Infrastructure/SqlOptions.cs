@@ -22,18 +22,12 @@ namespace InfoSystem.Infrastructure
             string.Format("CREATE TABLE" + "\"{0}attributes\"(" +
                           $"\"id\" serial NOT NULL," +
                           $"\"key\" text NULL," +
-                          $"\"value\" integer NULL," +
-                          $"\"typeid\" integer NOT NULL," +
-                          "CONSTRAINT \"PK_{0}attributes\" PRIMARY KEY (\"id\")," +
-                          "CONSTRAINT \"FK_{0}attributes_Types_typeid\" " +
-                          $"FOREIGN KEY (\"typeid\") REFERENCES \"Types\" (\"Id\") ON DELETE CASCADE," +
-                          "CONSTRAINT \"FK_{0}attributes_Value_propertyid\" " +
-                          "FOREIGN KEY (\"value\") REFERENCES \"{0}\" (\"id\") ON DELETE CASCADE" +
-                          $");", typeName);
+                          $"\"value\" text NULL," +
+                          $"CONSTRAINT \"PK_{{0}}attributes\" PRIMARY KEY (\"id\"));", typeName);
 
-        public static string GenerateInsertIntoAttributesScript(string typeName, string key, int value, int typeId) =>
-            $"INSERT INTO {typeName}attributes (key,value,typeid) " +
-            $"VALUES ('{key}','{value}',{typeId});";
+        public static string GenerateInsertIntoAttributesScript(string typeName, string key, string propertyName) =>
+            $"INSERT INTO {typeName}attributes (key,value) " +
+            $"VALUES ('{key}','{propertyName}');";
 
         public static string GenerateDeleteScript(string typeName, int attributeId) => $"DELETE FROM {typeName} WHERE id={attributeId};";
 
