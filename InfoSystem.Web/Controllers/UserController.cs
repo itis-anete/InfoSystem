@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using InfoSystem.Core.Entities;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -9,25 +11,31 @@ using Microsoft.IdentityModel.Tokens;
 namespace InfoSystem.Web.Controllers
 {
     /// <summary>
-    /// Used to give tokens
+    /// Used to manage user accounts
     /// </summary>
+    [AllowAnonymous]
     [Route("[controller]/[action]")]
-    public class TokenController : Controller
+    public class UserController : Controller
     {
+        /// <inheritdoc />
+        public UserController(UserDomainService service)
+        {
+            _service = service;
+        }
+
         /// <summary>
-        /// Used to receive new JWT.
+        /// Used to log in and receive new JWT.
         /// </summary>
         /// <returns>JWT ready for header format, example : Bearer *token*</returns>
         [HttpGet]
-        [AllowAnonymous]
-        public string GetToken()
+        public IActionResult LogIn(string login, string password)
         {
-            var identity = GetIdentity();
+            if (!_service.Verify(login, password))
+                return StatusCode(500, "Incorrect user credentials!");
+
+            var identity = GetIdentity(login);
             if (identity == null)
-            {
-                Response.StatusCode = 400;
-                return "";
-            }
+                return StatusCode(500);
 
             var key = AuthentificationOptions.GetSymmetricSecurityKey();
             var now = DateTime.UtcNow;
@@ -39,17 +47,26 @@ namespace InfoSystem.Web.Controllers
                 now.AddMinutes(AuthentificationOptions.Lifetime),
                 new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return "Bearer " + token;
+            return Ok("Bearer " + token);
         }
 
-        private ClaimsIdentity GetIdentity()
+        public User Register(string login, string password)
         {
-            var person = new Person() {Login = "admin", Password = "admin", Role = "admin"};
+            return _service.Register(login, password);
+        }
+
+        private readonly UserDomainService _service;
+
+        private ClaimsIdentity GetIdentity(string login)
+        {
+            var user = _service.Get(login);
             var claims = new List<Claim>
             {
-                new Claim("Name", person.Login),
-                new Claim("Role", person.Role)
+                new Claim("Name", user.Login)
             };
+            if (user.Role != null)
+                claims.Add(new Claim("Role", user.Role.Name));
+
             var claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);

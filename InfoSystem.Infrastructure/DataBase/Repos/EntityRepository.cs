@@ -6,7 +6,6 @@ using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Newtonsoft.Json;
 using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
 using ModelExtensions = Microsoft.EntityFrameworkCore.Metadata.Internal.ModelExtensions;
 

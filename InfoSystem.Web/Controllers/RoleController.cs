@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
+	//	[Authorize]
 	[Route("api/[controller]/[action]")]
 	public class RoleController : Controller
 	{

@@ -18,6 +18,7 @@ using Microsoft.Extensions.Options;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
+//	[Authorize]
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{
@@ -34,12 +35,12 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="requiredAttributeValue">Value of required property</param>
 		/// <returns>ActionResult, depending on operation result and added value.</returns> 
         [HttpPost]
-		public async Task<IActionResult>  Add([FromQuery] string typeName, string requiredAttributeValue)
+		public IActionResult Add([FromQuery] string typeName, string requiredAttributeValue)
 		{
-			var authResult =
-				await AuthenticationHttpContextExtensions.AuthenticateAsync(HttpContext,
-					JwtBearerDefaults.AuthenticationScheme);
-			HttpContext.User = authResult.Principal;
+//			var authResult =
+//				await AuthenticationHttpContextExtensions.AuthenticateAsync(HttpContext,
+//					JwtBearerDefaults.AuthenticationScheme);
+//			HttpContext.User = authResult.Principal;
 			
 			var addedEntity = _repository.Add(typeName, requiredAttributeValue);
 			if (addedEntity == null)
