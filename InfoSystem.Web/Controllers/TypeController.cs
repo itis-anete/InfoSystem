@@ -1,8 +1,6 @@
 using System;
 using InfoSystem.Core.Entities.Basic;
-using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -15,21 +13,22 @@ namespace InfoSystem.Web.Controllers
 		/// <inheritdoc />
 		public TypeController()
 		{
-			_repository = new TypeRepository(new InfoSystemDbContext());
+			_service = new TypeDomainService();
 		}
 
-		/// <summary>
-		/// Adds a new entity type.
-		/// </summary>
-		/// <param name="typeName">Name of a new type.</param>
-		/// <returns>ActionResult that refers to operation result.</returns>
-		[HttpPost]
-		public IActionResult Add([FromQuery] string typeName)
+	    /// <summary>
+	    /// Adds a new entity type.
+	    /// </summary>
+	    /// <param name="typeName">Name of a new type.</param>
+	    /// <param name="requiredProperty">Key of required property for attributes</param>
+	    /// <returns>ActionResult that refers to operation result.</returns>
+	    [HttpPost]
+		public IActionResult Add([FromQuery] string typeName, string requiredProperty)
 		{
 			EntityType addedType = null;
 			try
 			{
-				addedType = _repository.Add(typeName);
+				addedType = _service.Add(typeName, requiredProperty);
 			}
 			catch (NpgsqlException e)
 			{
@@ -56,7 +55,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var type = _repository.GetById(id);
+				var type = _service.GetById(id);
 				if (type == null)
 					return StatusCode(500);
 				return Ok(type);
@@ -77,9 +76,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var types = _repository.Get();
-				if (types == null)
-					return StatusCode(500);
+				var types = _service.Get();
 				return Ok(types);
 			}
 			catch (Exception e)
@@ -88,6 +85,6 @@ namespace InfoSystem.Web.Controllers
 			}
 		}
 
-		private readonly ITypeRepository _repository;
+		private readonly TypeDomainService _service;
 	}
 }

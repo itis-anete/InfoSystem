@@ -1,6 +1,6 @@
 <template>
   <td class="justify-end layout px-4">
-    <v-edit-dialog @click.native.stop lazy persistent ref="attributeDeleteDialog">
+    <v-edit-dialog @click.native.stop lazy persistent ref="propertyDeleteDialog">
       <v-btn flat icon>
         <v-icon small>delete</v-icon>
       </v-btn>
@@ -23,16 +23,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['deleteAttribute']),
+    ...mapActions(['deleteProperty']),
     remove() {
-      this.deleteAttribute({
-        attributeId: this.item.id,
+      this.deleteProperty({
+        propertyId: this.item.id,
         typeName: this.$route.params.typeName
       })
       this.clear()
     },
     clear() {
-      this.$refs['attributeDeleteDialog'].isActive = false
+      this.$refs['propertyDeleteDialog'].isActive = false
     }
   }
 }

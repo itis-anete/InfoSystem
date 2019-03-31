@@ -7,9 +7,11 @@ using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -22,22 +24,24 @@ namespace InfoSystem.Web.Controllers
 		/// <inheritdoc />
 		public EntityController()
 		{
-			_repository = new EntityRepository(new InfoSystemDbContext());
+			_repository = new EntityDomainService();
 		}
 
 		/// <summary>
 		/// Add a new instance of type <paramref name="typeName"/>.
 		/// </summary>
-		/// <param name="typeName">Entity type name.</param>
+		/// <param name="typeName">Entity type name.</param>\
+		/// <param name="requiredAttributeValue">Value of required property</param>
 		/// <returns>ActionResult, depending on operation result and added value.</returns> 
-		[HttpPost]
-		public async Task<IActionResult> Add([FromQuery] string typeName)
+        [HttpPost]
+		public async Task<IActionResult>  Add([FromQuery] string typeName, string requiredAttributeValue)
 		{
 			var authResult =
 				await AuthenticationHttpContextExtensions.AuthenticateAsync(HttpContext,
 					JwtBearerDefaults.AuthenticationScheme);
 			HttpContext.User = authResult.Principal;
-			var addedEntity = _repository.Add(typeName);
+			
+			var addedEntity = _repository.Add(typeName, requiredAttributeValue);
 			if (addedEntity == null)
 				return StatusCode(500);
 			return Ok(addedEntity);
@@ -46,8 +50,8 @@ namespace InfoSystem.Web.Controllers
 		/// <summary>
 		/// Deletes an instance.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <returns></returns>
+		/// <param name="id">Instance's id.</param>
+		/// <returns>IActionResult depending on result.</returns>
 		[HttpDelete]
 		public IActionResult Delete([FromQuery] int id)
 		{
@@ -87,8 +91,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				var entities = _repository.GetByTypeId(typeId);
-				if (entities == null || !entities.Any())
-					return StatusCode(500);
 				return Ok(entities);
 			}
 			catch (Exception e)
@@ -109,8 +111,6 @@ namespace InfoSystem.Web.Controllers
 			try
 			{
 				var entities = _repository.GetByTypeName(typeName);
-				if (entities == null || !entities.Any())
-					return StatusCode(500);
 				return Ok(entities);
 			}
 			catch (Exception e)
@@ -118,9 +118,8 @@ namespace InfoSystem.Web.Controllers
 				Console.WriteLine(e);
 				return StatusCode(500, e.Message);
 			}
-
 		}
 
-		private readonly IEntityRepository _repository;
+		private readonly EntityDomainService _repository;
 	}
 }

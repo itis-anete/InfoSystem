@@ -2,15 +2,17 @@
 using InfoSystem.Infrastructure.DataBase.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace InfoSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(InfoSystemDbContext))]
-    partial class InfoSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190329203220_ModelUpdates")]
+    partial class ModelUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +41,7 @@ namespace InfoSystem.Infrastructure.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("RequiredProperty");
+                    b.Property<string>("RequiredAttribute");
 
                     b.HasKey("Id");
 

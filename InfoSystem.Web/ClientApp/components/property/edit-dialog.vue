@@ -1,6 +1,6 @@
 <template>
   <td>
-    <v-edit-dialog lazy persistent ref="attributeEditDialog">
+    <v-edit-dialog lazy persistent ref="propertyEditDialog">
       <div>{{ item.value }}</div>
       <template v-slot:input>
         <v-text-field v-model="value" label="Value" single-line counter autofocus></v-text-field>
@@ -21,19 +21,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateAttribute']),
+    ...mapActions(['updateProperty']),
     save() {
-      const attribute = {
-        attributeId: this.item.id,
+      const property = {
+        propertyId: this.item.id,
         typeName: this.$route.params.typeName,
         newValue: this.value
       }
-      this.updateAttribute(attribute)
-      this.$refs['attributeEditDialog'].isActive = false
+      this.updateProperty(property)
+      this.$refs['propertyEditDialog'].isActive = false
     },
     cancel() {
       this.value = this.item.value
-      this.$refs['attributeEditDialog'].isActive = false
+      this.$refs['propertyEditDialog'].isActive = false
     }
   }
 }
