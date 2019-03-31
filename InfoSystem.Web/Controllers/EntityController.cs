@@ -15,15 +15,16 @@ namespace InfoSystem.Web.Controllers
 			_repository = new EntityDomainService();
 		}
 
-		/// <summary>
-		/// Add a new instance of type <paramref name="typeName"/>.
-		/// </summary>
-		/// <param name="typeName">Entity type name.</param>
-		/// <returns>ActionResult, depending on operation result and added value.</returns> 
-		[HttpPost]
-		public IActionResult Add([FromQuery] string typeName)
+        /// <summary>
+        /// Add a new instance of type <paramref name="typeName"/>.
+        /// </summary>
+        /// <param name="typeName">Entity type name.</param>
+        /// <param name="value">Value of required property</param>
+        /// <returns>ActionResult, depending on operation result and added value.</returns> 
+        [HttpPost]
+		public IActionResult Add([FromQuery] string typeName, string value)
 		{
-			var addedEntity = _repository.Add(typeName);
+			var addedEntity = _repository.Add(typeName, value);
 			if (addedEntity == null)
 				return StatusCode(500);
 			return Ok(addedEntity);

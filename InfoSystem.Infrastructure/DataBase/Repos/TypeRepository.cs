@@ -23,7 +23,10 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			var entityEntry = _context.Types.Add(new EntityType(newTypeName, requiredProperty));
 			var sqlQuery = SqlOptions.GenerateCreateTableScript(newTypeName);
 			_context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
-			_context.SaveChanges();
+            _context.SaveChanges();
+            sqlQuery = SqlOptions.GenerateCreateAttributesTableScript(newTypeName);
+            _context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
+            _context.SaveChanges();
 			return entityEntry.Entity;
 		}
 
