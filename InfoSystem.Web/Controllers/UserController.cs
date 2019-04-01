@@ -18,9 +18,9 @@ namespace InfoSystem.Web.Controllers
     public class UserController : Controller
     {
         /// <inheritdoc />
-        public UserController(UserDomainService service)
+        public UserController()
         {
-            _service = service;
+            _service = new UserDomainService();
         }
 
         /// <summary>
@@ -50,6 +50,7 @@ namespace InfoSystem.Web.Controllers
             return Ok("Bearer " + token);
         }
 
+        [HttpPost]
         public User Register(string login, string password)
         {
             return _service.Register(login, password);

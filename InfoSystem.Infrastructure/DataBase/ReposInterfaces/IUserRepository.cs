@@ -5,7 +5,7 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 	public interface IUserRepository
 	{
 		User Get(string login);
-		User Register(string login, string password);
+		User Register(string login, string password, Role role = null);
 		bool VerifyUser(string login, string password);
 	}
 }
