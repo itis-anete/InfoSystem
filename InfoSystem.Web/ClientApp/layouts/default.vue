@@ -75,6 +75,7 @@ export default {
         var titleA = a.find(x => x.key == 'title').value
         var titleB = b.find(x => x.key == 'title').value
         if (titleA == 'Home' && titleB == 'Registries') return -1
+        else if (titleA == 'Registries' && titleB == 'Home') return 1
         else if (titleA == 'Home') return -1
         else if (titleA == 'Registries') return -1
         else return 1

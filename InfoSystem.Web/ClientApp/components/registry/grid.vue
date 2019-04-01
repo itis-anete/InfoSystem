@@ -7,7 +7,7 @@
   >
     <template v-slot:items="props">
       <nuxt-link :to="`${$route.params.typeName}/${props.item.id}`" tag="tr" style="cursor:pointer">
-        <td>{{ props.item.id }}</td>
+        <td>{{props.item[headers[0].text]}}</td>
         <registry-delete-dialog :item="props.item"/>
       </nuxt-link>
     </template>
@@ -16,20 +16,23 @@
 
 <script>
 import RegistryDeleteDialog from '~/components/registry/delete-dialog.vue'
+import axios from 'axios'
 export default {
   props: ['entities'],
   components: {
     RegistryDeleteDialog
   },
   data: () => ({
-    headers: [{ text: 'Id', sortable: false }, { text: '', sortable: false }],
+    headers: [{ text: '', sortable: false }],
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
     pagination: {
       rowsPerPage: 10
-    }
+    },
+    property: ''
   }),
-  methods: {
-    deleteItem(item) {}
+  async created() {
+    let response = await axios.get(`/api/Property/GetAttributeValue?typeName=${this.$route.params.typeName}&attributeName=display`)
+    this.headers.unshift({ text: response.data, sortable: false })
   }
 }
 </script>

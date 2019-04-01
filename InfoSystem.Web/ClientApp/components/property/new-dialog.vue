@@ -26,7 +26,7 @@
               v-if="type && complex"
               :items="entities"
               return-object
-              item-text="id"
+              :item-text="displayProp"
               v-model="entity"
               label="Value"
             ></v-select>
@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   data: () => ({
@@ -52,14 +53,18 @@ export default {
     value: '',
     complex: false,
     type: null,
-    entity: null
+    entity: null,
+    displayProp: ''
   }),
   computed: {
     ...mapGetters(['types', 'entities'])
   },
   watch: {
     type(value) {
-      if (value) this.$store.dispatch('getEntities', value.name)
+      if (value) {
+        this.$store.dispatch('getEntities', value.name)
+        axios.get(`/api/Property/GetAttributeValue?typeName=${value.name}&attributeName=display`).then(response => (this.displayProp = response.data))
+      }
     }
   },
   methods: {
