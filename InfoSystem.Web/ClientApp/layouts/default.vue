@@ -22,7 +22,6 @@
             </v-tooltip>
           </v-list-tile-action>
         </v-list-tile>
-        <new-menu-item-dialog></new-menu-item-dialog>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar
@@ -32,6 +31,7 @@
       style="border-bottom: 1px solid #eaeaea; background-color: white;"
       height="80"
       clipped-left
+      class="pr-4"
     >
       <div class="side-icon">
         <v-toolbar-side-icon @click="drawerActive = !drawerActive"></v-toolbar-side-icon>
@@ -39,6 +39,7 @@
       <img src="../assets/logo.png" alt="logo" style="height: 50px" class="ml-4">
       <v-toolbar-title v-text="title"/>
       <v-spacer/>
+      <new-menu-item-dialog></new-menu-item-dialog>
     </v-toolbar>
     <v-content>
       <nuxt/>
@@ -73,9 +74,6 @@ export default {
       return this.menuItems.sort((a, b) => {
         var titleA = a.find(x => x.key == 'title').value
         var titleB = b.find(x => x.key == 'title').value
-        console.log(titleA)
-        console.warn(titleB)
-        console.error('qwe')
         if (titleA == 'Home' && titleB == 'Registries') return -1
         else if (titleA == 'Home') return -1
         else if (titleA == 'Registries') return -1

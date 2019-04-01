@@ -30,12 +30,11 @@ export default {
         axios.get(`/api/Property/GetByTypeName?entityId=${element.id}&typeName=menuitem`).then(x => {
           items.push(x.data)
         })
-        commit('setMenuItems', items)
       })
+      commit('setMenuItems', items)
     },
     async addMenuItem({ commit }, payload) {
       let entity = await axios.post(`/api/Entity/Add?typeName=menuitem&requiredAttributeValue=${payload.title}`)
-
       let property = {
         key: 'link',
         value: payload.link,
