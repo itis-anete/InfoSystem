@@ -4,10 +4,7 @@ using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Attribute = InfoSystem.Core.Entities.Basic.Attribute;
-using ModelExtensions = Microsoft.EntityFrameworkCore.Metadata.Internal.ModelExtensions;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
@@ -41,8 +38,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 var newProperty = AddRequiredPropertyAndReturnItFromDb(typeName, requiredAttributeValue,
                     type.RequiredProperty, entityEntry);
 
-                if (!CheckIfDisplayAttributeIsSet(typeName))
-                    AddDisplayAttribute(typeName, newProperty, type);
+                var handler = new SqlHandler(_context);
+                if (!handler.CheckIfDisplayAttributeIsSet(typeName))
+                    handler.AddDisplayAttribute(typeName, newProperty);
 
                 return entityEntry.Entity;
             }
@@ -68,8 +66,6 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             }
         }
 
-        public IEnumerable<Entity> Get() => _context.Entities;
-
         public Entity GetById(int id) => _context.Entities.Find(id);
 
         public IEnumerable<Entity> GetByTypeId(int typeId) =>
@@ -83,15 +79,6 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         private readonly InfoSystemDbContext _context;
 
-        private void AddDisplayAttribute(string typeName, Property newProperty, EntityType type)
-        {
-            var sqlQuery = SqlOptions.GenerateInsertIntoAttributesScript(typeName,
-                "display",
-                newProperty.Key);
-            _context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
-            _context.SaveChanges();
-        }
-
         private EntityEntry<Entity> AddEntityToDatabase(Entity newEntity)
         {
             var entityEntry = _context.Entities.Add(newEntity);
@@ -103,40 +90,13 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             string requiredPropertyName,
             EntityEntry<Entity> entityEntry)
         {
-            var newProperty = new Property(requiredPropertyName, requiredAttributeValue, entityEntry.Entity.TypeId,
-                entityEntry.Entity.Id);
-            var sqlQuery = SqlOptions.GenerateInsertIntoScript(typeName, newProperty);
-            _context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
-            _context.SaveChanges();
-            return GetTypePropertiesByName(typeName)
-                       .FirstOrDefault(property =>
-                           property.Key == newProperty.Key && property.EntityId == newProperty.EntityId)
+            var handler = new SqlHandler(_context);
+            var newProperty =
+                handler.InsertRequiredProperty(typeName, requiredAttributeValue, requiredPropertyName, entityEntry);
+            return handler.GetTypePropertiesByName(typeName)
+                       .FirstOrDefault(property => property.Key == newProperty.Key 
+                                                   && property.EntityId == newProperty.EntityId)
                    ?? throw new ArgumentNullException();
         }
-
-        private bool CheckIfDisplayAttributeIsSet(string typeName)
-        {
-            var selectScript = SqlOptions.GenerateSelectScript(typeName + "attributes");
-            ManageQueryType(typeof(Attribute));
-            var properties = _context.Query<Attribute>().FromSql(selectScript).ToArray();
-
-            return properties.Any() && properties.Any(property => property.Key == "display");
-        }
-
-        private IEnumerable<Property> GetTypePropertiesByName(string typeName)
-        {
-            ManageQueryType(typeof(Property));
-            var query = SqlOptions.GenerateSelectScript(typeName);
-            return _context.Query<Property>().FromSql(query);
-        }
-
-        private void ManageQueryType(Type type)
-        {
-            if (ModelDoesntHaveQueryType(type.FullName))
-                ModelExtensions.AsModel(_context.Model).AddQueryType(type);
-        }
-
-        private bool ModelDoesntHaveQueryType(string fullTypeName) => !_context.Model.GetEntityTypes().Any(type =>
-            type.IsQueryType && type.Name == fullTypeName);
     }
 }

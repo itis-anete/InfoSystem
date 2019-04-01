@@ -7,9 +7,11 @@ namespace InfoSystem.Infrastructure.DataBase.ReposInterfaces
 	{
 		Property Add(Property newProperty);
 		bool Delete(string typeName, int attributeId);
-		IEnumerable<Property> GetTypePropertiesById(int typeId);
+		string GetAttributeValue(string typeName, string attributeName);
 		IEnumerable<Property> GetByEntityId(int entityId, int typeId);
-	    IEnumerable<Property> GetByTypeName(int entityId, string typeName);
-	    Property Update(string typeName, string newValue, int attributeId);
+		Property GetByPropertyName(string propertyName, string typeName, int entityId);
+		IEnumerable<Property> GetByTypeName(int entityId, string typeName);
+		IEnumerable<Property> GetTypePropertiesById(int typeId);
+		Property Update(string typeName, string newValue, int attributeId);
 	}
 }

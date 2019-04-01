@@ -17,13 +17,18 @@ namespace InfoSystem.Sockets.Services
 
 		public bool Delete(string typeName, int attributeId) => _repository.Delete(typeName, attributeId);
 
-		public IEnumerable<Property> GetTypePropertiesById(int typeId) => _repository.GetTypePropertiesById(typeId);
-
+		public string GetAttributeValue(string typeName, string attributeName) =>
+			_repository.GetAttributeValue(typeName, attributeName);
 		public IEnumerable<Property> GetByEntityId(int entityId, int typeId) =>
 			_repository.GetByEntityId(entityId, typeId);
 
+		public Property GetByPropertyName(string propertyName, string typeName, int entityId) =>
+			_repository.GetByPropertyName(propertyName, typeName, entityId);
+
 		public IEnumerable<Property> GetByTypeName(int entityId, string typeName) =>
 			_repository.GetByTypeName(entityId, typeName);
+		
+		public IEnumerable<Property> GetTypePropertiesById(int typeId) => _repository.GetTypePropertiesById(typeId);
 
 		public Property Update(string typeName, string newValue, int attributeId) =>
 			_repository.Update(typeName, newValue, attributeId);

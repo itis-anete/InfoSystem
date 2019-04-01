@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +13,7 @@ namespace InfoSystem.Web.Controllers
 		/// <inheritdoc />
 		public PropertyController()
 		{
-			_repository = new PropertyDomainService();
+			_service = new PropertyDomainService();
 		}
 
 		/// <summary>
@@ -26,7 +24,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add([FromBody] Property newProperty)
 		{
-			var addedProperty = _repository.Add(newProperty);
+			var addedProperty = _service.Add(newProperty);
 			if (addedProperty == null)
 				return StatusCode(500);
 			return Ok(addedProperty);
@@ -40,7 +38,7 @@ namespace InfoSystem.Web.Controllers
 		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpDelete]
 		public IActionResult Delete([FromQuery] string typeName, int propertyId) =>
-			!_repository.Delete(typeName, propertyId) ? StatusCode(500) : Ok();
+			!_service.Delete(typeName, propertyId) ? StatusCode(500) : Ok();
 
 		/// <summary>
 		/// Gets all Properties that refers to type.
@@ -52,7 +50,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var properties = _repository.GetTypePropertiesById(typeId);
+				var properties = _service.GetTypePropertiesById(typeId);
 				return Ok(properties);
 			}
 			catch (Exception e)
@@ -73,7 +71,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var properties = _repository.GetByEntityId(entityId, typeId);
+				var properties = _service.GetByEntityId(entityId, typeId);
 				return Ok(properties);
 			}
 			catch (Exception e)
@@ -81,6 +79,19 @@ namespace InfoSystem.Web.Controllers
 				Console.WriteLine(e);
 				return StatusCode(500, e.Message);
 			}
+		}
+
+		[HttpGet]
+		public string GetAttributeValue(string typeName, string attributeName)
+		{
+			return _service.GetAttributeValue(typeName, attributeName);
+		}
+		
+		[HttpGet]
+		public IActionResult GetByPropertyName(string propertyName, string typeName, int entityId)
+		{
+			var property = _service.GetByPropertyName(propertyName, typeName, entityId);
+			return property == null ? StatusCode(500, "No such property!") : Ok(property);
 		}
 
 		/// <summary>
@@ -94,7 +105,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var properties = _repository.GetByTypeName(entityId, typeName);
+				var properties = _service.GetByTypeName(entityId, typeName);
 				return Ok(properties);
 			}
 			catch (Exception e)
@@ -114,12 +125,12 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Update(string typeName, string newValue, int propertyId)
 		{
-			var updatedProperty = _repository.Update(typeName, newValue, propertyId);
+			var updatedProperty = _service.Update(typeName, newValue, propertyId);
 			if (updatedProperty == null)
 				return StatusCode(500);
 			return Ok(updatedProperty);
 		}
 
-		private readonly PropertyDomainService _repository;
+		private readonly PropertyDomainService _service;
 	}
 }
