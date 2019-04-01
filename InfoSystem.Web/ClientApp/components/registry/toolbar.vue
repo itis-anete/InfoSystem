@@ -1,9 +1,7 @@
 <template>
   <v-toolbar card color="#eee">
     <v-toolbar-items>
-      <v-btn color="primary" flat @click="create">
-        <v-icon class="mr-2">add</v-icon>Create
-      </v-btn>
+      <new-entity-dialog></new-entity-dialog>
       <v-divider inset vertical></v-divider>
     </v-toolbar-items>
     <v-spacer></v-spacer>
@@ -12,13 +10,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+import NewEntityDialog from './new-entity-dialog.vue'
 export default {
-  methods: {
-    ...mapActions(['addEntity']),
-    create() {
-      this.addEntity(this.$route.params.typeName)
-    }
+  components: {
+    NewEntityDialog
   },
   computed: {
     ...mapGetters(['loading'])

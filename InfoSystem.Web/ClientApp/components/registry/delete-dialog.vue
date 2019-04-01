@@ -18,12 +18,9 @@ import { mapActions } from 'vuex'
 export default {
   props: ['item'],
   methods: {
-    ...mapActions(['deleteProperty']),
+    ...mapActions(['deleteEntity']),
     remove() {
-      this.deleteProperty({
-        propertyId: this.item.id,
-        typeName: this.$route.params.typeName
-      })
+      this.deleteEntity(this.item.id)
       this.clear()
     },
     clear() {

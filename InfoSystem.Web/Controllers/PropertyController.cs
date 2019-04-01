@@ -52,8 +52,8 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var Propertys = _repository.GetTypePropertiesById(typeId);
-				return Ok(Propertys);
+				var properties = _repository.GetTypePropertiesById(typeId);
+				return Ok(properties);
 			}
 			catch (Exception e)
 			{

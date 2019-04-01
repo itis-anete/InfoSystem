@@ -8,17 +8,19 @@
     <template v-slot:items="props">
       <nuxt-link :to="`${$route.params.typeName}/${props.item.id}`" tag="tr" style="cursor:pointer">
         <td>{{ props.item.id }}</td>
-        <td class="justify-end layout px-4">
-          <v-icon small @click="deleteItem(props.item)">delete</v-icon>
-        </td>
+        <registry-delete-dialog :item="props.item"/>
       </nuxt-link>
     </template>
   </v-data-table>
 </template>
 
 <script>
+import RegistryDeleteDialog from '~/components/registry/delete-dialog.vue'
 export default {
   props: ['entities'],
+  components: {
+    RegistryDeleteDialog
+  },
   data: () => ({
     headers: [{ text: 'Id', sortable: false }, { text: '', sortable: false }],
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],

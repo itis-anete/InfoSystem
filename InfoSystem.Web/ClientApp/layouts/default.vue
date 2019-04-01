@@ -2,16 +2,27 @@
   <v-app style="background-color: #F4F6F9">
     <v-navigation-drawer mini-variant fixed app clipped v-model="drawerActive">
       <v-list two-line class="pt-0">
-        <v-list-tile v-for="(item, i) in items" :key="i" :to="item.to" router exact>
+        <v-list-tile
+          v-for="(item, i) in sortedMenuItems"
+          :key="i"
+          :to="getProperty(item, 'link')"
+          router
+          exact
+        >
           <v-list-tile-action>
             <v-tooltip right>
               <template v-slot:activator="{ on }">
-                <v-icon v-on="on" v-html="item.icon" :class="{ active: isActive && i==1 }"></v-icon>
+                <v-icon
+                  v-on="on"
+                  v-html="getProperty(item, 'icon')"
+                  :class="{ active: isActive && i==1 }"
+                ></v-icon>
               </template>
-              <span>{{item.title}}</span>
+              <span>{{getProperty(item, 'title')}}</span>
             </v-tooltip>
           </v-list-tile-action>
         </v-list-tile>
+        <new-menu-item-dialog></new-menu-item-dialog>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar
@@ -36,32 +47,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+import NewMenuItemDialog from '../components/new-menu-item-dialog.vue'
+import axios from 'axios'
 export default {
+  components: {
+    NewMenuItemDialog
+  },
   data() {
     return {
-      title: 'InfoSystem',
-      items: [
-        {
-          icon: 'home',
-          title: 'Home',
-          to: '/'
-        },
-        {
-          icon: 'view_list',
-          title: 'Registries',
-          to: '/registries'
-        },
-        {
-          icon: 'people',
-          title: 'Roles',
-          to: '/roles'
-        }
-      ]
+      title: 'InfoSystem'
     }
   },
   computed: {
-    ...mapGetters(['drawer']),
+    ...mapGetters(['drawer', 'menuItems']),
     drawerActive: {
       get() {
         return this.drawer
@@ -70,9 +69,31 @@ export default {
         this.$store.dispatch('setDrawer', value)
       }
     },
+    sortedMenuItems() {
+      return this.menuItems.sort((a, b) => {
+        var titleA = a.find(x => x.key == 'title').value
+        var titleB = b.find(x => x.key == 'title').value
+        console.log(titleA)
+        console.warn(titleB)
+        console.error('qwe')
+        if (titleA == 'Home' && titleB == 'Registries') return -1
+        else if (titleA == 'Home') return -1
+        else if (titleA == 'Registries') return -1
+        else return 1
+      })
+    },
     isActive() {
       return this.$nuxt.$route.path.includes('registries')
     }
+  },
+  methods: {
+    ...mapActions(['getMenuItems']),
+    getProperty(item, key) {
+      return item.find(x => x.key == key).value
+    }
+  },
+  async created() {
+    this.getMenuItems()
   }
 }
 </script>

@@ -16,7 +16,7 @@ export default {
       property.value = payload.value
     },
     deleteProperty(state, payload) {
-      let index = state.attributes.indexOf(state.properties.find(x => x.id == payload.propertyId))
+      let index = state.properties.indexOf(state.properties.find(x => x.id == payload.propertyId))
       state.properties.splice(index, 1)
     }
   },
