@@ -25,6 +25,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 type = _context.Types.FirstOrDefault(t => t.Name == typeName) ??
                        throw new ArgumentException("No such type found in db");
                 newEntity.TypeId = type.Id;
+                newEntity.Display = requiredAttributeValue;
             }
             catch (Exception e)
             {
@@ -74,7 +75,14 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
         public IEnumerable<Entity> GetByTypeName(string typeName)
         {
             var type = _context.Types.FirstOrDefault(t => t.Name == typeName);
-            return _context.Entities.Where(e => e.TypeId == type.Id);
+            var propertyRepository = new PropertyRepository(_context);
+            var propertyName = propertyRepository.GetAttributeValue(typeName, "display");
+            var entities = _context.Entities.Where(e => e.TypeId == type.Id);
+
+            foreach (var entity in entities)
+                entity.Display = propertyRepository.GetByPropertyName(propertyName, typeName, entity.Id).Value;
+
+            return entities;
         }
 
         private readonly InfoSystemDbContext _context;

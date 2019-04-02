@@ -1,19 +1,6 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Xml.XPath;
-using InfoSystem.Core.Entities.Basic;
-using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
-using InfoSystem.Sockets.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace InfoSystem.Web.Controllers
 {

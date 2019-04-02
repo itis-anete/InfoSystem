@@ -82,13 +82,13 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		[HttpGet]
-		public string GetAttributeValue(string typeName, string attributeName)
+		public string GetAttributeValue(string typeName, string attributeName = "display")
 		{
 			return _service.GetAttributeValue(typeName, attributeName);
 		}
 		
 		[HttpGet]
-		public IActionResult GetByPropertyName(string propertyName, string typeName, int entityId)
+		public IActionResult GetByPropertyName(string typeName, int entityId, string propertyName)
 		{
 			var property = _service.GetByPropertyName(propertyName, typeName, entityId);
 			return property == null ? StatusCode(500, "No such property!") : Ok(property);
