@@ -12,9 +12,9 @@ namespace InfoSystem.Web.Controllers
 	public class TypeController : Controller
 	{
 		/// <inheritdoc />
-		public TypeController()
+		public TypeController(TypeDomainService service)
 		{
-			_service = new TypeDomainService();
+			_service = service;
 		}
 
 	    /// <summary>

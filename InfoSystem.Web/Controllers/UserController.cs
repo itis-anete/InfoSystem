@@ -18,9 +18,9 @@ namespace InfoSystem.Web.Controllers
     public class UserController : Controller
     {
         /// <inheritdoc />
-        public UserController()
+        public UserController(UserDomainService service)
         {
-            _service = new UserDomainService();
+            _service = service;
         }
 
         /// <summary>

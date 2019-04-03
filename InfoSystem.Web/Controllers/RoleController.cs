@@ -10,9 +10,9 @@ namespace InfoSystem.Web.Controllers
 	public class RoleController : Controller
 	{
 		/// <inheritdoc />
-		public RoleController()
+		public RoleController(RoleDomainService service)
 		{
-			_service = new RoleDomainService();
+			_service = service;
 		}
 
 	    /// <summary>

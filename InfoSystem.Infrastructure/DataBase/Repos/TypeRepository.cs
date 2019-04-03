@@ -24,6 +24,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 			var entityEntry = AddNewType(newTypeName, requiredProperty);
 			AddAttributesTable(newTypeName);
+			
+			new SqlHandler(_context).AddDisplayAttribute(newTypeName, requiredProperty);
 
 			return entityEntry.Entity;
 		}

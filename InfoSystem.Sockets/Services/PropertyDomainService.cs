@@ -8,9 +8,9 @@ namespace InfoSystem.Sockets.Services
 {
 	public class PropertyDomainService
 	{
-		public PropertyDomainService()
+		public PropertyDomainService(IPropertyRepository repository)
 		{
-			_repository = new PropertyRepository(new InfoSystemDbContext());
+			_repository = repository;
 		}
 
 		public Property Add(Property newProperty) => _repository.Add(newProperty);

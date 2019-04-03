@@ -1,10 +1,15 @@
 using System;
 using System.IO;
 using System.Reflection;
+using InfoSystem.Infrastructure.DataBase.Context;
+using InfoSystem.Infrastructure.DataBase.Repos;
+using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +53,20 @@ namespace InfoSystem.Web
 			
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+			services.AddScoped<IEntityRepository, EntityRepository>();
+			services.AddScoped<IPropertyRepository, PropertyRepository>();
+			services.AddScoped<IRoleRepository, RoleRepository>();
+			services.AddScoped<ITypeRepository, TypeRepository>();
+			services.AddScoped<IUserRepository, UserRepository>();
+
+			services.AddScoped<EntityDomainService>();
+			services.AddScoped<RoleDomainService>();
+			services.AddScoped<TypeDomainService>();
+			services.AddScoped<PropertyDomainService>();
+			services.AddScoped<UserDomainService>();
+
+			services.AddScoped<InfoSystemDbContext>();
+			
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 			services.AddSwaggerGen(options =>
 			{

@@ -8,9 +8,9 @@ namespace InfoSystem.Sockets.Services
 {
 	public class TypeDomainService
 	{
-		public TypeDomainService()
+		public TypeDomainService(ITypeRepository repository)
 		{
-			_repository = new TypeRepository(new InfoSystemDbContext());
+			_repository = repository;
 		}
 
 		public EntityType Add(string typeName, string requiredProperty) => _repository.Add(typeName, requiredProperty);

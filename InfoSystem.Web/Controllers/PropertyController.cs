@@ -11,9 +11,9 @@ namespace InfoSystem.Web.Controllers
 	public class PropertyController : Controller
 	{
 		/// <inheritdoc />
-		public PropertyController()
+		public PropertyController(PropertyDomainService service)
 		{
-			_service = new PropertyDomainService();
+			_service = service;
 		}
 
 		/// <summary>

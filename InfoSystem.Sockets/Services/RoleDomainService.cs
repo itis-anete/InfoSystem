@@ -7,9 +7,9 @@ namespace InfoSystem.Sockets.Services
 {
 	public class RoleDomainService
 	{
-		public RoleDomainService()
+		public RoleDomainService(IRoleRepository repository)
 		{
-			_repository = new RoleRepository(new InfoSystemDbContext());
+			_repository = repository;
 		}
 
 		public Role Create(string name, bool canRead, bool canWrite) => _repository.Create(name, canRead, canWrite);

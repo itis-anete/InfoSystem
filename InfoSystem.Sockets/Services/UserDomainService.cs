@@ -7,9 +7,9 @@ namespace InfoSystem.Sockets.Services
 {
 	public class UserDomainService
 	{
-		public UserDomainService()
+		public UserDomainService(IUserRepository repository)
 		{
-			_repository = new UserRepository(new InfoSystemDbContext());
+			_repository = repository;
 		}
 
 		public User Get(string login) => _repository.Get(login);

@@ -10,9 +10,9 @@ namespace InfoSystem.Web.Controllers
 	public class EntityController : Controller
 	{
 		/// <inheritdoc />
-		public EntityController()
+		public EntityController(EntityDomainService repository)
 		{
-			_repository = new EntityDomainService();
+			_repository = repository;
 		}
 
 		/// <summary>

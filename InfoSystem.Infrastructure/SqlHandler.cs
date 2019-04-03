@@ -17,11 +17,11 @@ namespace InfoSystem.Infrastructure
             _context = context;
         }
 
-        internal void AddDisplayAttribute(string typeName, Property newProperty)
+        internal void AddDisplayAttribute(string typeName, string newDisplayValue)
         {
             var sqlQuery = SqlOptions.GenerateInsertIntoAttributesScript(typeName,
                 "display",
-                newProperty.Key);
+                newDisplayValue);
             _context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
             _context.SaveChanges();
         }

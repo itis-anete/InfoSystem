@@ -41,7 +41,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
                 var handler = new SqlHandler(_context);
                 if (!handler.CheckIfDisplayAttributeIsSet(typeName))
-                    handler.AddDisplayAttribute(typeName, newProperty);
+                    handler.AddDisplayAttribute(typeName, newProperty.Value);
 
                 return entityEntry.Entity;
             }
