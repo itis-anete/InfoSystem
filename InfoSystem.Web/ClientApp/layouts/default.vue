@@ -2,37 +2,10 @@
   <v-app style="background-color: #F4F6F9">
     <v-navigation-drawer mini-variant fixed app clipped v-model="drawerActive">
       <v-list two-line class="pt-0">
-        <v-list-tile
-          v-for="(item, i) in sortedMenuItems"
-          :key="i"
-          :to="getProperty(item, 'link')"
-          router
-          exact
-        >
-          <v-list-tile-action>
-            <v-tooltip right>
-              <template v-slot:activator="{ on }">
-                <v-icon
-                  v-on="on"
-                  v-html="getProperty(item, 'icon')"
-                  :class="{ active: isActive && i==1 }"
-                ></v-icon>
-              </template>
-              <span>{{getProperty(item, 'title')}}</span>
-            </v-tooltip>
-          </v-list-tile-action>
-        </v-list-tile>
+        <menu-list-tile v-for="(item, i) in menuItems" :key="i" :item="item" :index="i"></menu-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar
-      fixed
-      app
-      flat
-      style="border-bottom: 1px solid #eaeaea; background-color: white;"
-      height="80"
-      clipped-left
-      class="pr-4"
-    >
+    <v-toolbar fixed app flat height="80" clipped-left class="pr-4 top-toolbar">
       <div class="side-icon">
         <v-toolbar-side-icon @click="drawerActive = !drawerActive"></v-toolbar-side-icon>
       </div>
@@ -48,13 +21,15 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import NewMenuItemDialog from '../components/new-menu-item-dialog.vue'
-import axios from 'axios'
+import MenuListTile from '../components/menu-list-tile.vue'
 export default {
   components: {
-    NewMenuItemDialog
+    NewMenuItemDialog,
+    MenuListTile
   },
+  middleware: ['loadMenuItems'],
   data() {
     return {
       title: 'InfoSystem'
@@ -69,30 +44,7 @@ export default {
       set(value) {
         this.$store.dispatch('setDrawer', value)
       }
-    },
-    sortedMenuItems() {
-      return this.menuItems.sort((a, b) => {
-        var titleA = a.find(x => x.key == 'title').value
-        var titleB = b.find(x => x.key == 'title').value
-        if (titleA == 'Home' && titleB == 'Registries') return -1
-        else if (titleA == 'Registries' && titleB == 'Home') return 1
-        else if (titleA == 'Home') return -1
-        else if (titleA == 'Registries') return -1
-        else return 1
-      })
-    },
-    isActive() {
-      return this.$nuxt.$route.path.includes('registries')
     }
-  },
-  methods: {
-    ...mapActions(['getMenuItems']),
-    getProperty(item, key) {
-      return item.find(x => x.key == key).value
-    }
-  },
-  async created() {
-    this.getMenuItems()
   }
 }
 </script>
@@ -101,6 +53,10 @@ export default {
 .v-toolbar__content {
   padding: 0px 0px !important;
 }
+.top-toolbar {
+	border-bottom: 1px solid #eaeaea;
+	background-color: white !important;
+}
 .side-icon {
   height: 100%;
   width: 80px;
@@ -108,8 +64,5 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.active {
-  color: #52a8b6 !important;
 }
 </style>

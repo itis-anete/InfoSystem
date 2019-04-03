@@ -1,5 +1,5 @@
 <template>
-  <v-edit-dialog lazy persistent ref="newMenuItemDialog">
+  <v-edit-dialog lazy persistent ref="newMenuItemDialog" style="width: 36px">
     <v-btn flat icon style="width: 36px">
       <v-icon dark>star</v-icon>
     </v-btn>
@@ -33,7 +33,6 @@ export default {
     clear() {
       this.title = ''
       this.icon = ''
-      this.link = ''
       this.$refs['newMenuItemDialog'].isActive = false
     }
   }

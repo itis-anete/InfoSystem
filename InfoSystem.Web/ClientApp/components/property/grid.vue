@@ -3,7 +3,7 @@
     :headers="headers"
     :items="properties"
     :rows-per-page-items="rowsPerPageItems"
-    :pagination.sync="pagination"
+    :pagination.sync="currentPagination"
     prev-icon="arrow-left"
     next-icon="arrow-right"
     sort-icon="arrow_drop_down"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import PropertyEditDialog from '~/components/property/edit-dialog.vue'
 import PropertyDeleteDialog from '~/components/property/delete-dialog.vue'
 export default {
@@ -39,12 +39,19 @@ export default {
       },
       { text: 'Value', sortable: false },
       { text: '', sortable: false }
-    ],
-    rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
-    pagination: {
-      rowsPerPage: 10
-    }
+    ]
   }),
+  computed: {
+    ...mapGetters(['rowsPerPageItems', 'pagination']),
+    currentPagination: {
+      get() {
+        return this.pagination
+      },
+      set(value) {
+        this.$store.commit('setPagination', value)
+      }
+    }
+  },
   methods: {
     linkTo(item) {
       if (item.isComplex) this.$router.push(`../${item.key.substring(8)}/${item.value}`)

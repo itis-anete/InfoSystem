@@ -3,7 +3,7 @@
     :headers="headers"
     :items="entities"
     :rows-per-page-items="rowsPerPageItems"
-    :pagination.sync="pagination"
+    :pagination.sync="currentPagination"
   >
     <template v-slot:items="props">
       <nuxt-link :to="`${$route.params.typeName}/${props.item.id}`" tag="tr" style="cursor:pointer">
@@ -23,14 +23,16 @@ export default {
   components: {
     RegistryDeleteDialog
   },
-  data: () => ({
-    rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
-    pagination: {
-      rowsPerPage: 10
-    }
-  }),
   computed: {
-    ...mapGetters(['headers'])
+    ...mapGetters(['headers', 'rowsPerPageItems', 'pagination']),
+    currentPagination: {
+      get() {
+        return this.pagination
+      },
+      set(value) {
+        this.$store.commit('setPagination', value)
+      }
+    }
   }
 }
 </script>

@@ -21,8 +21,7 @@
               color="primary"
               required
             ></v-checkbox>
-
-            <v-btn :disabled="!name" color="primary" @click="create">Create</v-btn>
+            <v-btn :disabled="!valid" color="primary" @click="create">Create</v-btn>
           </v-form>
         </v-card>
       </v-flex>
