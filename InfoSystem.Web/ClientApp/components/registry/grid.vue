@@ -17,28 +17,27 @@
 <script>
 import RegistryDeleteDialog from '~/components/registry/delete-dialog.vue'
 import axios from 'axios'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   props: ['entities'],
   components: {
     RegistryDeleteDialog
   },
   data: () => ({
-    headers: [{ text: '', sortable: false }],
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
     pagination: {
       rowsPerPage: 10
     }
   }),
-  async created() {
-    let response = await axios.get(`/api/Property/GetAttributeValue?typeName=${this.$route.params.typeName}&attributeName=display`)
-    this.headers.unshift({ text: response.data, sortable: false })
+  computed: {
+    ...mapGetters(['headers'])
   }
 }
 </script>
 
 <style scoped>
 tbody tr:nth-of-type(even) {
-   background-color: #F4F6F9;
- }
+  background-color: #f4f6f9;
+}
 </style>
 
