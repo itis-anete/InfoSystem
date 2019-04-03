@@ -3,7 +3,7 @@
     <v-layout row wrap justify-center align-center>
       <v-flex xs3>
         <transition name="component-fade" mode="out-in">
-          <component v-bind:is="view" v-model="isSignUp"></component>
+          <component :is="view" v-model="isSignUp"></component>
         </transition>
       </v-flex>
     </v-layout>

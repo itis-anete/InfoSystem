@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace InfoSystem.Core.Entities.Basic
 {
     public class Property
@@ -7,6 +9,9 @@ namespace InfoSystem.Core.Entities.Basic
         public string Value { get; set; }
         public int TypeId { get; set; }
         public int EntityId { get; set; }
+        [NotMapped]
+        public string DisplayComplexValue { get; set; }
+
 
         public Property(string key, string value, int typeId, int entityId)
         {

@@ -23,12 +23,17 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newProperty);
 				_context.Database.ExecuteSqlCommand(sql);
 
-				return new SqlHandler(_context).GetTypePropertiesByName(typeName)
+				var property =  new SqlHandler(_context).GetTypePropertiesByName(typeName)
 					.FirstOrDefault(a =>
 						a.Key == newProperty.Key &&
 						a.TypeId == newProperty.TypeId &&
 						a.EntityId == newProperty.EntityId &&
 						a.Value == newProperty.Value);
+
+			    if (property.IsComplex)
+			        SetDisplayComlexValue(property);
+
+			    return property;
 			}
 			catch (Exception e)
 			{
@@ -75,10 +80,27 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			new SqlHandler(_context).GetTypePropertiesByName(typeName)
 				.FirstOrDefault(p => p.EntityId == entityId && p.Key == propertyName);
 
-		public IEnumerable<Property> GetByTypeName(int entityId, string typeName) =>
-			new SqlHandler(_context).GetTypePropertiesByName(typeName).Where(a => a.EntityId == entityId);
+		public IEnumerable<Property> GetByTypeName(int entityId, string typeName)
+	    {
+	        var properties = new SqlHandler(_context).GetTypePropertiesByName(typeName).Where(a => a.EntityId == entityId);
+	        var propertiesList = properties.ToList();
+            foreach (var property in propertiesList)
+            {
+                if (property.IsComplex)
+                    SetDisplayComlexValue(property);
+            }
+            return propertiesList;
+	    }
 
-		public Property Update(string typeName, string newValue, int attributeId)
+	    public void SetDisplayComlexValue(Property property)
+	    {
+	        var complexPropertyTypeName = property.Key.Substring(8);
+	        var propertyName = GetAttributeValue(complexPropertyTypeName, "display");
+	        var propertyValue = GetByPropertyName(propertyName, complexPropertyTypeName, int.Parse(property.Value)).Value;
+	        property.DisplayComplexValue = propertyValue;
+        }
+
+	    public Property Update(string typeName, string newValue, int attributeId)
 		{
 			try
 			{

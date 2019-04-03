@@ -7,7 +7,7 @@
   >
     <template v-slot:items="props">
       <nuxt-link :to="`${$route.params.typeName}/${props.item.id}`" tag="tr" style="cursor:pointer">
-        <td>{{props.item[headers[0].text]}}</td>
+        <td>{{props.item.display}}</td>
         <registry-delete-dialog :item="props.item"/>
       </nuxt-link>
     </template>
@@ -27,8 +27,7 @@ export default {
     rowsPerPageItems: [10, 20, 100, { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }],
     pagination: {
       rowsPerPage: 10
-    },
-    property: ''
+    }
   }),
   async created() {
     let response = await axios.get(`/api/Property/GetAttributeValue?typeName=${this.$route.params.typeName}&attributeName=display`)

@@ -10,8 +10,8 @@
   >
     <template v-slot:items="props">
       <tr @click="linkTo(props.item)" :key="props.index" :class="{link : props.item.isComplex}">
-        <td>{{props.item.key}}</td>
-        <td v-if="props.item.isComplex">{{props.item.value}}</td>
+        <td>{{formatKey(props.item)}}</td>
+        <td v-if="props.item.isComplex">{{props.item.displayComplexValue}}</td>
         <property-edit-dialog v-else :item="props.item"/>
         <property-delete-dialog :item="props.item"/>
       </tr>
@@ -48,6 +48,9 @@ export default {
   methods: {
     linkTo(item) {
       if (item.isComplex) this.$router.push(`../${item.key.substring(8)}/${item.value}`)
+    },
+    formatKey(item) {
+      return item.isComplex ? item.key.substring(8) : item.key
     }
   }
 }

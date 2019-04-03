@@ -26,7 +26,7 @@
               v-if="type && complex"
               :items="entities"
               return-object
-              :item-text="displayProp"
+              item-text="display"
               v-model="entity"
               label="Value"
             ></v-select>
@@ -53,8 +53,7 @@ export default {
     value: '',
     complex: false,
     type: null,
-    entity: null,
-    displayProp: ''
+    entity: null
   }),
   computed: {
     ...mapGetters(['types', 'entities'])
@@ -63,7 +62,6 @@ export default {
     type(value) {
       if (value) {
         this.$store.dispatch('getEntities', value.name)
-        axios.get(`/api/Property/GetAttributeValue?typeName=${value.name}&attributeName=display`).then(response => (this.displayProp = response.data))
       }
     }
   },

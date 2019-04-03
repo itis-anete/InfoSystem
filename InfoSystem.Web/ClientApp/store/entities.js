@@ -20,13 +20,6 @@ export default {
   actions: {
     async getEntities({ commit }, payload) {
       let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`)
-      for (let i = 0; i < response.data.length; i++) {
-        let propertyName = await axios.get(`/api/Property/GetAttributeValue?typeName=${payload}&attributeName=display`)
-        let propertyValue = await axios.get(
-          `/api/Property/GetByPropertyName?propertyName=${propertyName.data}&typeName=${payload}&entityId=${response.data[i].id}`
-        )
-        Vue.set(response.data[i], propertyName.data, propertyValue.data.value)
-      }
       setTimeout(() => {
         commit('setEntities', response.data)
       }, 0)
@@ -34,11 +27,6 @@ export default {
     async addEntity({ commit }, payload) {
       commit('setLoading', true)
       let response = await axios.post(`/api/Entity/Add?typeName=${payload.typeName}&requiredAttributeValue=${payload.requiredAttributeValue}`)
-      let propertyName = await axios.get(`/api/Property/GetAttributeValue?typeName=${payload.typeName}&attributeName=display`)
-      let propertyValue = await axios.get(
-        `/api/Property/GetByPropertyName?propertyName=${propertyName.data}&typeName=${payload.typeName}&entityId=${response.data.id}`
-      )
-      Vue.set(response.data, propertyName.data, propertyValue.data.value)
       commit('addEntity', response.data)
       commit('setLoading', false)
     },
