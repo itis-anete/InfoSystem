@@ -7,7 +7,13 @@ export default {
   },
   mutations: {
     setLoading(state, payload) {
-      state.loading = payload
+      if (payload) {
+        state.loading = true
+      } else {
+        setTimeout(() => {
+          state.loading = false
+        }, 500)
+      }
     },
     setMenuItems(state, payload) {
       state.menuItems = payload

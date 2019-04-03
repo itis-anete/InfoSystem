@@ -34,9 +34,7 @@ export default {
       commit('setLoading', true)
       await axios.delete(`/api/Entity/Delete?id=${payload}`)
       commit('deleteEntity', payload)
-      setTimeout(() => {
-        commit('setLoading', false)
-      }, 500)
+      commit('setLoading', false)
     }
   },
   getters: {

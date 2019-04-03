@@ -33,25 +33,19 @@ export default {
         `/api/Property/Update?typeName=${payload.typeName}&newValue=${payload.newValue}&propertyId=${payload.propertyId}`
       )
       commit('updateProperty', response.data)
-      setTimeout(() => {
-        commit('setLoading', false)
-      }, 500)
+      commit('setLoading', false)
     },
     async addProperty({ commit }, payload) {
       commit('setLoading', true)
       let response = await axios.post(`/api/Property/Add`, payload)
       commit('addProperty', response.data)
-      setTimeout(() => {
-        commit('setLoading', false)
-      }, 500)
+      commit('setLoading', false)
     },
     async deleteProperty({ commit }, payload) {
       commit('setLoading', true)
       await axios.delete(`/api/Property/Delete?typeName=${payload.typeName}&attributeId=${payload.attributeId}`)
       commit('deleteProperty', payload)
-      setTimeout(() => {
-        commit('setLoading', false)
-      }, 500)
+      commit('setLoading', false)
     }
   },
   getters: {
