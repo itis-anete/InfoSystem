@@ -47,10 +47,5 @@ export default {
       commit('deleteProperty', payload)
       commit('setLoading', false)
     }
-  },
-  getters: {
-    properties: state => {
-      return state.properties
-    }
   }
 }

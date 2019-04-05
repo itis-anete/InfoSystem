@@ -1,8 +1,8 @@
 <template>
   <v-data-table
-    :headers="headers"
+    :headers="grid.headers"
     :items="entities"
-    :rows-per-page-items="rowsPerPageItems"
+    :rows-per-page-items="grid.rowsPerPageItems"
     :pagination.sync="currentPagination"
   >
     <template v-slot:items="props">
@@ -17,17 +17,17 @@
 <script>
 import RegistryDeleteDialog from '~/components/registry/delete-dialog.vue'
 import axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   props: ['entities'],
   components: {
     RegistryDeleteDialog
   },
   computed: {
-    ...mapGetters(['headers', 'rowsPerPageItems', 'pagination']),
+    ...mapState(['grid']),
     currentPagination: {
       get() {
-        return this.pagination
+        return this.grid.pagination
       },
       set(value) {
         this.$store.commit('setPagination', value)

@@ -13,7 +13,7 @@
           <v-flex xs5>
             <v-select
               v-if="complex"
-              :items="types"
+              :items="types.types"
               return-object
               item-text="name"
               v-model="type"
@@ -24,7 +24,7 @@
           <v-flex xs6>
             <v-select
               v-if="type && complex"
-              :items="entities"
+              :items="entities.entities"
               return-object
               item-text="display"
               v-model="entity"
@@ -45,7 +45,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data: () => ({
     dialog: false,
@@ -56,7 +56,7 @@ export default {
     entity: null
   }),
   computed: {
-    ...mapGetters(['types', 'entities'])
+    ...mapState(['types', 'entities'])
   },
   watch: {
     type(value) {

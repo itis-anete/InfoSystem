@@ -16,15 +16,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   data: () => ({
     requiredAttributeValue: ''
   }),
   computed: {
-    ...mapGetters(['types']),
+    ...mapState(['types']),
     requiredProperty() {
-      return this.types.find(x => x.name == this.$route.params.typeName).requiredProperty
+      return this.types.types.find(x => x.name == this.$route.params.typeName).requiredProperty
     }
   },
   methods: {

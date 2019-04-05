@@ -2,9 +2,9 @@
   <v-container class="ma-0" style="margin-left: 250px !important">
     <v-layout justify-center>
       <v-flex xs10>
-        <v-card v-if="properties">
+        <v-card v-if="properties.properties">
           <entity-toolbar></entity-toolbar>
-          <property-grid :properties="properties"></property-grid>
+          <property-grid :properties="properties.properties"></property-grid>
         </v-card>
       </v-flex>
     </v-layout>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import EntityToolbar from '~/components/entity-toolbar.vue'
 import PropertyGrid from '~/components/property/grid.vue'
 export default {
@@ -25,7 +25,7 @@ export default {
     EntityToolbar
   },
   computed: {
-    ...mapGetters(['properties'])
+    ...mapState(['properties'])
   },
   async fetch({ store, params }) {
     await store.dispatch('getTypes')

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import NewMenuItemDialog from '../components/new-menu-item-dialog.vue'
 import MenuListTile from '../components/menu-list-tile.vue'
 export default {
@@ -36,10 +36,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['drawer', 'menuItems']),
+    ...mapState(['menu']),
+    ...mapGetters(['menuItems']),
     drawerActive: {
       get() {
-        return this.drawer
+        return this.menu.drawer
       },
       set(value) {
         this.$store.dispatch('setDrawer', value)
@@ -54,8 +55,8 @@ export default {
   padding: 0px 0px !important;
 }
 .top-toolbar {
-	border-bottom: 1px solid #eaeaea;
-	background-color: white !important;
+  border-bottom: 1px solid #eaeaea;
+  background-color: white !important;
 }
 .side-icon {
   height: 100%;
