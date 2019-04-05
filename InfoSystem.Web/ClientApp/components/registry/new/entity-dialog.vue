@@ -16,27 +16,31 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from "vuex";
 export default {
   data: () => ({
-    requiredAttributeValue: ''
+    requiredAttributeValue: ""
   }),
   computed: {
-    ...mapState(['types']),
+    ...mapState(["types"]),
     requiredProperty() {
-      return this.types.types.find(x => x.name == this.$route.params.typeName).requiredProperty
+      return this.types.types.find(x => x.name == this.$route.params.typeName)
+        .requiredProperty;
     }
   },
   methods: {
-    ...mapActions(['addEntity']),
+    ...mapActions(["addEntity"]),
     create() {
-      this.addEntity({ typeName: this.$route.params.typeName, requiredAttributeValue: this.requiredAttributeValue })
-      this.clear()
+      this.addEntity({
+        typeName: this.$route.params.typeName,
+        requiredAttributeValue: this.requiredAttributeValue
+      });
+      this.clear();
     },
     clear() {
-      this.requiredAttributeValue = ''
-      this.$refs['newEntityDialog'].isActive = false
+      this.requiredAttributeValue = "";
+      this.$refs["newEntityDialog"].isActive = false;
     }
   }
-}
+};
 </script>

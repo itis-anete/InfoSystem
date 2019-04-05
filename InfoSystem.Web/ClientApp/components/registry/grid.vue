@@ -1,14 +1,9 @@
 <template>
-  <v-data-table
-    :headers="grid.headers"
-    :items="entities"
-    :rows-per-page-items="grid.rowsPerPageItems"
-    :pagination.sync="currentPagination"
-  >
+  <v-data-table :headers="grid.headers" :items="entities" :rows-per-page-items="grid.rowsPerPageItems" :pagination.sync="currentPagination">
     <template v-slot:items="props">
       <nuxt-link :to="`${$route.params.typeName}/${props.item.id}`" tag="tr" style="cursor:pointer">
-        <td>{{props.item.display}}</td>
-        <registry-delete-dialog :item="props.item"/>
+        <td>{{ props.item.display }}</td>
+        <registry-delete-dialog :item="props.item" />
       </nuxt-link>
     </template>
   </v-data-table>

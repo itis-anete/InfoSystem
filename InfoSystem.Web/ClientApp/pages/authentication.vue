@@ -32,12 +32,13 @@ export default {
 </script>
 
 <style scoped>
-.component-fade-enter-active, .component-fade-leave-active {
-  transition: all .5s ease;
+.component-fade-enter-active,
+.component-fade-leave-active {
+  transition: all 0.5s ease;
 }
-.component-fade-enter, .component-fade-leave-to {
+.component-fade-enter,
+.component-fade-leave-to {
   opacity: 0;
-	transform: translateX(30px)
+  transform: translateX(30px);
 }
-
 </style>

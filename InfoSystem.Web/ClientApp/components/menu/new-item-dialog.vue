@@ -40,8 +40,8 @@ export default {
 </script>
 
 <style scoped>
-.list_tile_last{
-	border-top: 1px solid #52A8B6;
-	border-bottom: 1px solid #52A8B6;
+.list_tile_last {
+  border-top: 1px solid #52a8b6;
+  border-bottom: 1px solid #52a8b6;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer style="margin-top: 81px" fixed :class="{left: menu.drawer}" width="250">
+  <v-navigation-drawer style="margin-top: 81px" fixed :class="{ left: menu.drawer }" width="250">
     <v-list two-line subheader>
       <v-subheader>
         Entity Types

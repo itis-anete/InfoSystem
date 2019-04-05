@@ -1,9 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500">
     <template v-slot:activator="{ on }">
-      <v-btn color="primary" flat v-on="on">
-        <v-icon class="mr-2">add</v-icon>Add
-      </v-btn>
+      <v-btn color="primary" flat v-on="on"> <v-icon class="mr-2">add</v-icon>Add </v-btn>
     </template>
     <v-card>
       <v-card-title class="headline">Add property</v-card-title>
@@ -11,25 +9,11 @@
         <v-switch v-model="complex" color="primary" :label="`${complex ? 'Complex' : 'Simple'}`"></v-switch>
         <v-layout align-center justify-space-between>
           <v-flex xs5>
-            <v-select
-              v-if="complex"
-              :items="types.types"
-              return-object
-              item-text="name"
-              v-model="type"
-              label="Key"
-            ></v-select>
-            <v-text-field v-else label="Key" v-model="key"></v-text-field>
-          </v-flex>:
+            <v-select v-if="complex" :items="types.types" return-object item-text="name" v-model="type" label="Key"></v-select>
+            <v-text-field v-else label="Key" v-model="key"></v-text-field> </v-flex
+          >:
           <v-flex xs6>
-            <v-select
-              v-if="type && complex"
-              :items="entities.entities"
-              return-object
-              item-text="display"
-              v-model="entity"
-              label="Value"
-            ></v-select>
+            <v-select v-if="type && complex" :items="entities.entities" return-object item-text="display" v-model="entity" label="Value"></v-select>
             <v-text-field v-else-if="!complex" label="Value" v-model="value"></v-text-field>
           </v-flex>
         </v-layout>

@@ -9,11 +9,11 @@
     sort-icon="arrow_drop_down"
   >
     <template v-slot:items="props">
-      <tr @click="linkTo(props.item)" :key="props.index" :class="{link : props.item.isComplex}">
-        <td>{{formatKey(props.item)}}</td>
-        <td v-if="props.item.isComplex">{{props.item.displayComplexValue}}</td>
-        <property-edit-dialog v-else :item="props.item"/>
-        <property-delete-dialog :item="props.item"/>
+      <tr @click="linkTo(props.item)" :key="props.index" :class="{ link: props.item.isComplex }">
+        <td>{{ formatKey(props.item) }}</td>
+        <td v-if="props.item.isComplex">{{ props.item.displayComplexValue }}</td>
+        <property-edit-dialog v-else :item="props.item" />
+        <property-delete-dialog :item="props.item" />
       </tr>
     </template>
   </v-data-table>

@@ -9,18 +9,8 @@
           <v-divider></v-divider>
           <v-form>
             <v-text-field v-model="name" :rules="nameRules" label="Name" required></v-text-field>
-            <v-checkbox
-              v-model="readingAbility"
-              label="Can member of this role read information?"
-              color="primary"
-              required
-            ></v-checkbox>
-            <v-checkbox
-              v-model="writingAbility"
-              label="Can member of this role write information?"
-              color="primary"
-              required
-            ></v-checkbox>
+            <v-checkbox v-model="readingAbility" label="Can member of this role read information?" color="primary" required></v-checkbox>
+            <v-checkbox v-model="writingAbility" label="Can member of this role write information?" color="primary" required></v-checkbox>
             <v-btn :disabled="!valid" color="primary" @click="create">Create</v-btn>
           </v-form>
         </v-card>

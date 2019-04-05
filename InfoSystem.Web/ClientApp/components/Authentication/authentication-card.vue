@@ -24,7 +24,7 @@
           @input="$v.password.$touch()"
           @blur="$v.password.$touch()"
         ></v-text-field>
-        <v-btn color="primary" :disabled="$v.$invalid" block @click="submit">{{buttonText}}</v-btn>
+        <v-btn color="primary" :disabled="$v.$invalid" block @click="submit">{{ buttonText }}</v-btn>
         <!-- <div v-if="error" class="registration_error">
                       <v-divider></v-divider>
                       <p class="registration_error_message">{{error}}</p>
@@ -32,8 +32,8 @@
       </v-form>
     </v-card>
     <v-card flat class="mt-3 card_switch">
-      {{switchText}}
-      <a @click="$emit('input', !value)">{{switchLink}}</a>
+      {{ switchText }}
+      <a @click="$emit('input', !value)">{{ switchLink }}</a>
     </v-card>
   </div>
 </template>

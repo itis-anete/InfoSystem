@@ -2,34 +2,28 @@
   <v-app style="background-color: #F4F6F9">
     <v-navigation-drawer mini-variant fixed app clipped v-model="drawerActive">
       <v-list two-line class="pt-0">
-        <menu-list-tile v-for="(item, i) in menuItems" :key="i" :item="item" :index="i"></menu-list-tile>
+        <menu-list-tile v-for="(item, i) in sortedMenuItems" :key="i" :item="item" :index="i"></menu-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app flat height="80" clipped-left class="pr-4 top-toolbar">
       <div class="side-icon">
         <v-toolbar-side-icon @click="drawerActive = !drawerActive"></v-toolbar-side-icon>
       </div>
-      <img src="../assets/logo.png" alt="logo" style="height: 50px" class="ml-4">
-      <v-toolbar-title v-text="title"/>
-      <v-spacer/>
-      <new-menu-item-dialog></new-menu-item-dialog>
+      <img src="../assets/logo.png" alt="logo" style="height: 50px" class="ml-4" />
+      <v-toolbar-title v-text="title" />
+      <v-spacer />
+      <new-menu-item-dialog />
     </v-toolbar>
     <v-content>
-      <nuxt/>
+      <nuxt />
     </v-content>
   </v-app>
 </template>
 
 <script>
-<<<<<<< HEAD
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import NewMenuItemDialog from '../components/menu/new-item-dialog.vue'
 import MenuListTile from '../components/menu/list-tile.vue'
-=======
-import { mapGetters, mapState } from 'vuex'
-import NewMenuItemDialog from '../components/new-menu-item-dialog.vue'
-import MenuListTile from '../components/menu-list-tile.vue'
->>>>>>> origin/master
 export default {
   components: {
     NewMenuItemDialog,
@@ -42,12 +36,8 @@ export default {
     }
   },
   computed: {
-<<<<<<< HEAD
-    ...mapGetters(['drawer', 'sortedMenuItems']),
-=======
     ...mapState(['menu']),
-    ...mapGetters(['menuItems']),
->>>>>>> origin/master
+    ...mapGetters(['sortedMenuItems']),
     drawerActive: {
       get() {
         return this.menu.drawer

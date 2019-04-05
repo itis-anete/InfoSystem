@@ -1,7 +1,7 @@
 import axios from 'axios'
 export default {
   state: {
-    drawer: false,
+    drawer: true,
     menuItems: []
   },
   mutations: {
