@@ -5,7 +5,7 @@
       <v-divider inset vertical></v-divider>
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-progress-circular v-if="loading" class="px-5" indeterminate color="primary"></v-progress-circular>
+    <v-progress-circular v-if="common.loading" class="px-5" indeterminate color="primary"></v-progress-circular>
   </v-toolbar>
 </template>
 
@@ -17,7 +17,7 @@ export default {
     NewEntityDialog
   },
   computed: {
-    ...mapState(['loading'])
+    ...mapState(['common'])
   }
 }
 </script>
