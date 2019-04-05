@@ -52,7 +52,7 @@ export default {
     drawer(state) {
       return state.drawer
     },
-    menuItems(state) {
+    sortedMenuItems(state) {
       return state.menuItems.sort((a, b) => {
         var titleA = a.find(x => x.key == 'title').value
         var titleB = b.find(x => x.key == 'title').value

@@ -11,7 +11,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import NewEntityDialog from './new-entity-dialog.vue'
+import NewEntityDialog from './new/entity-dialog.vue'
 export default {
   components: {
     NewEntityDialog

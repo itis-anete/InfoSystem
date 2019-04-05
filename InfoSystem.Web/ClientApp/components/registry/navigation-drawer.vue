@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import NewTypeDialog from './new-type-dialog.vue'
+import NewTypeDialog from './new/type-dialog.vue'
 import TypeListTile from './type-list-tile.vue'
 import { mapGetters } from 'vuex'
 export default {

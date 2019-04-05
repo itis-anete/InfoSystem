@@ -22,8 +22,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import NewMenuItemDialog from '../components/new-menu-item-dialog.vue'
-import MenuListTile from '../components/menu-list-tile.vue'
+import NewMenuItemDialog from '../components/menu/new-item-dialog.vue'
+import MenuListTile from '../components/menu/list-tile.vue'
 export default {
   components: {
     NewMenuItemDialog,
@@ -36,7 +36,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['drawer', 'menuItems']),
+    ...mapGetters(['drawer', 'sortedMenuItems']),
     drawerActive: {
       get() {
         return this.drawer

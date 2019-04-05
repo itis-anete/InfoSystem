@@ -3,7 +3,7 @@
     <v-layout justify-center>
       <v-flex xs10>
         <v-card v-if="properties">
-          <entity-toolbar></entity-toolbar>
+          <toolbar></toolbar>
           <property-grid :properties="properties"></property-grid>
         </v-card>
       </v-flex>
@@ -13,7 +13,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import EntityToolbar from '~/components/entity-toolbar.vue'
+import Toolbar from '~/components/property/toolbar.vue'
 import PropertyGrid from '~/components/property/grid.vue'
 export default {
   name: 'Entity',
@@ -22,7 +22,7 @@ export default {
   },
   components: {
     PropertyGrid,
-    EntityToolbar
+    Toolbar
   },
   computed: {
     ...mapGetters(['properties'])
