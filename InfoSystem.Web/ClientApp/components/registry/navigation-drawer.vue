@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer style="margin-top: 81px" fixed :class="{left: drawer}" width="250">
+  <v-navigation-drawer style="margin-top: 81px" fixed :class="{left: menu.drawer}" width="250">
     <v-list two-line subheader>
       <v-subheader>
         Entity Types
@@ -15,7 +15,7 @@
 <script>
 import NewTypeDialog from './new/type-dialog.vue'
 import TypeListTile from './type-list-tile.vue'
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   components: {
     NewTypeDialog,
@@ -23,7 +23,7 @@ export default {
   },
   props: ['types'],
   computed: {
-    ...mapGetters(['drawer'])
+    ...mapState(['menu'])
   }
 }
 </script>

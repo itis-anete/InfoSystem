@@ -21,10 +21,5 @@ export default {
       let response = await axios.post(`/api/Type/Add?typeName=${payload.typeName}&requiredProperty=${payload.requiredProperty}`)
       commit('addType', response.data)
     }
-  },
-  getters: {
-    types(state) {
-      return state.types
-    }
   }
 }

@@ -21,9 +21,15 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import { mapGetters } from 'vuex'
 import NewMenuItemDialog from '../components/menu/new-item-dialog.vue'
 import MenuListTile from '../components/menu/list-tile.vue'
+=======
+import { mapGetters, mapState } from 'vuex'
+import NewMenuItemDialog from '../components/new-menu-item-dialog.vue'
+import MenuListTile from '../components/menu-list-tile.vue'
+>>>>>>> origin/master
 export default {
   components: {
     NewMenuItemDialog,
@@ -36,10 +42,15 @@ export default {
     }
   },
   computed: {
+<<<<<<< HEAD
     ...mapGetters(['drawer', 'sortedMenuItems']),
+=======
+    ...mapState(['menu']),
+    ...mapGetters(['menuItems']),
+>>>>>>> origin/master
     drawerActive: {
       get() {
-        return this.drawer
+        return this.menu.drawer
       },
       set(value) {
         this.$store.dispatch('setDrawer', value)
@@ -54,8 +65,8 @@ export default {
   padding: 0px 0px !important;
 }
 .top-toolbar {
-	border-bottom: 1px solid #eaeaea;
-	background-color: white !important;
+  border-bottom: 1px solid #eaeaea;
+  background-color: white !important;
 }
 .side-icon {
   height: 100%;

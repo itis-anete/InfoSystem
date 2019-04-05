@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import NewEntityDialog from './new/entity-dialog.vue'
 export default {
   components: {
     NewEntityDialog
   },
   computed: {
-    ...mapGetters(['loading'])
+    ...mapState(['loading'])
   }
 }
 </script>

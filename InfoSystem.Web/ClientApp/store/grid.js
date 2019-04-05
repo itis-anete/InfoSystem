@@ -20,16 +20,5 @@ export default {
       let response = await axios.get(`/api/Property/GetAttributeValue?typeName=${payload.typeName}&attributeName=display`)
       commit('setHeaders', response.data)
     }
-  },
-  getters: {
-    headers(state) {
-      return state.headers
-    },
-    rowsPerPageItems(state) {
-      return state.rowsPerPageItems
-    },
-    pagination(state) {
-      return state.pagination
-    }
   }
 }

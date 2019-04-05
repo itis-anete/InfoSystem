@@ -36,10 +36,5 @@ export default {
       commit('deleteEntity', payload)
       commit('setLoading', false)
     }
-  },
-  getters: {
-    entities(state) {
-      return state.entities
-    }
   }
 }

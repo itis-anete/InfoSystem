@@ -2,9 +2,9 @@
   <v-container class="ma-0" style="margin-left: 250px !important">
     <v-layout justify-center>
       <v-flex xs10>
-        <v-card v-if="entities">
+        <v-card v-if="entities.entities">
           <registry-toolbar></registry-toolbar>
-          <registry-grid :entities="entities"></registry-grid>
+          <registry-grid :entities="entities.entities"></registry-grid>
         </v-card>
       </v-flex>
     </v-layout>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import RegistryGrid from '~/components/registry/grid.vue'
 import RegistryToolbar from '~/components/registry/toolbar.vue'
 export default {
@@ -25,7 +25,7 @@ export default {
     mode: 'out-in'
   },
   computed: {
-    ...mapGetters(['entities'])
+    ...mapState(['entities'])
   },
   async fetch({ store, params }) {
     await store.dispatch('getTypes')

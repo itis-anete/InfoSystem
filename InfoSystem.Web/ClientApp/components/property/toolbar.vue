@@ -10,14 +10,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import PropertyNewDialog from '~/components/property/new-dialog.vue'
 export default {
   components: {
     PropertyNewDialog
   },
   computed: {
-    ...mapGetters(['loading'])
+    ...mapState(['loading'])
   }
 }
 </script>

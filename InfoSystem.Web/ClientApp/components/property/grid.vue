@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="properties"
-    :rows-per-page-items="rowsPerPageItems"
+    :rows-per-page-items="grid.rowsPerPageItems"
     :pagination.sync="currentPagination"
     prev-icon="arrow-left"
     next-icon="arrow-right"
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import PropertyEditDialog from '~/components/property/edit-dialog.vue'
 import PropertyDeleteDialog from '~/components/property/delete-dialog.vue'
 export default {
@@ -42,10 +42,10 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters(['rowsPerPageItems', 'pagination']),
+    ...mapState(['grid']),
     currentPagination: {
       get() {
-        return this.pagination
+        return this.grid.pagination
       },
       set(value) {
         this.$store.commit('setPagination', value)
@@ -68,6 +68,6 @@ export default {
   cursor: pointer !important;
 }
 tbody tr:nth-of-type(even) {
-   background-color: #F4F6F9;
- }
+  background-color: #f4f6f9;
+}
 </style>

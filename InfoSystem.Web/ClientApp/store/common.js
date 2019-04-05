@@ -13,10 +13,5 @@ export default {
       }
     }
   },
-  actions: {},
-  getters: {
-    loading(state) {
-      return state.loading
-    }
-  }
+  actions: {}
 }
