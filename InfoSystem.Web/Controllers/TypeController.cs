@@ -4,6 +4,7 @@ using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
+
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
@@ -11,19 +12,21 @@ namespace InfoSystem.Web.Controllers
 	[Route("api/[controller]/[action]")]
 	public class TypeController : Controller
 	{
+		private readonly TypeDomainService _service;
+
 		/// <inheritdoc />
 		public TypeController(TypeDomainService service)
 		{
 			_service = service;
 		}
 
-	    /// <summary>
-	    /// Adds a new entity type.
-	    /// </summary>
-	    /// <param name="typeName">Name of a new type.</param>
-	    /// <param name="requiredProperty">Key of required property for attributes</param>
-	    /// <returns>ActionResult that refers to operation result.</returns>
-	    [HttpPost]
+		/// <summary>
+		/// Adds a new entity type.
+		/// </summary>
+		/// <param name="typeName">Name of a new type.</param>
+		/// <param name="requiredProperty">Key of required property for attributes</param>
+		/// <returns>ActionResult that refers to operation result.</returns>
+		[HttpPost]
 		public IActionResult Add([FromQuery] string typeName, string requiredProperty)
 		{
 			EntityType addedType = null;
@@ -47,6 +50,24 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
+		/// Gets all entity type's
+		/// </summary>
+		/// <returns>EntityTypes's collection.</returns>
+		[HttpGet]
+		public IActionResult Get()
+		{
+			try
+			{
+				var types = _service.Get();
+				return Ok(types);
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+		}
+
+		/// <summary>
 		/// Gets entity type specified by it's id.
 		/// </summary>
 		/// <param name="id">Type's id.</param>
@@ -67,25 +88,5 @@ namespace InfoSystem.Web.Controllers
 				return StatusCode(500, e.Message);
 			}
 		}
-
-		/// <summary>
-		/// Gets all entity type's
-		/// </summary>
-		/// <returns>EntityTypes's collection.</returns>
-		[HttpGet]
-		public IActionResult Get()
-		{
-			try
-			{
-				var types = _service.Get();
-				return Ok(types);
-			}
-			catch (Exception e)
-			{
-				return BadRequest(e.Message);
-			}
-		}
-
-		private readonly TypeDomainService _service;
 	}
 }

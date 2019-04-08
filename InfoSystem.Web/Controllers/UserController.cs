@@ -14,9 +14,11 @@ namespace InfoSystem.Web.Controllers
     /// Used to manage user accounts
     /// </summary>
     [AllowAnonymous]
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {
+        private readonly UserDomainService _service;
+
         /// <inheritdoc />
         public UserController(UserDomainService service)
         {
@@ -56,7 +58,6 @@ namespace InfoSystem.Web.Controllers
             return _service.Register(login, password);
         }
 
-        private readonly UserDomainService _service;
 
         private ClaimsIdentity GetIdentity(string login)
         {

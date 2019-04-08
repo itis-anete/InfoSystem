@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
-using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.Repos;
 using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Sockets.Services
 {
 	public class TypeDomainService
 	{
+		private readonly ITypeRepository _repository;
+
 		public TypeDomainService(ITypeRepository repository)
 		{
 			_repository = repository;
@@ -18,7 +18,5 @@ namespace InfoSystem.Sockets.Services
 		public IEnumerable<EntityType> Get() => _repository.Get();
 
 		public EntityType GetById(int id) => _repository.GetById(id);
-
-		private readonly ITypeRepository _repository;
 	}
 }

@@ -8,6 +8,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 {
 	public class RoleRepository : IRoleRepository
 	{
+		private readonly InfoSystemDbContext _context;
+
 		public RoleRepository(InfoSystemDbContext context)
 		{
 			_context = context;
@@ -63,7 +65,5 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				return null;
 			}
 		}
-
-		private readonly InfoSystemDbContext _context;
 	}
 }

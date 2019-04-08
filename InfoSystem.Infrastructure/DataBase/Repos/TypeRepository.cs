@@ -11,6 +11,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 {
 	public class TypeRepository : ITypeRepository
 	{
+		private readonly InfoSystemDbContext _context;
+
 		public TypeRepository(InfoSystemDbContext context)
 		{
 			_context = context;
@@ -24,23 +26,15 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
 			var entityEntry = AddNewType(newTypeName, requiredProperty);
 			AddAttributesTable(newTypeName);
-			
+
 			new SqlHandler(_context).AddDisplayAttribute(newTypeName, requiredProperty);
 
 			return entityEntry.Entity;
 		}
 
-		private void ExecuteSqlAndSave(string sqlQuery)
-		{
-			_context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
-			_context.SaveChanges();
-		}
-
 		public IEnumerable<EntityType> Get() => _context.Types;
 
 		public EntityType GetById(int id) => _context.Types.Find(id);
-
-		private readonly InfoSystemDbContext _context;
 
 		private void AddAttributesTable(string newTypeName)
 		{
@@ -54,6 +48,12 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			var sqlQuery = SqlOptions.GenerateCreateTableScript(newTypeName);
 			ExecuteSqlAndSave(sqlQuery);
 			return entityEntry;
+		}
+
+		private void ExecuteSqlAndSave(string sqlQuery)
+		{
+			_context.Database.ExecuteSqlCommand(new RawSqlString(sqlQuery));
+			_context.SaveChanges();
 		}
 	}
 }

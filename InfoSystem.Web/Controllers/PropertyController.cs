@@ -10,6 +10,8 @@ namespace InfoSystem.Web.Controllers
 	[Route("api/[controller]/[action]")]
 	public class PropertyController : Controller
 	{
+		private readonly PropertyDomainService _service;
+
 		/// <inheritdoc />
 		public PropertyController(PropertyDomainService service)
 		{
@@ -40,24 +42,17 @@ namespace InfoSystem.Web.Controllers
 		public IActionResult Delete([FromQuery] string typeName, int propertyId) =>
 			!_service.Delete(typeName, propertyId) ? StatusCode(500) : Ok();
 
+
 		/// <summary>
-		/// Gets all Properties that refers to type.
+		/// Get system attribute value for type. Default attributeName is "display".
 		/// </summary>
-		/// <param name="typeId">Entity type id.</param>
-		/// <returns>Properties refering to type collection.</returns>
+		/// <param name="typeName"></param>
+		/// <param name="attributeName"></param>
+		/// <returns>Attribute value, property key.</returns>
 		[HttpGet]
-		public IActionResult GetPropertiesByTypeId([FromQuery] int typeId)
+		public string GetAttributeValue(string typeName, string attributeName = "display")
 		{
-			try
-			{
-				var properties = _service.GetTypePropertiesById(typeId);
-				return Ok(properties);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			return _service.GetAttributeValue(typeName, attributeName);
 		}
 
 		/// <summary>
@@ -81,12 +76,13 @@ namespace InfoSystem.Web.Controllers
 			}
 		}
 
-		[HttpGet]
-		public string GetAttributeValue(string typeName, string attributeName = "display")
-		{
-			return _service.GetAttributeValue(typeName, attributeName);
-		}
-		
+		/// <summary>
+		/// Get property value for choosen entity.
+		/// </summary>
+		/// <param name="typeName"></param>
+		/// <param name="entityId"></param>
+		/// <param name="propertyName"></param>
+		/// <returns>IActionResult, StatusCode 500 or property object.</returns>
 		[HttpGet]
 		public IActionResult GetByPropertyName(string typeName, int entityId, string propertyName)
 		{
@@ -116,6 +112,26 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
+		/// Gets all Properties that refers to type.
+		/// </summary>
+		/// <param name="typeId">Entity type id.</param>
+		/// <returns>Properties refering to type collection.</returns>
+		[HttpGet]
+		public IActionResult GetPropertiesByTypeId([FromQuery] int typeId)
+		{
+			try
+			{
+				var properties = _service.GetTypePropertiesById(typeId);
+				return Ok(properties);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return StatusCode(500, e.Message);
+			}
+		}
+
+		/// <summary>
 		/// Update Property value.
 		/// </summary>
 		/// <param name="typeName">Property's type name.</param>
@@ -130,7 +146,5 @@ namespace InfoSystem.Web.Controllers
 				return StatusCode(500);
 			return Ok(updatedProperty);
 		}
-
-		private readonly PropertyDomainService _service;
 	}
 }

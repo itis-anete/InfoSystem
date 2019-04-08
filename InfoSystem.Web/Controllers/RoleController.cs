@@ -9,20 +9,22 @@ namespace InfoSystem.Web.Controllers
 	[Route("api/[controller]/[action]")]
 	public class RoleController : Controller
 	{
+		private readonly RoleDomainService _service;
+
 		/// <inheritdoc />
 		public RoleController(RoleDomainService service)
 		{
 			_service = service;
 		}
 
-	    /// <summary>
-	    /// Add a new role.
-	    /// </summary>
-	    /// <param name="name">Name of the role.</param>
-	    /// <param name="canRead">Permission to read.</param>
-	    /// <param name="canWrite">Permission to write.</param>
-	    /// <returns>IActionResult depending on result of operation.</returns>
-	    [HttpPost]
+		/// <summary>
+		/// Add a new role.
+		/// </summary>
+		/// <param name="name">Name of the role.</param>
+		/// <param name="canRead">Permission to read.</param>
+		/// <param name="canWrite">Permission to write.</param>
+		/// <returns>IActionResult depending on result of operation.</returns>
+		[HttpPost]
 		public IActionResult Create(string name, bool canRead, bool canWrite)
 		{
 			var newRole = _service.Create(name, canRead, canWrite);
@@ -71,7 +73,5 @@ namespace InfoSystem.Web.Controllers
 				return BadRequest();
 			return Ok(updatedRole);
 		}
-
-		private readonly RoleDomainService _service;
 	}
 }

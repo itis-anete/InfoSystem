@@ -10,6 +10,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 {
 	public class PropertyRepository : IPropertyRepository
 	{
+		private readonly InfoSystemDbContext _context;
+
 		public PropertyRepository(InfoSystemDbContext context)
 		{
 			_context = context;
@@ -23,17 +25,17 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				var sql = SqlOptions.GenerateInsertIntoScript(typeName, newProperty);
 				_context.Database.ExecuteSqlCommand(sql);
 
-				var property =  new SqlHandler(_context).GetTypePropertiesByName(typeName)
+				var property = new SqlHandler(_context).GetTypePropertiesByName(typeName)
 					.FirstOrDefault(a =>
 						a.Key == newProperty.Key &&
 						a.TypeId == newProperty.TypeId &&
 						a.EntityId == newProperty.EntityId &&
 						a.Value == newProperty.Value);
 
-			    if (property.IsComplex)
-			        SetDisplayComlexValue(property);
+				if (property.IsComplex)
+					SetDisplayComplexValue(property);
 
-			    return property;
+				return property;
 			}
 			catch (Exception e)
 			{
@@ -67,12 +69,6 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			return attribute.Value;
 		}
 
-		public IEnumerable<Property> GetTypePropertiesById(int typeId)
-		{
-			var typeName = _context.Types.Find(typeId)?.Name;
-			return new SqlHandler(_context).GetTypePropertiesByName(typeName);
-		}
-
 		public IEnumerable<Property> GetByEntityId(int entityId, int typeId) =>
 			GetTypePropertiesById(typeId).Where(a => a.EntityId == entityId);
 
@@ -81,26 +77,35 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				.FirstOrDefault(p => p.EntityId == entityId && p.Key == propertyName);
 
 		public IEnumerable<Property> GetByTypeName(int entityId, string typeName)
-	    {
-	        var properties = new SqlHandler(_context).GetTypePropertiesByName(typeName).Where(a => a.EntityId == entityId);
-	        var propertiesList = properties.ToList();
-            foreach (var property in propertiesList)
-            {
-                if (property.IsComplex)
-                    SetDisplayComlexValue(property);
-            }
-            return propertiesList;
-	    }
+		{
+			var properties = new SqlHandler(_context).GetTypePropertiesByName(typeName)
+				.Where(a => a.EntityId == entityId);
+			var propertiesList = properties.ToList();
+			foreach (var property in propertiesList)
+			{
+				if (property.IsComplex)
+					SetDisplayComplexValue(property);
+			}
 
-	    public void SetDisplayComlexValue(Property property)
-	    {
-	        var complexPropertyTypeName = property.Key.Substring(8);
-	        var propertyName = GetAttributeValue(complexPropertyTypeName, "display");
-	        var propertyValue = GetByPropertyName(propertyName, complexPropertyTypeName, int.Parse(property.Value)).Value;
-	        property.DisplayComplexValue = propertyValue;
-        }
+			return propertiesList;
+		}
 
-	    public Property Update(string typeName, string newValue, int attributeId)
+		public IEnumerable<Property> GetTypePropertiesById(int typeId)
+		{
+			var typeName = _context.Types.Find(typeId)?.Name;
+			return new SqlHandler(_context).GetTypePropertiesByName(typeName);
+		}
+
+		public void SetDisplayComplexValue(Property property)
+		{
+			var complexPropertyTypeName = property.Key.Substring(8);
+			var propertyName = GetAttributeValue(complexPropertyTypeName, "display");
+			var propertyValue = GetByPropertyName(propertyName, complexPropertyTypeName, int.Parse(property.Value))
+				.Value;
+			property.DisplayComplexValue = propertyValue;
+		}
+
+		public Property Update(string typeName, string newValue, int attributeId)
 		{
 			try
 			{
@@ -117,7 +122,5 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 				return null;
 			}
 		}
-
-		private readonly InfoSystemDbContext _context;
 	}
 }

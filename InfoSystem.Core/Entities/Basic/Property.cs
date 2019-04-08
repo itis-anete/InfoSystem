@@ -9,9 +9,12 @@ namespace InfoSystem.Core.Entities.Basic
         public string Value { get; set; }
         public int TypeId { get; set; }
         public int EntityId { get; set; }
-        [NotMapped]
-        public string DisplayComplexValue { get; set; }
+        public bool IsComplex => Key.StartsWith("Complex:");
+        [NotMapped] public string DisplayComplexValue { get; set; }
 
+        public Property()
+        {
+        }
 
         public Property(string key, string value, int typeId, int entityId)
         {
@@ -20,12 +23,5 @@ namespace InfoSystem.Core.Entities.Basic
             TypeId = typeId;
             EntityId = entityId;
         }
-
-        public Property()
-        {
-            
-        }
-
-        public bool IsComplex => Key.StartsWith("Complex:");
     }
 }
