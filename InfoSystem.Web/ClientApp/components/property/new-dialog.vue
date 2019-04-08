@@ -55,7 +55,7 @@ export default {
       const property = {
         key: this.complex ? `Complex:${this.type.name}` : this.key,
         value: this.complex ? this.entity.id : this.value,
-        typeId: this.types.find(x => x.name == this.$route.params.typeName).id,
+        typeId: this.types.types.find(x => x.name == this.$route.params.typeName).id,
         entityId: this.$route.params.id
       }
       this.addProperty(property)
