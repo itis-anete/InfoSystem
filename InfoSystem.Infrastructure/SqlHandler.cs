@@ -12,6 +12,8 @@ namespace InfoSystem.Infrastructure
 {
     internal class SqlHandler
     {
+        private readonly InfoSystemDbContext _context;
+
         internal SqlHandler(InfoSystemDbContext context)
         {
             _context = context;
@@ -69,7 +71,5 @@ namespace InfoSystem.Infrastructure
 
         private bool ModelDoesntHaveQueryType(string fullTypeName) => !_context.Model.GetEntityTypes().Any(type =>
             type.IsQueryType && type.Name == fullTypeName);
-
-        private readonly InfoSystemDbContext _context;
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace InfoSystem.Sockets
+namespace InfoSystem.Sockets.Connections
 {
 	public static class Resolver
 	{

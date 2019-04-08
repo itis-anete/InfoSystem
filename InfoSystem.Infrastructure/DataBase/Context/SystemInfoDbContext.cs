@@ -1,4 +1,3 @@
-using System.Reflection;
 using InfoSystem.Core;
 using InfoSystem.Core.Entities;
 using InfoSystem.Core.Entities.Basic;
@@ -8,6 +7,13 @@ namespace InfoSystem.Infrastructure.DataBase.Context
 {
     public class InfoSystemDbContext : DbContext
     {
+        private string _connectionString;
+
+        public DbSet<Entity> Entities { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<EntityType> Types { get; set; }
+        public DbSet<User> Users { get; set; }
+
         public InfoSystemDbContext()
         {
             _connectionString = new ConfigurationProvider().Configuration["ConnectionString"];
@@ -24,12 +30,5 @@ namespace InfoSystem.Infrastructure.DataBase.Context
             modelBuilder.Entity<EntityType>().HasIndex(t => t.Name);
             modelBuilder.Entity<User>().HasIndex(u => u.Login);
         }
-
-        public DbSet<Entity> Entities { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<EntityType> Types { get; set; }
-        public DbSet<User> Users { get; set; }
-
-        private string _connectionString;
     }
 }

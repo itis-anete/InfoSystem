@@ -29,7 +29,8 @@ namespace InfoSystem.Infrastructure
             $"INSERT INTO {typeName}attributes (key,value) " +
             $"VALUES ('{key}','{propertyName}');";
 
-        public static string GenerateDeleteScript(string typeName, int attributeId) => $"DELETE FROM {typeName} WHERE id={attributeId};";
+        public static string GenerateDeleteScript(string typeName, int attributeId) =>
+            $"DELETE FROM {typeName} WHERE id={attributeId};";
 
         public static string GenerateInsertIntoScript(string typeName, Property newProperty) =>
             $"INSERT INTO {typeName} (key,value,typeid,entityid) " +

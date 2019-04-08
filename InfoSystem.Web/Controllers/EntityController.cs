@@ -9,6 +9,8 @@ namespace InfoSystem.Web.Controllers
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{
+		private readonly EntityDomainService _repository;
+
 		/// <inheritdoc />
 		public EntityController(EntityDomainService repository)
 		{
@@ -21,14 +23,9 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="typeName">Entity type name.</param>\
 		/// <param name="requiredAttributeValue">Value of required property</param>
 		/// <returns>ActionResult, depending on operation result and added value.</returns> 
-        [HttpPost]
+		[HttpPost]
 		public IActionResult Add([FromQuery] string typeName, string requiredAttributeValue)
 		{
-//			var authResult =
-//				await AuthenticationHttpContextExtensions.AuthenticateAsync(HttpContext,
-//					JwtBearerDefaults.AuthenticationScheme);
-//			HttpContext.User = authResult.Principal;
-			
 			var addedEntity = _repository.Add(typeName, requiredAttributeValue);
 			if (addedEntity == null)
 				return StatusCode(500);
@@ -107,7 +104,5 @@ namespace InfoSystem.Web.Controllers
 				return StatusCode(500, e.Message);
 			}
 		}
-
-		private readonly EntityDomainService _repository;
 	}
 }

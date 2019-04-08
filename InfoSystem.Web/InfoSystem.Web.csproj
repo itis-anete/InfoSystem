@@ -29,46 +29,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Remove="appconfig.json" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\InfoSystem.Core\InfoSystem.Core.csproj" />
       <ProjectReference Include="..\InfoSystem.Infrastructure\InfoSystem.Infrastructure.csproj" />
       <ProjectReference Include="..\InfoSystem.Sockets\InfoSystem.Sockets.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="appconfig.json">
+        <Content Update="appconfig.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\FillMarket\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\FillMarket\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\FillMarket\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\FillMarket\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\FillMarket\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Home\About.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Home\Contact.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Home\Error.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Home\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Home\Markets.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Home\Privacy.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Products\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Products\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Products\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Products\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Products\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Shared\_CookieConsentPartial.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Shared\_Layout.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\Shared\_ValidationScriptsPartial.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\ShowMarket\ShowMarket.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\_ViewImports.cshtml" />
-      <_ContentIncludedByDefault Remove="Views(old, from Razor)\_ViewStart.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\Error.cshtml" />
-      <_ContentIncludedByDefault Remove="Pages\_ViewImports.cshtml" />
+        </Content>
     </ItemGroup>
     
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

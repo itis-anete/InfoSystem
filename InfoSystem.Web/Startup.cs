@@ -1,18 +1,11 @@
 using System;
 using System.IO;
 using System.Reflection;
-using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
-using InfoSystem.Sockets.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace InfoSystem.Web
@@ -33,40 +26,16 @@ namespace InfoSystem.Web
 		/// </summary>
 		public IConfiguration Configuration { get; }
 
-		///<summary>This method gets called by the runtime. Use this method to add services to the container.</summary> 
+		///<summary>
+		/// This method gets called by the runtime. Use this method to add services to the container.
+		/// </summary> 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-			{
-				options.RequireHttpsMetadata = false;
-				options.TokenValidationParameters = new TokenValidationParameters
-				{
-					ValidateIssuer = true,
-					ValidIssuer = AuthentificationOptions.Issuer,
-					ValidateAudience = true,
-					ValidAudience = AuthentificationOptions.Audience,
-					ValidateLifetime = true,
-					IssuerSigningKey = AuthentificationOptions.GetSymmetricSecurityKey(),
-					ValidateIssuerSigningKey = true,
-				};
-			});
-			
+			services.AddJwtAuthentication();
+			services.AddInfrastructure();
+
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-			services.AddScoped<IEntityRepository, EntityRepository>();
-			services.AddScoped<IPropertyRepository, PropertyRepository>();
-			services.AddScoped<IRoleRepository, RoleRepository>();
-			services.AddScoped<ITypeRepository, TypeRepository>();
-			services.AddScoped<IUserRepository, UserRepository>();
-
-			services.AddScoped<EntityDomainService>();
-			services.AddScoped<RoleDomainService>();
-			services.AddScoped<TypeDomainService>();
-			services.AddScoped<PropertyDomainService>();
-			services.AddScoped<UserDomainService>();
-
-			services.AddScoped<InfoSystemDbContext>();
-			
 			services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
 			services.AddSwaggerGen(options =>
 			{
@@ -82,7 +51,9 @@ namespace InfoSystem.Web
 			});
 		}
 
-		///<summary>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</summary>
+		///<summary>
+		/// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		/// </summary>
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			if (env.IsDevelopment())

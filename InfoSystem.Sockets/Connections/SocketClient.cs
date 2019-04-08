@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using InfoSystem.Sockets.Models;
 
-namespace InfoSystem.Sockets
+namespace InfoSystem.Sockets.Connections
 {
 	public class SocketClient
 	{

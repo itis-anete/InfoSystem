@@ -10,6 +10,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 {
     public class EntityRepository : IEntityRepository
     {
+        private readonly InfoSystemDbContext _context;
+
         public EntityRepository(InfoSystemDbContext dbContext)
         {
             _context = dbContext;
@@ -84,9 +86,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
             return entities;
         }
-
-        private readonly InfoSystemDbContext _context;
-
+        
         private EntityEntry<Entity> AddEntityToDatabase(Entity newEntity)
         {
             var entityEntry = _context.Entities.Add(newEntity);

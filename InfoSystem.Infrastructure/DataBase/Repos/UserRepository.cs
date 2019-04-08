@@ -8,6 +8,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 {
 	public class UserRepository : IUserRepository
 	{
+		private readonly InfoSystemDbContext _context;
+
 		public UserRepository(InfoSystemDbContext context)
 		{
 			_context = context;
@@ -35,7 +37,5 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			var user = _context.Users.FirstOrDefault(u => u.Login == login);
 			return user != null && user.Password == password;
 		}
-
-		private readonly InfoSystemDbContext _context;
 	}
 }

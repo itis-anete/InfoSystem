@@ -43,7 +43,7 @@ export default {
     },
     async deleteProperty({ commit }, payload) {
       commit('setLoading', true)
-      await axios.delete(`/api/Property/Delete?typeName=${payload.typeName}&attributeId=${payload.attributeId}`)
+      await axios.delete(`/api/Property/Delete?typeName=${payload.typeName}&propertyId=${payload.propertyId}`)
       commit('deleteProperty', payload)
       commit('setLoading', false)
     }
