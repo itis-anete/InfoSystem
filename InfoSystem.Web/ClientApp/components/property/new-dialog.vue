@@ -7,16 +7,7 @@
       <v-card-title class="headline">Add property</v-card-title>
       <v-card-text>
         <v-switch v-model="complex" color="primary" :label="`${complex ? 'Complex' : 'Simple'}`"></v-switch>
-        <v-layout align-center justify-space-between>
-          <v-flex xs5>
-            <v-select v-if="complex" :items="types.types" return-object item-text="name" v-model="type" label="Key"></v-select>
-            <v-text-field v-else label="Key" v-model="key"></v-text-field> </v-flex
-          >:
-          <v-flex xs6>
-            <v-select v-if="type && complex" :items="entities.entities" return-object item-text="display" v-model="entity" label="Value"></v-select>
-            <v-text-field v-else-if="!complex" label="Value" v-model="value"></v-text-field>
-          </v-flex>
-        </v-layout>
+        <component :is="view" :propertyKey.sync="property.key" :propertyValue.sync="property.value"></component>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -28,44 +19,48 @@
 </template>
 
 <script>
+import Complex from '../property/complex-property.vue'
+import Simple from '../property/simple-property.vue'
+
 import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 export default {
+  components: {
+    Complex,
+    Simple
+  },
   data: () => ({
     dialog: false,
-    key: '',
-    value: '',
     complex: false,
-    type: null,
-    entity: null
+    property: {
+      key: '',
+      value: '',
+      typeId: '',
+      entityId: ''
+    }
   }),
   computed: {
-    ...mapState(['types', 'entities'])
-  },
-  watch: {
-    type(value) {
-      if (value) {
-        this.$store.dispatch('getEntities', value.name)
-      }
+    ...mapState(['types', 'entities']),
+    view() {
+      return this.complex ? 'complex' : 'simple'
     }
   },
   methods: {
     ...mapActions(['addProperty']),
-    add() {
-      const property = {
-        key: this.complex ? `Complex:${this.type.name}` : this.key,
-        value: this.complex ? this.entity.id : this.value,
-        typeId: this.types.find(x => x.name == this.$route.params.typeName).id,
-        entityId: this.$route.params.id
+
+    async add() {
+      this.property.typeId = this.types.types.find(x => x.name == this.$route.params.typeName).id
+      this.property.entityId = this.$route.params.id
+      if (this.complex) {
+        this.property.key = `Complex:${this.property.key.name}`
+        this.property.value = this.property.value.id
       }
-      this.addProperty(property)
+      await this.addProperty(this.property)
       this.clear()
     },
     clear() {
-      this.key = ''
-      this.value = ''
-      this.type = null
-      this.entity = null
+      this.property.key = ''
+      this.property.value = ''
       this.complex = false
       this.dialog = false
     }
