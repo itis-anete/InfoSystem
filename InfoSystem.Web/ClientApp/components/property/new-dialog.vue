@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     ...mapActions(['addProperty']),
-
     async add() {
       this.property.typeId = this.types.types.find(x => x.name == this.$route.params.typeName).id
       this.property.entityId = this.$route.params.id
@@ -55,6 +54,7 @@ export default {
         this.property.key = `Complex:${this.property.key.name}`
         this.property.value = this.property.value.id
       }
+      //Merge doesnt work
       await this.addProperty(this.property)
       this.clear()
     },
