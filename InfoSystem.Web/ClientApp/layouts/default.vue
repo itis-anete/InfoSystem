@@ -1,6 +1,6 @@
 <template>
   <v-app style="background-color: #F4F6F9">
-    <v-navigation-drawer mini-variant fixed app clipped v-model="drawerActive">
+    <v-navigation-drawer mini-variant class="layout-drawer" fixed app clipped v-model="drawerActive">
       <v-list two-line class="pt-0">
         <menu-list-tile v-for="(item, i) in sortedMenuItems" :key="i" :item="item" :index="i"></menu-list-tile>
       </v-list>
@@ -65,5 +65,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.layout-drawer {
+  height: calc(100% - 80px) !important;
+  overflow-y: auto;
+}
+.layout-drawer::-webkit-scrollbar {
+  display: none;
 }
 </style>

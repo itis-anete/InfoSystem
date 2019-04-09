@@ -1,12 +1,12 @@
 <template>
-  <v-navigation-drawer style="margin-top: 81px" fixed :class="{ left: menu.drawer }" width="250">
-    <v-list two-line subheader>
-      <v-subheader>
-        Entity Types
-        <v-spacer></v-spacer>
-        <new-type-dialog></new-type-dialog>
-      </v-subheader>
-      <v-divider></v-divider>
+  <v-navigation-drawer class="drawer" fixed :class="{ left: menu.drawer }" width="250">
+    <v-subheader>
+      Entity Types
+      <v-spacer></v-spacer>
+      <new-type-dialog></new-type-dialog>
+    </v-subheader>
+    <v-divider></v-divider>
+    <v-list two-line subheader class="drawer-list">
       <type-list-tile v-for="(type, index) in types" :type="type" :key="type.name"></type-list-tile>
     </v-list>
   </v-navigation-drawer>
@@ -35,5 +35,17 @@ export default {
 .left {
   transform: translateX(80px) !important;
   transition: transform 1s linear;
+}
+.drawer {
+  margin-top: 81px !important;
+  height: 100% !important;
+  overflow-y: hidden;
+}
+.drawer-list {
+  height: calc(100% - 120px) !important;
+  overflow-y: auto;
+}
+.drawer-list::-webkit-scrollbar {
+  display: none;
 }
 </style>
