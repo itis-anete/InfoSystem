@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import AuthenticationCard from './authentication-card.vue'
 export default {
   props: ['value'],
@@ -28,8 +29,10 @@ export default {
     }
   },
   methods: {
-    signUp(username, password) {
-      console.log(username, password)
+    ...mapActions(['register']),
+    async signUp(username, password) {
+      await this.register({ login: username, password: password })
+      this.$router.push('/')
     }
   }
 }

@@ -10,6 +10,7 @@ import types from './types'
 import roles from './roles'
 import menu from './menu'
 import grid from './grid'
+import user from './user'
 
 const createStore = () => {
   return new Vuex.Store({
@@ -20,7 +21,8 @@ const createStore = () => {
       types,
       roles,
       menu,
-      grid
+      grid,
+      user
     }
   })
 }

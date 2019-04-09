@@ -12,6 +12,7 @@
       <img src="../assets/logo.png" alt="logo" style="height: 50px" class="ml-4" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <v-btn color="error" @click="onLogOut">LogOut</v-btn>
       <new-menu-item-dialog />
     </v-toolbar>
     <v-content>
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 import NewMenuItemDialog from '../components/menu/new-item-dialog.vue'
 import MenuListTile from '../components/menu/list-tile.vue'
 export default {
@@ -29,7 +30,7 @@ export default {
     NewMenuItemDialog,
     MenuListTile
   },
-  middleware: ['loadMenuItems'],
+  middleware: ['loadMenuItems', 'authentication'],
   data() {
     return {
       title: 'InfoSystem'
@@ -45,6 +46,13 @@ export default {
       set(value) {
         this.$store.dispatch('setDrawer', value)
       }
+    }
+  },
+  methods: {
+    ...mapActions(['logOut']),
+    onLogOut() {
+      this.logOut()
+      this.$router.push('/authenticate')
     }
   }
 }
