@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
+
 namespace InfoSystem.Web
 {
 	/// <summary>

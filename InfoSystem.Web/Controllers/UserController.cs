@@ -49,7 +49,7 @@ namespace InfoSystem.Web.Controllers
                 now.AddMinutes(AuthentificationOptions.Lifetime),
                 new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return Ok("Bearer " + token);
+            return Ok(new { Token = "Bearer " + token, Login = login });
         }
 
         [HttpPost]
