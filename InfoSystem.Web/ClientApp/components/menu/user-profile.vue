@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn class="profile-btn" d-flex large depressed v-on="on">
         {{ user.login }}
-        <v-avatar size="40" color="white">
+        <v-avatar size="40" class="ml-3 mr-4" color="white">
           <img src="https://cdn3.iconfinder.com/data/icons/users-6/100/654853-user-men-2-512.png" alt="avatar" />
         </v-avatar>
         <v-icon>expand_more</v-icon>
@@ -48,10 +48,6 @@ export default {
   background-color: #f5f5f5;
   min-width: 170px;
   padding: 20px;
-  justify-content: space-between;
-}
-
-.v-btn__content {
   justify-content: space-between;
 }
 </style>

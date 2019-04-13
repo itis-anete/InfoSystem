@@ -1,7 +1,11 @@
 <template>
-  <v-container grid-list-xs fill-height>
+  <v-container
+    grid-list-xs
+    fill-height
+    style="background: linear-gradient(to bottom, #52A8B6 0%,#52A8B6 50%,#fafafa 50%,#fafafa 100%); max-width: 100% "
+  >
     <v-layout row wrap justify-center align-center>
-      <v-flex xs3>
+      <v-flex xs12 sm8 md4 lg4>
         <transition name="component-fade" mode="out-in">
           <component :is="view" v-model="isSignUp"></component>
         </transition>
@@ -11,8 +15,8 @@
 </template>
 
 <script>
-import SignUp from '../components/Authentication/signup.vue'
-import LogIn from '../components/Authentication/login.vue'
+import SignUp from '../components/authentication/signup.vue'
+import LogIn from '../components/authentication/login.vue'
 
 export default {
   layout: 'authentication',

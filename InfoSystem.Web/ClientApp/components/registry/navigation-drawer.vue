@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer class="drawer" fixed :class="{ left: menu.drawer }" width="250">
-    <v-subheader>
+    <v-subheader style="height: 47px">
       Entity Types
       <v-spacer></v-spacer>
       <new-type-dialog></new-type-dialog>

@@ -1,11 +1,13 @@
 <template>
-  <v-container class="ma-0" style="margin-left: 250px !important">
+  <v-container class="ma-0 pa-0" style="margin-left: 250px !important; max-width: 100%">
     <v-layout justify-center>
-      <v-flex xs10>
-        <v-card v-if="entities.entities">
-          <registry-toolbar></registry-toolbar>
-          <registry-grid :entities="entities.entities"></registry-grid>
-        </v-card>
+      <v-flex xs12>
+        <registry-toolbar></registry-toolbar>
+        <v-layout justify-center class="mt-0">
+          <v-flex xs11>
+            <registry-grid :entities="entities.entities"></registry-grid>
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
   </v-container>

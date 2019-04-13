@@ -1,10 +1,16 @@
 // Import Vuetify styling
 @require '~vuetify/src/stylus/app.styl'
+
 .page-enter-active, .page-leave-active 
   transition: opacity .5s
 
-
 .page-enter, .page-leave-active 
   opacity: 0
+
+html
+	height: 100vh
+	overflow: hidden
+body
+	box-sizing: border-box
 
 

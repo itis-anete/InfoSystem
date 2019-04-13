@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pl-0 py-0 ml-0 mt-0" fill-height>
+  <v-container class="pa-0 ml-0 mt-0" fill-height style="max-width: 100% !important">
     <v-layout>
       <registry-navigation-drawer :types="types.types"></registry-navigation-drawer>
       <nuxt-child :key="$route.params.typeName"></nuxt-child>

@@ -1,35 +1,39 @@
 <template>
   <div>
-    <v-card flat class="card pa-5 elevation-2">
-      <h1 class="text-xs-center">InfoSystem</h1>
-      <v-form ref="form" lazy-validation class="mt-4">
-        <v-text-field
-          outline
-          v-model="username"
-          label="Username"
-          @keyup.enter="submit"
-          :error-messages="nameErrors"
-          @input="$v.username.$touch()"
-          @blur="$v.username.$touch()"
-        ></v-text-field>
-        <v-text-field
-          outline
-          v-model="password"
-          :append-icon="showPassword ? 'visibility_off' : 'visibility'"
-          :type="showPassword ? 'text' : 'password'"
-          label="Password"
-          @keyup.enter="submit"
-          @click:append="showPassword = !showPassword"
-          :error-messages="passwordErrors"
-          @input="$v.password.$touch()"
-          @blur="$v.password.$touch()"
-        ></v-text-field>
-        <v-btn color="primary" :disabled="$v.$invalid" block @click="submit">{{ buttonText }}</v-btn>
-        <!-- <div v-if="error" class="registration_error">
-                      <v-divider></v-divider>
-                      <p class="registration_error_message">{{error}}</p>
-        </div>-->
-      </v-form>
+    <v-card class="elevation-1 pa-3">
+      <v-card-text>
+        <div class="layout column align-center">
+          <img src="../../assets/logo.png" alt="Vue Material Admin" width="120" height="120" />
+          <h1 class="flex my-4 primary--text">InfoSystem</h1>
+        </div>
+        <v-form>
+          <v-text-field
+            append-icon="person"
+            outline
+            v-model="username"
+            label="Username"
+            @keyup.enter="submit"
+            :error-messages="nameErrors"
+            @input="$v.username.$touch()"
+            @blur="$v.username.$touch()"
+          ></v-text-field>
+          <v-text-field
+            outline
+            v-model="password"
+            :append-icon="showPassword ? 'visibility_off' : 'visibility'"
+            :type="showPassword ? 'text' : 'password'"
+            label="Password"
+            @keyup.enter="submit"
+            @click:append="showPassword = !showPassword"
+            :error-messages="passwordErrors"
+            @input="$v.password.$touch()"
+            @blur="$v.password.$touch()"
+          ></v-text-field>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn large color="primary" :disabled="$v.$invalid" block @click="submit">{{ buttonText }}</v-btn>
+      </v-card-actions>
     </v-card>
     <v-card flat class="mt-3 card_switch">
       {{ switchText }}
