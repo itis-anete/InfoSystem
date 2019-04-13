@@ -5,15 +5,17 @@
         <menu-list-tile v-for="(item, i) in sortedMenuItems" :key="i" :item="item" :index="i"></menu-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed app flat height="80" clipped-left class="pr-4 top-toolbar">
+    <v-toolbar fixed app flat height="80" clipped-left class=" top-toolbar">
       <div class="side-icon">
         <v-toolbar-side-icon @click="drawerActive = !drawerActive"></v-toolbar-side-icon>
       </div>
       <img src="../assets/logo.png" alt="logo" style="height: 50px" class="ml-4" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn color="error" @click="onLogOut">LogOut</v-btn>
-      <new-menu-item-dialog />
+      <v-toolbar-items>
+        <user-profile />
+      </v-toolbar-items>
+      <!-- <new-menu-item-dialog /> -->
     </v-toolbar>
     <v-content>
       <nuxt />
@@ -25,10 +27,12 @@
 import { mapGetters, mapState, mapActions } from 'vuex'
 import NewMenuItemDialog from '../components/menu/new-item-dialog.vue'
 import MenuListTile from '../components/menu/list-tile.vue'
+import UserProfile from '../components/menu/user-profile.vue'
 export default {
   components: {
     NewMenuItemDialog,
-    MenuListTile
+    MenuListTile,
+    UserProfile
   },
   middleware: ['loadMenuItems', 'authentication'],
   data() {
@@ -46,13 +50,6 @@ export default {
       set(value) {
         this.$store.dispatch('setDrawer', value)
       }
-    }
-  },
-  methods: {
-    ...mapActions(['logOut']),
-    onLogOut() {
-      this.logOut()
-      this.$router.push('/authenticate')
     }
   }
 }
