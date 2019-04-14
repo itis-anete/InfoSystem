@@ -7,28 +7,8 @@
           <h1 class="flex my-4 primary--text">InfoSystem</h1>
         </div>
         <v-form>
-          <v-text-field
-            append-icon="person"
-            outline
-            v-model="username"
-            label="Username"
-            @keyup.enter="submit"
-            :error-messages="nameErrors"
-            @input="$v.username.$touch()"
-            @blur="$v.username.$touch()"
-          ></v-text-field>
-          <v-text-field
-            outline
-            v-model="password"
-            :append-icon="showPassword ? 'visibility_off' : 'visibility'"
-            :type="showPassword ? 'text' : 'password'"
-            label="Password"
-            @keyup.enter="submit"
-            @click:append="showPassword = !showPassword"
-            :error-messages="passwordErrors"
-            @input="$v.password.$touch()"
-            @blur="$v.password.$touch()"
-          ></v-text-field>
+          <username-field :v="$v" :username.sync="username" :submit="submit" />
+          <password-field :v="$v" :password.sync="password" :submit="submit" />
         </v-form>
       </v-card-text>
       <v-card-actions>
@@ -44,34 +24,24 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, minLength, email } from 'vuelidate/lib/validators'
+import { required, minLength } from 'vuelidate/lib/validators'
+import UsernameField from './username-field.vue'
+import PasswordField from './password-field.vue'
 export default {
   props: ['value', 'buttonText', 'switchText', 'switchLink', 'onSubmit'],
+  components: {
+    UsernameField,
+    PasswordField
+  },
   mixins: [validationMixin],
   validations: {
-    password: { required, minLength: minLength(6) },
-    username: { required }
+    username: { required },
+    password: { required, minLength: minLength(6) }
   },
   data() {
     return {
-      showPassword: false,
       password: '',
       username: ''
-    }
-  },
-  computed: {
-    passwordErrors() {
-      const errors = []
-      if (!this.$v.password.$dirty) return errors
-      !this.$v.password.minLength && errors.push('Password must be at most 6 characters long')
-      !this.$v.password.required && errors.push('Password is required.')
-      return errors
-    },
-    nameErrors() {
-      const errors = []
-      if (!this.$v.username.$dirty) return errors
-      !this.$v.username.required && errors.push('Username is required.')
-      return errors
     }
   },
   methods: {
