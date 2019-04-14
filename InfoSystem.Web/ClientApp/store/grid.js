@@ -16,8 +16,10 @@ export default {
     }
   },
   actions: {
-    async loadHeaders({ commit }, payload) {
-      let response = await axios.get(`/api/Property/GetAttributeValue?typeName=${payload.typeName}&attributeName=display`)
+    async loadHeaders({ commit, rootState }, payload) {
+      let response = await axios.get(`/api/Property/GetAttributeValue?typeName=${payload.typeName}&attributeName=display`, {
+        headers: { Authorization: rootState.user.token }
+      })
       commit('setHeaders', response.data)
     }
   }

@@ -13,12 +13,14 @@ export default {
     }
   },
   actions: {
-    async getTypes({ commit }) {
-      let response = await axios.get('/api/Type/Get')
+    async getTypes({ commit, rootState }) {
+      let response = await axios.get('/api/Type/Get', { headers: { Authorization: rootState.user.token } })
       commit('setTypes', response.data)
     },
-    async addType({ commit }, payload) {
-      let response = await axios.post(`/api/Type/Add?typeName=${payload.typeName}&requiredProperty=${payload.requiredProperty}`)
+    async addType({ commit, rootState }, payload) {
+      let response = await axios.post(`/api/Type/Add?typeName=${payload.typeName}&requiredProperty=${payload.requiredProperty}`, {
+        headers: { Authorization: rootState.user.token }
+      })
       commit('addType', response.data)
     }
   }

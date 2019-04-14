@@ -34,7 +34,7 @@ export default {
     MenuListTile,
     UserProfile
   },
-  middleware: ['loadMenuItems', 'authentication'],
+  middleware: ['authentication', 'loadMenuItems'],
   data() {
     return {
       title: 'InfoSystem'

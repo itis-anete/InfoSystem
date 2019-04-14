@@ -21,29 +21,34 @@ export default {
     }
   },
   actions: {
-    async getProperties({ commit }, payload) {
-      let response = await axios.get(`/api/Property/GetByTypeName?entityId=${payload.entityId}&typeName=${payload.typeName}`)
+    async getProperties({ commit, rootState }, payload) {
+      let response = await axios.get(`/api/Property/GetByTypeName?entityId=${payload.entityId}&typeName=${payload.typeName}`, {
+        headers: { Authorization: rootState.user.token }
+      })
       setTimeout(() => {
         commit('setProperties', response.data)
       }, 0)
     },
-    async updateProperty({ commit }, payload) {
+    async updateProperty({ commit, rootState }, payload) {
       commit('setLoading', true)
       let response = await axios.post(
-        `/api/Property/Update?typeName=${payload.typeName}&newValue=${payload.newValue}&propertyId=${payload.propertyId}`
+        `/api/Property/Update?typeName=${payload.typeName}&newValue=${payload.newValue}&propertyId=${payload.propertyId}`,
+        { headers: { Authorization: rootState.user.token } }
       )
       commit('updateProperty', response.data)
       commit('setLoading', false)
     },
-    async addProperty({ commit }, payload) {
+    async addProperty({ commit, rootState }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(`/api/Property/Add`, payload)
+      let response = await axios.post(`/api/Property/Add`, payload, { headers: { Authorization: rootState.user.token } })
       commit('addProperty', response.data)
       commit('setLoading', false)
     },
-    async deleteProperty({ commit }, payload) {
+    async deleteProperty({ commit, rootState }, payload) {
       commit('setLoading', true)
-      await axios.delete(`/api/Property/Delete?typeName=${payload.typeName}&propertyId=${payload.propertyId}`)
+      await axios.delete(`/api/Property/Delete?typeName=${payload.typeName}&propertyId=${payload.propertyId}`, {
+        headers: { Authorization: rootState.user.token }
+      })
       commit('deleteProperty', payload)
       commit('setLoading', false)
     }

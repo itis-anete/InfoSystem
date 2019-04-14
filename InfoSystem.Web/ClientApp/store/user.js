@@ -19,15 +19,19 @@ export default {
       commit('setToken', window.localStorage['token'])
     },
     async authenticate({ commit }, payload) {
+      commit('setLoading', true)
       let response = await axios.get(`/api/User/LogIn?login=${payload.login}&password=${payload.password}`)
       window.localStorage['login'] = response.data.login
       commit('setLogin', response.data.login)
       window.localStorage['token'] = response.data.token
       commit('setToken', response.data.token)
+      commit('setLoading', false)
     },
     async register({ dispatch }, payload) {
+      commit('setLoading', true)
       await axios.post(`/api/User/Register?login=${payload.login}&password=${payload.password}`)
       dispatch('authenticate', payload)
+      commit('setLoading', false)
     },
     async logOut({ commit }) {
       delete window.localStorage['login']

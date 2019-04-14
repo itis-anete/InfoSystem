@@ -1,6 +1,7 @@
 using System;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Sockets.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 
@@ -8,7 +9,7 @@ using Npgsql;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
-	//	[Authorize]
+	[Authorize]
 	[Route("api/[controller]/[action]")]
 	public class TypeController : Controller
 	{

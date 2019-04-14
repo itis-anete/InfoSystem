@@ -1,11 +1,12 @@
 using System;
 using InfoSystem.Sockets.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
-//	[Authorize]
+	[Authorize]
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{

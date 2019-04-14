@@ -18,21 +18,23 @@ export default {
     }
   },
   actions: {
-    async getEntities({ commit }, payload) {
-      let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`)
+    async getEntities({ commit, rootState }, payload) {
+      let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`, { headers: { Authorization: rootState.user.token } })
       setTimeout(() => {
         commit('setEntities', response.data)
       }, 0)
     },
-    async addEntity({ commit }, payload) {
+    async addEntity({ commit, rootState }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(`/api/Entity/Add?typeName=${payload.typeName}&requiredAttributeValue=${payload.requiredAttributeValue}`)
+      let response = await axios.post(`/api/Entity/Add?typeName=${payload.typeName}&requiredAttributeValue=${payload.requiredAttributeValue}`, {
+        headers: { Authorization: rootState.user.token }
+      })
       commit('addEntity', response.data)
       commit('setLoading', false)
     },
-    async deleteEntity({ commit }, payload) {
+    async deleteEntity({ commit, rootState }, payload) {
       commit('setLoading', true)
-      await axios.delete(`/api/Entity/Delete?id=${payload}`)
+      await axios.delete(`/api/Entity/Delete?id=${payload}`, { headers: { Authorization: rootState.user.token } })
       commit('deleteEntity', payload)
       commit('setLoading', false)
     }
