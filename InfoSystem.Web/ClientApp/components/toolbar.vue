@@ -3,9 +3,7 @@
     <v-layout align-center style="height: 100%">
       <v-flex xs12 style="height: 100%; margin-left: 4.1666666667%">
         <v-toolbar-items>
-          <v-divider inset vertical></v-divider>
           <component :is="newDialog"></component>
-          <v-divider inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-progress-circular
             v-if="common.loading"

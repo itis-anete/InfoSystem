@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500">
     <template v-slot:activator="{ on }">
-      <v-btn color="primary" flat v-on="on"> <v-icon class="mr-2">add</v-icon>Add Property </v-btn>
+      <v-btn color="primary" depressed v-on="on"> <v-icon class="mr-2">add</v-icon>Add Property </v-btn>
     </template>
     <v-card>
       <v-card-title class="headline">Add new property</v-card-title>
