@@ -7,7 +7,7 @@
     <v-layout row wrap justify-center align-center>
       <v-flex xs12 sm8 md4 lg4>
         <transition name="component-fade" mode="out-in">
-          <component :is="view" v-model="isSignUp"></component>
+          <component :is="currentAuthState" v-model="isSignUp"></component>
         </transition>
       </v-flex>
     </v-layout>
@@ -27,9 +27,14 @@ export default {
   data: () => ({
     isSignUp: true
   }),
+  head() {
+    return {
+      title: this.currentAuthState
+    }
+  },
   computed: {
-    view() {
-      return this.isSignUp ? 'sign-up' : 'log-in'
+    currentAuthState() {
+      return this.isSignUp ? 'SignUp' : 'LogIn'
     }
   }
 }

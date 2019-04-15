@@ -4,7 +4,7 @@
       <v-card-text>
         <div class="layout column align-center">
           <img src="../../assets/logo.png" alt="Vue Material Admin" width="120" height="120" />
-          <h1 class="flex my-4 primary--text">InfoSystem</h1>
+          <h1 class="flex my-4 primary--text">InfoSystem | {{ value ? 'SignUp' : 'LogIn' }}</h1>
         </div>
         <v-form>
           <username-field :v="$v" :username.sync="username" :submit="submit" />
@@ -15,7 +15,7 @@
         <v-btn large color="primary" :disabled="$v.$invalid" block @click="submit">{{ buttonText }}</v-btn>
       </v-card-actions>
     </v-card>
-    <v-card flat class="mt-3 card_switch">
+    <v-card flat class="mt-3 card_switch elevation-2">
       {{ switchText }}
       <a @click="$emit('input', !value)">{{ switchLink }}</a>
     </v-card>

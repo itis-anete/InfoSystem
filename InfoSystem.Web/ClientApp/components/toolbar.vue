@@ -3,7 +3,7 @@
     <v-layout align-center style="height: 100%">
       <v-flex xs12 style="height: 100%; margin-left: 4.1666666667%">
         <v-toolbar-items>
-          <component :is="newDialog"></component>
+          <transition name="page" mode="out-in"><component :is="newDialog"></component></transition>
           <v-spacer></v-spacer>
           <v-progress-circular
             v-if="common.loading"
