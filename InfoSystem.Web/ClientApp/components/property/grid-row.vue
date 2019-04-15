@@ -3,20 +3,28 @@
     <td>{{ formatKey(item) }}</td>
     <td v-if="item.isComplex">{{ item.displayComplexValue }}</td>
     <property-edit-dialog v-else :item="item" />
-    <property-delete-dialog :item="item" />
+    <delete-dialog :remove="remove" />
   </tr>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import PropertyEditDialog from '~/components/property/edit-dialog.vue'
-import PropertyDeleteDialog from '~/components/property/delete-dialog.vue'
+import DeleteDialog from '~/components/delete-dialog.vue'
 export default {
   props: ['item'],
   components: {
     PropertyEditDialog,
-    PropertyDeleteDialog
+    DeleteDialog
   },
   methods: {
+    ...mapActions(['deleteProperty']),
+    remove() {
+      this.deleteProperty({
+        propertyId: this.item.id,
+        typeName: this.$route.params.typeName
+      })
+    },
     linkTo(item) {
       if (item.isComplex) this.$router.push(`../${item.key.substring(8)}/${item.value}`)
     },
