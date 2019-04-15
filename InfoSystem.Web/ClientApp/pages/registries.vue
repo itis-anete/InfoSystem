@@ -2,7 +2,7 @@
   <v-container class="pa-0 ml-0 mt-0" fill-height style="max-width: 100% !important">
     <v-layout>
       <registry-navigation-drawer :types="types.types" />
-      <v-container class="ma-0 pa-0" style="margin-left: 250px !important;">
+      <v-container class="ma-0 pa-0" style="margin-left: 250px !important; max-width: 100% !important">
         <v-layout justify-center>
           <v-flex xs12>
             <toolbar :newDialog="dialog"></toolbar>
