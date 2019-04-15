@@ -5,7 +5,7 @@
         <toolbar :newDialog="`property-new-dialog`"></toolbar>
         <v-layout justify-center class="mt-0">
           <v-flex xs11>
-            <property-grid :properties="properties.properties"></property-grid>
+            <grid :items="properties.properties" :headers="headers" :gridRow="`property-grid-row`"></grid>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -16,17 +16,28 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Toolbar from '~/components/toolbar.vue'
-import PropertyGrid from '~/components/property/grid.vue'
+import Grid from '~/components/grid.vue'
 
 export default {
   name: 'Entity',
+  components: {
+    Grid,
+    Toolbar
+  },
   validate({ params }) {
     return !isNaN(+params.id)
   },
-  components: {
-    PropertyGrid,
-    Toolbar
-  },
+  data: () => ({
+    headers: [
+      {
+        text: 'Key',
+        align: 'left',
+        value: 'key'
+      },
+      { text: 'Value', sortable: false },
+      { text: '', sortable: false }
+    ]
+  }),
   computed: {
     ...mapState(['properties'])
   },

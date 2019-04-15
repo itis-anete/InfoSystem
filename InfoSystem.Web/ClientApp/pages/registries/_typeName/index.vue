@@ -5,7 +5,7 @@
         <toolbar :newDialog="`new-entity-dialog`"></toolbar>
         <v-layout justify-center class="mt-0">
           <v-flex xs11>
-            <registry-grid :entities="entities.entities"></registry-grid>
+            <grid :items="entities.entities" :headers="grid.headers" :gridRow="`registry-grid-row`"></grid>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -15,16 +15,16 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import RegistryGrid from '~/components/registry/grid.vue'
+import Grid from '~/components/grid.vue'
 import Toolbar from '~/components/toolbar.vue'
 export default {
   name: 'Registry',
   components: {
-    RegistryGrid,
+    Grid,
     Toolbar
   },
   computed: {
-    ...mapState(['entities'])
+    ...mapState(['entities', 'grid'])
   },
   async fetch({ store, params }) {
     await store.dispatch('getTypes')
