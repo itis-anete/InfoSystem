@@ -1,8 +1,11 @@
 <template>
   <v-layout align-center justify-space-between>
-    <v-flex xs5> <v-select :items="types.types" return-object item-text="name" v-model="type" label="Key"></v-select> </v-flex>:
+    <v-flex xs5>
+      <v-select :items="types.types" return-object item-text="name" v-model="type" label="Key" />
+    </v-flex>
+    {{ `:` }}
     <v-flex xs6>
-      <v-select v-if="type" :items="entities.entities" return-object item-text="display" v-model="entity" label="Value"></v-select>
+      <v-select v-if="type" :items="entities.entities" return-object item-text="display" v-model="entity" label="Value" />
     </v-flex>
   </v-layout>
 </template>

@@ -2,12 +2,12 @@
   <v-navigation-drawer class="drawer" fixed :class="{ left: menu.drawer }" width="250">
     <v-subheader style="height: 47px">
       Entity Types
-      <v-spacer></v-spacer>
-      <new-type-dialog></new-type-dialog>
+      <v-spacer />
+      <new-type-dialog />
     </v-subheader>
-    <v-divider></v-divider>
+    <v-divider />
     <v-list two-line subheader class="drawer-list">
-      <type-list-tile v-for="(type, index) in types" :type="type" :key="type.name"></type-list-tile>
+      <type-list-tile v-for="(type, index) in types" :type="type" :key="type.name" />
     </v-list>
   </v-navigation-drawer>
 </template>

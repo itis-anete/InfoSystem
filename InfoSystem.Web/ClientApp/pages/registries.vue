@@ -1,14 +1,14 @@
 <template>
   <v-container class="pa-0 ml-0 mt-0" fill-height style="max-width: 100% !important">
     <v-layout>
-      <registry-navigation-drawer :types="types.types"></registry-navigation-drawer>
+      <registry-navigation-drawer :types="types.types" />
       <v-container class="ma-0 pa-0" style="margin-left: 250px !important;">
         <v-layout justify-center>
           <v-flex xs12>
             <toolbar :newDialog="dialog"></toolbar>
             <v-layout justify-center class="mt-0">
               <v-flex xs11>
-                <nuxt-child :key="$route.params.typeName"></nuxt-child>
+                <nuxt-child :key="$route.params.typeName" />
               </v-flex>
             </v-layout>
           </v-flex>

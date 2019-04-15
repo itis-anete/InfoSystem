@@ -10,8 +10,8 @@
     :error-messages="passwordErrors"
     @input="v.password.$touch()"
     @blur="v.password.$touch()"
-  ></v-text-field
-></template>
+  />
+</template>
 
 <script>
 import { validationMixin } from 'vuelidate'

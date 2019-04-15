@@ -8,7 +8,7 @@
     style="max-height: calc(100vh - 130px);backface-visibility: hidden;"
   >
     <template v-slot:items="props">
-      <component :is="gridRow" :item="props.item"></component>
+      <component :is="gridRow" :item="props.item" />
     </template>
   </v-data-table>
 </template>

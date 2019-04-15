@@ -3,7 +3,7 @@
     <v-list-tile-action>
       <v-tooltip right>
         <template v-slot:activator="{ on }">
-          <v-icon v-on="on" v-html="getProperty(item, 'icon')" :class="{ active: isActive && index == 1 }"></v-icon>
+          <v-icon v-on="on" v-html="getProperty(item, 'icon')" :class="{ active: isActive && index == 1 }" />
         </template>
         <span>{{ getProperty(item, 'title') }}</span>
       </v-tooltip>

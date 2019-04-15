@@ -3,15 +3,9 @@
     <v-layout align-center style="height: 100%">
       <v-flex xs12 style="height: 100%; margin-left: 4.1666666667%">
         <v-toolbar-items>
-          <transition name="page" mode="out-in"><component :is="newDialog"></component></transition>
-          <v-spacer></v-spacer>
-          <v-progress-circular
-            v-if="common.loading"
-            class="px-5"
-            style="height: 30px; margin-top: 9px"
-            indeterminate
-            color="primary"
-          ></v-progress-circular>
+          <transition name="page" mode="out-in"><component :is="newDialog"/></transition>
+          <v-spacer />
+          <v-progress-circular v-if="common.loading" class="px-5" style="height: 30px; margin-top: 9px" indeterminate color="primary" />
         </v-toolbar-items>
       </v-flex>
     </v-layout>

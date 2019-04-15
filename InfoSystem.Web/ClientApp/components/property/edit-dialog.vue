@@ -3,7 +3,7 @@
     <v-edit-dialog lazy persistent ref="propertyEditDialog">
       <div>{{ item.value }}</div>
       <template v-slot:input>
-        <v-text-field v-model="value" label="Value" single-line counter autofocus></v-text-field>
+        <v-text-field v-model="value" label="Value" single-line counter autofocus />
         <v-btn color="error" flat @click="cancel">Cancel</v-btn>
         <v-btn color="primary" flat @click="save">save</v-btn>
       </template>

@@ -1,5 +1,5 @@
 <template>
-  <grid :items="properties.properties" :headers="headers" :gridRow="`property-grid-row`"></grid>
+  <grid :items="properties.properties" :headers="headers" :gridRow="`property-grid-row`" />
 </template>
 
 <script>

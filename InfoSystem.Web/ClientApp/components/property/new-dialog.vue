@@ -6,11 +6,11 @@
     <v-card>
       <v-card-title class="headline">Add new property</v-card-title>
       <v-card-text>
-        <v-switch v-model="complex" color="primary" :label="`${complex ? 'Complex' : 'Simple'}`"></v-switch>
-        <component :is="view" :propertyKey.sync="property.key" :propertyValue.sync="property.value"></component>
+        <v-switch v-model="complex" color="primary" :label="`${complex ? 'Complex' : 'Simple'}`" />
+        <component :is="view" :propertyKey.sync="property.key" :propertyValue.sync="property.value" />
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-btn color="error" flat @click="clear">Cancel</v-btn>
         <v-btn color="primary" flat @click="add">Add</v-btn>
       </v-card-actions>
@@ -22,7 +22,6 @@
 import Complex from '../property/complex-property.vue'
 import Simple from '../property/simple-property.vue'
 
-import axios from 'axios'
 import { mapActions, mapState } from 'vuex'
 export default {
   components: {

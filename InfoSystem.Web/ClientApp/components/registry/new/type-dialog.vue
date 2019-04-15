@@ -4,8 +4,8 @@
       <v-icon>add</v-icon>
     </v-btn>
     <template v-slot:input>
-      <v-text-field v-model="typeName" class="mt-4" label="Type Name"></v-text-field>
-      <v-text-field v-model="requiredProperty" class label="Required Property"></v-text-field>
+      <v-text-field v-model="typeName" class="mt-4" label="Type Name" />
+      <v-text-field v-model="requiredProperty" class label="Required Property" />
       <v-btn color="error" flat @click="clear">Cancel</v-btn>
       <v-btn color="primary" flat @click="create">Create</v-btn>
     </template>

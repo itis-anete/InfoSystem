@@ -1,13 +1,5 @@
 <template>
-  <div>
-    <authentication-card
-      v-model="isSignUp"
-      :switchText="`Have an account?`"
-      :switchLink="`Log In`"
-      :buttonText="`Sign Up`"
-      :onSubmit="signUp"
-    ></authentication-card>
-  </div>
+  <authentication-card v-model="isSignUp" :switchText="`Have an account?`" :switchLink="`Log In`" :buttonText="`Sign Up`" :onSubmit="signUp" />
 </template>
 
 <script>

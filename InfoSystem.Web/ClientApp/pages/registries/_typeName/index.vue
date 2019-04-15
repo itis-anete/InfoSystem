@@ -1,5 +1,5 @@
 <template>
-  <grid :items="entities.entities" :headers="grid.headers" :gridRow="`registry-grid-row`"></grid>
+  <grid :items="entities.entities" :headers="grid.headers" :gridRow="`registry-grid-row`" />
 </template>
 
 <script>

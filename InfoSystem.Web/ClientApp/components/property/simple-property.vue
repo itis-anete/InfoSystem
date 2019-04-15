@@ -1,8 +1,11 @@
 <template>
   <v-layout align-center justify-space-between>
-    <v-flex xs5> <v-text-field label="Key" v-model="propKey"></v-text-field> </v-flex>:
+    <v-flex xs5>
+      <v-text-field label="Key" v-model="propKey" />
+    </v-flex>
+    {{ `:` }}
     <v-flex xs6>
-      <v-text-field label="Value" v-model="propValue"></v-text-field>
+      <v-text-field label="Value" v-model="propValue" />
     </v-flex>
   </v-layout>
 </template>

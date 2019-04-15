@@ -4,8 +4,8 @@
       <v-icon dark>star</v-icon>
     </v-btn>
     <template v-slot:input>
-      <v-text-field v-model="title" class="mt-4" label="Title"></v-text-field>
-      <v-text-field v-model="icon" label="Icon"></v-text-field>
+      <v-text-field v-model="title" class="mt-4" label="Title" />
+      <v-text-field v-model="icon" label="Icon" />
       <v-btn color="error" flat @click="clear">Cancel</v-btn>
       <v-btn color="primary" flat @click="create">Create</v-btn>
     </template>

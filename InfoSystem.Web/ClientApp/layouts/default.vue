@@ -2,12 +2,12 @@
   <v-app style="background-color: #F4F6F9">
     <v-navigation-drawer mini-variant class="layout-drawer" fixed app clipped v-model="drawerActive">
       <v-list two-line class="pt-0">
-        <menu-list-tile v-for="(item, i) in sortedMenuItems" :key="i" :item="item" :index="i"></menu-list-tile>
+        <menu-list-tile v-for="(item, i) in sortedMenuItems" :key="i" :item="item" :index="i" />
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app flat height="80" clipped-left class=" top-toolbar">
       <div class="side-icon">
-        <v-toolbar-side-icon @click="drawerActive = !drawerActive"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click="drawerActive = !drawerActive" />
       </div>
       <img src="../assets/logo.png" alt="logo" style="height: 50px" class="ml-4" />
       <v-toolbar-title v-text="title" />

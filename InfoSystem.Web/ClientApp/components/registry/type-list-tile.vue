@@ -5,7 +5,7 @@
         <v-list-tile-title :class="{ active: isActive(type.name) }" v-html="formatName(type.name)" />
       </v-list-tile-content>
     </v-list-tile>
-    <v-divider :key="type.id"></v-divider>
+    <v-divider :key="type.id" />
   </div>
 </template>
 

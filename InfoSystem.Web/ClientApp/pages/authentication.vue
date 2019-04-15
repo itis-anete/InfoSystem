@@ -7,7 +7,7 @@
     <v-layout row wrap justify-center align-center>
       <v-flex xs12 sm8 md4 lg4>
         <transition name="component-fade" mode="out-in">
-          <component :is="currentAuthState" v-model="isSignUp"></component>
+          <component :is="currentAuthState" v-model="isSignUp" />
         </transition>
       </v-flex>
     </v-layout>

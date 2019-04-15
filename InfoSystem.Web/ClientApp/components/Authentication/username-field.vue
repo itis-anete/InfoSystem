@@ -8,7 +8,7 @@
     :error-messages="nameErrors"
     @input="v.username.$touch()"
     @blur="v.username.$touch()"
-  ></v-text-field>
+  />
 </template>
 
 <script>
