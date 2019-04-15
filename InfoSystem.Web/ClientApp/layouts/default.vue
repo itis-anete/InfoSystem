@@ -13,9 +13,9 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-toolbar-items>
+        <new-menu-item-dialog />
         <user-profile />
       </v-toolbar-items>
-      <!-- <new-menu-item-dialog /> -->
     </v-toolbar>
     <v-content>
       <nuxt />
