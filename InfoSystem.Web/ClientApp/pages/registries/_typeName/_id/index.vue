@@ -1,11 +1,13 @@
 <template>
-  <v-container class="ma-0" style="margin-left: 250px !important">
+  <v-container class="ma-0 pa-0" style="margin-left: 250px !important; max-width: 100%">
     <v-layout justify-center>
-      <v-flex xs10>
-        <v-card v-if="properties.properties">
-          <toolbar></toolbar>
-          <property-grid :properties="properties.properties"></property-grid>
-        </v-card>
+      <v-flex xs12>
+        <toolbar :newDialog="`property-new-dialog`"></toolbar>
+        <v-layout justify-center class="mt-0">
+          <v-flex xs11>
+            <property-grid :properties="properties.properties"></property-grid>
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
   </v-container>
@@ -13,7 +15,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import Toolbar from '~/components/property/toolbar.vue'
+import Toolbar from '~/components/toolbar.vue'
 import PropertyGrid from '~/components/property/grid.vue'
 
 export default {

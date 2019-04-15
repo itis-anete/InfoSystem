@@ -2,7 +2,7 @@
   <v-container class="ma-0 pa-0" style="margin-left: 250px !important; max-width: 100%">
     <v-layout justify-center>
       <v-flex xs12>
-        <registry-toolbar></registry-toolbar>
+        <toolbar :newDialog="`new-entity-dialog`"></toolbar>
         <v-layout justify-center class="mt-0">
           <v-flex xs11>
             <registry-grid :entities="entities.entities"></registry-grid>
@@ -16,15 +16,12 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import RegistryGrid from '~/components/registry/grid.vue'
-import RegistryToolbar from '~/components/registry/toolbar.vue'
+import Toolbar from '~/components/toolbar.vue'
 export default {
   name: 'Registry',
   components: {
     RegistryGrid,
-    RegistryToolbar
-  },
-  transition: {
-    mode: 'out-in'
+    Toolbar
   },
   computed: {
     ...mapState(['entities'])

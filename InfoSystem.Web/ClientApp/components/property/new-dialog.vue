@@ -1,10 +1,10 @@
 <template>
   <v-dialog v-model="dialog" persistent max-width="500">
     <template v-slot:activator="{ on }">
-      <v-btn color="primary" flat v-on="on"> <v-icon class="mr-2">add</v-icon>Add </v-btn>
+      <v-btn color="primary" flat v-on="on"> <v-icon class="mr-2">add</v-icon>Add Property </v-btn>
     </template>
     <v-card>
-      <v-card-title class="headline">Add property</v-card-title>
+      <v-card-title class="headline">Add new property</v-card-title>
       <v-card-text>
         <v-switch v-model="complex" color="primary" :label="`${complex ? 'Complex' : 'Simple'}`"></v-switch>
         <component :is="view" :propertyKey.sync="property.key" :propertyValue.sync="property.value"></component>

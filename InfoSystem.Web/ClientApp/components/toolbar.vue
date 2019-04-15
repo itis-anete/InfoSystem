@@ -1,10 +1,10 @@
 <template>
-  <v-toolbar flat color="white" height="48" style="border-bottom: 1px solid #eaeaea !important">
+  <v-toolbar flat color="white" height="48" style="border-bottom: 1px solid rgba(0,0,0,0.12) !important">
     <v-layout align-center style="height: 100%">
-      <v-flex xs12 style="height: 100%; margin-left: 75px">
+      <v-flex xs12 style="height: 100%; margin-left: 4.1666666667%">
         <v-toolbar-items>
           <v-divider inset vertical></v-divider>
-          <new-entity-dialog></new-entity-dialog>
+          <component :is="newDialog"></component>
           <v-divider inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-progress-circular
@@ -22,11 +22,14 @@
 
 <script>
 import { mapState } from 'vuex'
-import NewEntityDialog from './new/entity-dialog.vue'
+import NewEntityDialog from './registry/new/entity-dialog.vue'
+import PropertyNewDialog from '~/components/property/new-dialog.vue'
 export default {
   components: {
-    NewEntityDialog
+    NewEntityDialog,
+    PropertyNewDialog
   },
+  props: ['newDialog'],
   computed: {
     ...mapState(['common'])
   }
