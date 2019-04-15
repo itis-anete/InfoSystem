@@ -14,7 +14,15 @@ export default {
   validate({ params }) {
     return !isNaN(+params.id)
   },
+  head() {
+    return {
+      title: `${this.$route.params.typeName.charAt(0).toUpperCase()}${this.$route.params.typeName.slice(1)}s - ${
+        this.entities.currentEntityDisplay
+      } | InfoSystem`
+    }
+  },
   data: () => ({
+    ent: [],
     headers: [
       {
         text: 'Key',
@@ -26,10 +34,12 @@ export default {
     ]
   }),
   computed: {
-    ...mapState(['properties'])
+    ...mapState(['properties', 'entities'])
   },
   async fetch({ store, params }) {
     await store.dispatch('getTypes')
+    await store.dispatch('getCurrentEntityDisplay', { entityId: params.id, typeName: params.typeName })
+    await store.dispatch('getEntities', params.typeName)
     await store.dispatch('getProperties', { entityId: params.id, typeName: params.typeName })
   }
 }

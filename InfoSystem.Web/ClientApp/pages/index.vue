@@ -14,7 +14,12 @@
 export default {
   data: () => ({
     name: 'InfoSystem'
-  })
+  }),
+  head() {
+    return {
+      title: 'Home Page'
+    }
+  }
 }
 </script>
 

@@ -10,6 +10,11 @@ export default {
   components: {
     Grid
   },
+  head() {
+    return {
+      title: `${this.$route.params.typeName.charAt(0).toUpperCase()}${this.$route.params.typeName.slice(1)}s  | InfoSystem`
+    }
+  },
   computed: {
     ...mapState(['entities', 'grid'])
   },

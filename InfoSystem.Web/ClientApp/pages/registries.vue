@@ -33,6 +33,11 @@ export default {
       return this.$route.params.id ? 'property-new-dialog' : 'new-entity-dialog'
     }
   },
+  head() {
+    return {
+      title: 'Registries'
+    }
+  },
   async fetch({ store, params }) {
     await store.dispatch('getTypes')
   }

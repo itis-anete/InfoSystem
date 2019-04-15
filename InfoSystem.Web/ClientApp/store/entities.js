@@ -3,11 +3,15 @@ import Vue from 'vue'
 
 export default {
   state: {
-    entities: []
+    entities: [],
+    currentEntityDisplay: ''
   },
   mutations: {
     setEntities(state, payload) {
       state.entities = payload
+    },
+    setCurrentEntityDisplay(state, payload) {
+      state.currentEntityDisplay = payload
     },
     addEntity(state, payload) {
       state.entities.push(payload)
@@ -18,6 +22,16 @@ export default {
     }
   },
   actions: {
+    async getCurrentEntityDisplay({ commit, rootState }, payload) {
+      let displayKey = await axios.get(`/api/Property/GetAttributeValue?typeName=${payload.typeName}`, {
+        headers: { Authorization: rootState.user.token }
+      })
+      let response = await axios.get(
+        `/api/Property/GetByPropertyName?typeName=${payload.typeName}&entityId=${payload.entityId}&propertyName=${displayKey.data}`,
+        { headers: { Authorization: rootState.user.token } }
+      )
+      commit('setCurrentEntityDisplay', response.data.value)
+    },
     async getEntities({ commit, rootState }, payload) {
       let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`, { headers: { Authorization: rootState.user.token } })
       setTimeout(() => {
