@@ -23,24 +23,33 @@ export default {
   },
   actions: {
     async getCurrentEntityDisplay({ commit, rootState }, payload) {
-      let displayKey = await axios.get(`/api/Property/GetAttributeValue?typeName=${payload.typeName}`, {
+      let displayKey = await axios({
+        method: 'get',
+        url: `/api/Property/GetAttributeValue?typeName=${payload.typeName}`,
         headers: { Authorization: rootState.user.token }
       })
-      let response = await axios.get(
-        `/api/Property/GetByPropertyName?typeName=${payload.typeName}&entityId=${payload.entityId}&propertyName=${displayKey.data}`,
-        { headers: { Authorization: rootState.user.token } }
-      )
+      let response = await axios({
+        method: 'get',
+        url: `/api/Property/GetByPropertyName?typeName=${payload.typeName}&entityId=${payload.entityId}&propertyName=${displayKey.data}`,
+        headers: { Authorization: rootState.user.token }
+      })
       commit('setCurrentEntityDisplay', response.data.value)
     },
     async getEntities({ commit, rootState }, payload) {
-      let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${payload}`, { headers: { Authorization: rootState.user.token } })
+      let response = await axios({
+        method: 'get',
+        url: `/api/Entity/GetByTypeName?typeName=${payload}`,
+        headers: { Authorization: rootState.user.token }
+      })
       setTimeout(() => {
         commit('setEntities', response.data)
       }, 0)
     },
     async addEntity({ commit, rootState }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(`/api/Entity/Add?typeName=${payload.typeName}&requiredAttributeValue=${payload.requiredAttributeValue}`, {
+      let response = await axios({
+        method: 'post',
+        url: `/api/Entity/Add?typeName=${payload.typeName}&requiredAttributeValue=${payload.requiredAttributeValue}`,
         headers: { Authorization: rootState.user.token }
       })
       commit('addEntity', response.data)
@@ -48,7 +57,7 @@ export default {
     },
     async deleteEntity({ commit, rootState }, payload) {
       commit('setLoading', true)
-      await axios.delete(`/api/Entity/Delete?id=${payload}`, { headers: { Authorization: rootState.user.token } })
+      await axios({ method: 'delete', url: `/api/Entity/Delete?id=${payload}`, headers: { Authorization: rootState.user.token } })
       commit('deleteEntity', payload)
       commit('setLoading', false)
     }

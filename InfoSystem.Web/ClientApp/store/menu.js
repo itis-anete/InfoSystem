@@ -20,21 +20,15 @@ export default {
       commit('setDrawer', payload)
     },
     async getMenuItems({ commit, rootState }) {
-      const typeName = 'menuitem'
       const token = rootState.user.token
-      let response = await axios.get(`/api/Entity/GetByTypeName?typeName=${typeName}`, { headers: { Authorization: token } })
-      let items = []
-      for (let menuItem of response.data) {
-        let menuItemProperties = await axios.get(`/api/Property/GetByTypeName?entityId=${menuItem.id}&typeName=${typeName}`, {
-          headers: { Authorization: token }
-        })
-        items.push(menuItemProperties.data)
-      }
-      commit('setMenuItems', items)
+      let response = await axios({ method: 'get', url: '/api/Entity/GetMenu', headers: { Authorization: token } })
+      commit('setMenuItems', response.data)
     },
     async addMenuItem({ commit, rootState }, payload) {
       const typeName = 'menuitem'
-      let entity = await axios.post(`/api/Entity/Add?typeName=menuitem&requiredAttributeValue=${payload.title}`, {
+      let entity = await axios({
+        method: 'post',
+        url: `/api/Entity/Add?typeName=menuitem&requiredAttributeValue=${payload.title}`,
         headers: { Authorization: rootState.user.token }
       })
       let property = {
@@ -43,13 +37,15 @@ export default {
         typeId: entity.data.typeId,
         entityId: entity.data.id
       }
-      await axios.post(`/api/Property/Add`, property, { headers: { Authorization: rootState.user.token } })
+      await axios({ method: 'post', url: `/api/Property/Add`, data: property, headers: { Authorization: rootState.user.token } })
 
       property.key = 'icon'
       property.value = payload.icon
-      await axios.post(`/api/Property/Add`, property, { headers: { Authorization: rootState.user.token } })
+      await axios({ method: 'post', url: `/api/Property/Add`, data: property, headers: { Authorization: rootState.user.token } })
 
-      let menuItem = await axios.get(`/api/Property/GetByTypeName?entityId=${entity.data.id}&typeName=${typeName}`, {
+      let menuItem = await axios({
+        method: 'get',
+        url: `/api/Property/GetByTypeName?entityId=${entity.data.id}&typeName=${typeName}`,
         headers: { Authorization: rootState.user.token }
       })
       commit('addMenuItem', menuItem.data)

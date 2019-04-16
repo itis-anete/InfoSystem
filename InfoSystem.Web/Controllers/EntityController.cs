@@ -1,6 +1,5 @@
 using System;
 using InfoSystem.Sockets.Services;
-using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +27,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add([FromQuery] string typeName, string requiredAttributeValue)
 		{
-			var addedEntity = _repository.Add(typeName, requiredAttributeValue);
+			var addedEntity = _service.Add(typeName, requiredAttributeValue);
 			if (addedEntity == null)
 				return StatusCode(500);
 			return Ok(addedEntity);

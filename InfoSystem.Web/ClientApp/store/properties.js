@@ -22,7 +22,9 @@ export default {
   },
   actions: {
     async getProperties({ commit, rootState }, payload) {
-      let response = await axios.get(`/api/Property/GetByTypeName?entityId=${payload.entityId}&typeName=${payload.typeName}`, {
+      let response = await axios({
+        method: 'get',
+        url: `/api/Property/GetByTypeName?entityId=${payload.entityId}&typeName=${payload.typeName}`,
         headers: { Authorization: rootState.user.token }
       })
       setTimeout(() => {
@@ -31,22 +33,25 @@ export default {
     },
     async updateProperty({ commit, rootState }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(
-        `/api/Property/Update?typeName=${payload.typeName}&newValue=${payload.newValue}&propertyId=${payload.propertyId}`,
-        { headers: { Authorization: rootState.user.token } }
-      )
+      let response = await axios({
+        method: 'post',
+        url: `/api/Property/Update?typeName=${payload.typeName}&newValue=${payload.newValue}&propertyId=${payload.propertyId}`,
+        headers: { Authorization: rootState.user.token }
+      })
       commit('updateProperty', response.data)
       commit('setLoading', false)
     },
     async addProperty({ commit, rootState }, payload) {
       commit('setLoading', true)
-      let response = await axios.post(`/api/Property/Add`, payload, { headers: { Authorization: rootState.user.token } })
+      let response = await axios({ method: 'post', url: `/api/Property/Add`, data: payload, headers: { Authorization: rootState.user.token } })
       commit('addProperty', response.data)
       commit('setLoading', false)
     },
     async deleteProperty({ commit, rootState }, payload) {
       commit('setLoading', true)
-      await axios.delete(`/api/Property/Delete?typeName=${payload.typeName}&propertyId=${payload.propertyId}`, {
+      await axios({
+        method: 'delete',
+        url: `/api/Property/Delete?typeName=${payload.typeName}&propertyId=${payload.propertyId}`,
         headers: { Authorization: rootState.user.token }
       })
       commit('deleteProperty', payload)
