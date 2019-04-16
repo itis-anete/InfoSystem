@@ -27,7 +27,7 @@ export default {
       commit('setToken', response.data.token)
       commit('setLoading', false)
     },
-    async register({ dispatch }, payload) {
+    async register({ dispatch, commit }, payload) {
       commit('setLoading', true)
       await axios.post(`/api/User/Register?login=${payload.login}&password=${payload.password}`)
       dispatch('authenticate', payload)
