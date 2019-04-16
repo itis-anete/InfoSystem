@@ -13,7 +13,7 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-toolbar-items>
-        <new-menu-item-dialog />
+        <new-menu-item-dialog class="mr-4" />
         <user-profile />
       </v-toolbar-items>
     </v-toolbar>
