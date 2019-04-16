@@ -19,9 +19,11 @@ namespace InfoSystem.Sockets.Services
 		public bool Delete(int id) => _repository.Delete(id);
 
 		public Entity GetById(int id) => _repository.GetById(id);
-
+		
 		public IEnumerable<Entity> GetByTypeId(int typeId) => _repository.GetByTypeId(typeId);
 
 		public IEnumerable<Entity> GetByTypeName(string typeName) => _repository.GetByTypeName(typeName);
+
+		public IEnumerable<IEnumerable<Property>> GetMenu() => _repository.GetMenu();
 	}
 }

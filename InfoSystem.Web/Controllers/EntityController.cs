@@ -1,5 +1,6 @@
 using System;
 using InfoSystem.Sockets.Services;
+using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +11,12 @@ namespace InfoSystem.Web.Controllers
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{
-		private readonly EntityDomainService _repository;
+		private readonly EntityDomainService _service;
 
 		/// <inheritdoc />
-		public EntityController(EntityDomainService repository)
+		public EntityController(EntityDomainService service)
 		{
-			_repository = repository;
+			_service = service;
 		}
 
 		/// <summary>
@@ -41,7 +42,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpDelete]
 		public IActionResult Delete([FromQuery] int id)
 		{
-			return !_repository.Delete(id) ? StatusCode(500) : Ok();
+			return !_service.Delete(id) ? StatusCode(500) : Ok();
 		}
 
 		/// <summary>
@@ -54,7 +55,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var entity = _repository.GetById(id);
+				var entity = _service.GetById(id);
 				if (entity == null)
 					return StatusCode(500);
 				return Ok(entity);
@@ -76,7 +77,7 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var entities = _repository.GetByTypeId(typeId);
+				var entities = _service.GetByTypeId(typeId);
 				return Ok(entities);
 			}
 			catch (Exception e)
@@ -96,13 +97,26 @@ namespace InfoSystem.Web.Controllers
 		{
 			try
 			{
-				var entities = _repository.GetByTypeName(typeName);
+				var entities = _service.GetByTypeName(typeName);
 				return Ok(entities);
 			}
 			catch (Exception e)
 			{
 				Console.WriteLine(e);
 				return StatusCode(500, e.Message);
+			}
+		}
+		
+		public IActionResult GetMenu()
+		{
+			try
+			{
+				return Ok(_service.GetMenu());
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				return Ok(null);
 			}
 		}
 	}
