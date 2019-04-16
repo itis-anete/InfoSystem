@@ -1,6 +1,5 @@
 using InfoSystem.Infrastructure.DataBase.Context;
 using InfoSystem.Infrastructure.DataBase.Repos;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using InfoSystem.Sockets.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,11 +11,11 @@ namespace InfoSystem.Web
 	{
 		public static void AddInfrastructure(this IServiceCollection services)
 		{
-			services.AddScoped<IEntityRepository, EntityRepository>();
-			services.AddScoped<IPropertyRepository, PropertyRepository>();
-			services.AddScoped<IRoleRepository, RoleRepository>();
-			services.AddScoped<ITypeRepository, TypeRepository>();
-			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<EntityRepository>();
+			services.AddScoped<PropertyRepository>();
+			services.AddScoped<RoleRepository>();
+			services.AddScoped<TypeRepository>();
+			services.AddScoped<UserRepository>();
 
 			services.AddScoped<EntityDomainService>();
 			services.AddScoped<RoleDomainService>();

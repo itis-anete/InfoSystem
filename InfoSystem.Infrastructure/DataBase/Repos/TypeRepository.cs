@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Npgsql;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class TypeRepository : ITypeRepository
+	public class TypeRepository 
 	{
 		private readonly InfoSystemDbContext _context;
 

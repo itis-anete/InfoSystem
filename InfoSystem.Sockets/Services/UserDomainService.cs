@@ -1,13 +1,13 @@
 using InfoSystem.Core.Entities;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Infrastructure.DataBase.Repos;
 
 namespace InfoSystem.Sockets.Services
 {
 	public class UserDomainService
 	{
-		private readonly IUserRepository _repository;
+		private readonly UserRepository _repository;
 
-		public UserDomainService(IUserRepository repository)
+		public UserDomainService(UserRepository repository)
 		{
 			_repository = repository;
 		}

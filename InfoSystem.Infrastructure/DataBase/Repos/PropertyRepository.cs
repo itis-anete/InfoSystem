@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 using Microsoft.EntityFrameworkCore;
 using Property = InfoSystem.Core.Entities.Basic.Property;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class PropertyRepository : IPropertyRepository
+	public class PropertyRepository
 	{
 		private readonly InfoSystemDbContext _context;
 

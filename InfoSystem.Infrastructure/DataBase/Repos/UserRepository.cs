@@ -2,11 +2,10 @@ using System;
 using System.Linq;
 using InfoSystem.Core.Entities;
 using InfoSystem.Infrastructure.DataBase.Context;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
 
 namespace InfoSystem.Infrastructure.DataBase.Repos
 {
-	public class UserRepository : IUserRepository
+	public class UserRepository
 	{
 		private readonly InfoSystemDbContext _context;
 

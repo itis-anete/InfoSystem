@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using InfoSystem.Core.Entities.Basic;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Infrastructure.DataBase.Repos;
 
 namespace InfoSystem.Sockets.Services
 {
 	public class TypeDomainService
 	{
-		private readonly ITypeRepository _repository;
+		private readonly TypeRepository _repository;
 
-		public TypeDomainService(ITypeRepository repository)
+		public TypeDomainService(TypeRepository repository)
 		{
 			_repository = repository;
 		}

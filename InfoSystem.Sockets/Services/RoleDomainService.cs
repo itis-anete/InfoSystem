@@ -1,13 +1,13 @@
 using InfoSystem.Core.Entities;
-using InfoSystem.Infrastructure.DataBase.ReposInterfaces;
+using InfoSystem.Infrastructure.DataBase.Repos;
 
 namespace InfoSystem.Sockets.Services
 {
 	public class RoleDomainService
 	{
-		private readonly IRoleRepository _repository;
+		private readonly RoleRepository _repository;
 
-		public RoleDomainService(IRoleRepository repository)
+		public RoleDomainService(RoleRepository repository)
 		{
 			_repository = repository;
 		}
