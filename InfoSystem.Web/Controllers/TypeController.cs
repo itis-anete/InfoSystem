@@ -1,6 +1,7 @@
 using System;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Sockets.Services;
+using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
@@ -10,6 +11,7 @@ namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
 	[Authorize]
+	[BadRequestExceptionFilter]
 	[Route("api/[controller]/[action]")]
 	public class TypeController : Controller
 	{
@@ -30,7 +32,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add([FromQuery] string typeName, string requiredProperty)
 		{
-			EntityType addedType = null;
+			EntityType addedType;
 			try
 			{
 				addedType = _service.Add(typeName, requiredProperty);
@@ -39,12 +41,6 @@ namespace InfoSystem.Web.Controllers
 			{
 				Console.WriteLine(e);
 				return Conflict(e.Message);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				if (addedType == null)
-					return BadRequest(e.Message);
 			}
 
 			return Ok(addedType);
@@ -57,15 +53,8 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult Get()
 		{
-			try
-			{
-				var types = _service.Get();
-				return Ok(types);
-			}
-			catch (Exception e)
-			{
-				return BadRequest(e.Message);
-			}
+			var types = _service.Get();
+			return Ok(types);
 		}
 
 		/// <summary>
@@ -76,18 +65,8 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetById(int id)
 		{
-			try
-			{
-				var type = _service.GetById(id);
-				if (type == null)
-					return StatusCode(500);
-				return Ok(type);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			var type = _service.GetById(id) ?? throw new ReceiveException();
+			return Ok(type);
 		}
 	}
 }

@@ -1,5 +1,5 @@
-using System;
 using InfoSystem.Sockets.Services;
+using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +7,7 @@ namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
 	[Authorize]
+	[BadRequestExceptionFilter]
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
 	{
@@ -27,9 +28,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add([FromQuery] string typeName, string requiredAttributeValue)
 		{
-			var addedEntity = _service.Add(typeName, requiredAttributeValue);
-			if (addedEntity == null)
-				return StatusCode(500);
+			var addedEntity = _service.Add(typeName, requiredAttributeValue) ?? throw new AdditionException();
 			return Ok(addedEntity);
 		}
 
@@ -41,7 +40,8 @@ namespace InfoSystem.Web.Controllers
 		[HttpDelete]
 		public IActionResult Delete([FromQuery] int id)
 		{
-			return !_service.Delete(id) ? StatusCode(500) : Ok();
+			if (!_service.Delete(id)) throw new DeletionException();
+			return Ok();
 		}
 
 		/// <summary>
@@ -52,18 +52,8 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetById([FromQuery] int id)
 		{
-			try
-			{
-				var entity = _service.GetById(id);
-				if (entity == null)
-					return StatusCode(500);
-				return Ok(entity);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			var entity = _service.GetById(id) ?? throw new ReceiveException();
+			return Ok(entity);
 		}
 
 		/// <summary>
@@ -74,16 +64,8 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetByTypeId([FromQuery] int typeId)
 		{
-			try
-			{
-				var entities = _service.GetByTypeId(typeId);
-				return Ok(entities);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			var entities = _service.GetByTypeId(typeId);
+			return Ok(entities);
 		}
 
 		/// <summary>
@@ -94,29 +76,11 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetByTypeName([FromQuery] string typeName)
 		{
-			try
-			{
-				var entities = _service.GetByTypeName(typeName);
-				return Ok(entities);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			var entities = _service.GetByTypeName(typeName);
+			return Ok(entities);
 		}
-		
-		public IActionResult GetMenu()
-		{
-			try
-			{
-				return Ok(_service.GetMenu());
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return Ok(null);
-			}
-		}
+
+		[HttpGet]
+		public IActionResult GetMenu() => Ok(_service.GetMenu());
 	}
 }
