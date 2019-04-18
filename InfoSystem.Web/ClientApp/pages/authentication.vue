@@ -25,7 +25,7 @@ export default {
     LogIn
   },
   data: () => ({
-    isSignUp: true
+    isSignUp: false
   }),
   head() {
     return {
