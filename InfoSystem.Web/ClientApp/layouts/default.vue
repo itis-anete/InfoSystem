@@ -25,7 +25,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Getter, Action, State } from 'vuex-class'
+import menu from '@/store/menu'
+import { getModule } from 'vuex-module-decorators'
 import { MenuItem } from '../models/menuItem'
 
 import NewMenuItemDialog from '../components/menu/new-item-dialog.vue'
@@ -42,16 +43,21 @@ import UserProfile from '../components/menu/user-profile.vue'
   // middleware: ['authentication', 'loadMenuItems']
 })
 export default class extends Vue {
-  @Getter('menu/sortedMenuItems') sortedMenuItems!: MenuItem[]
-  @Getter('menu/drawer') drawer!: Boolean
+  menuStore = getModule(menu, this.$store)
 
+  get sortedMenuItems() {
+    return this.menuStore.SortedMenuItems
+  }
+  get drawer() {
+    return this.menuStore.Drawer
+  }
   private title = 'InfoSystem'
 
   public get drawerActive(): Boolean {
     return this.drawer
   }
   public set drawerActive(value: Boolean) {
-    this.$store.dispatch('menu/setDrawer', value)
+    this.menuStore.setDrawer(value)
   }
 }
 </script>

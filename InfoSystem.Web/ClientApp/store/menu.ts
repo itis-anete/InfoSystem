@@ -13,6 +13,14 @@ export default class MenuModule extends VuexModule {
 
   drawer: Boolean = false
 
+  get SortedMenuItems() {
+    return this.menuItems
+  }
+
+  get Drawer() {
+    return this.drawer
+  }
+
   @MutationAction
   async getMenuItems() {
     let response = await axios({ method: 'get', url: '/api/Entity/GetMenu' })
@@ -55,13 +63,18 @@ export default class MenuModule extends VuexModule {
     return menuItem.data as MenuItem
   }
 
+  @Action({ commit: 'SET_DRAWER' })
+  async setDrawer(payload: Boolean) {
+    return payload
+  }
+
   @Mutation
   ADD_MENU_ITEM(payload: MenuItem) {
     this.menuItems.push(payload)
   }
 
   @Mutation
-  setDrawer(payload: Boolean) {
+  SET_DRAWER(payload: Boolean) {
     this.drawer = payload
   }
 }

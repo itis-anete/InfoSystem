@@ -10,6 +10,10 @@ import { Module, VuexModule, MutationAction, Action, Mutation } from 'vuex-modul
 export default class TypesModule extends VuexModule {
   types: Type[] = []
 
+  get Types() {
+    return this.types
+  }
+
   @MutationAction
   async getTypes() {
     let response = await axios({

@@ -41,7 +41,7 @@ export default class extends Vue {
   }
 
   get types() {
-    return this.typesStore.types
+    return this.typesStore.Types
   }
 
   head() {
