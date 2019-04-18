@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using InfoSystem.Core.Entities;
 using InfoSystem.Sockets.Services;
+using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,7 @@ namespace InfoSystem.Web.Controllers
     /// Used to manage user accounts
     /// </summary>
     [AllowAnonymous]
+    [BadRequestExceptionFilter]
     [Route("api/[controller]/[action]")]
     public class UserController : Controller
     {
@@ -49,7 +51,7 @@ namespace InfoSystem.Web.Controllers
                 now.AddMinutes(AuthentificationOptions.Lifetime),
                 new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
             var token = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return Ok(new { Token = "Bearer " + token, Login = login });
+            return Ok(new {Token = "Bearer " + token, Login = login});
         }
 
         [HttpPost]
@@ -57,7 +59,6 @@ namespace InfoSystem.Web.Controllers
         {
             return _service.Register(login, password);
         }
-
 
         private ClaimsIdentity GetIdentity(string login)
         {

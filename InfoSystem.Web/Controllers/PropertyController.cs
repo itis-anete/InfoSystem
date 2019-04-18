@@ -1,6 +1,6 @@
-using System;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Sockets.Services;
+using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +8,7 @@ namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
 	[Authorize]
+	[BadRequestExceptionFilter]
 	[Route("api/[controller]/[action]")]
 	public class PropertyController : Controller
 	{
@@ -27,9 +28,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Add([FromBody] Property newProperty)
 		{
-			var addedProperty = _service.Add(newProperty);
-			if (addedProperty == null)
-				return StatusCode(500);
+			var addedProperty = _service.Add(newProperty) ?? throw new AdditionException();
 			return Ok(addedProperty);
 		}
 
@@ -40,8 +39,11 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="propertyId">Instance id.</param>
 		/// <returns>IActionResult depending on result of operation.</returns>
 		[HttpDelete]
-		public IActionResult Delete([FromQuery] string typeName, int propertyId) =>
-			!_service.Delete(typeName, propertyId) ? StatusCode(500) : Ok();
+		public IActionResult Delete([FromQuery] string typeName, int propertyId)
+		{
+			if (!_service.Delete(typeName, propertyId)) throw new DeletionException();
+			return Ok();
+		}
 
 
 		/// <summary>
@@ -51,10 +53,8 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="attributeName"></param>
 		/// <returns>Attribute value, property key.</returns>
 		[HttpGet]
-		public string GetAttributeValue(string typeName, string attributeName = "display")
-		{
-			return _service.GetAttributeValue(typeName, attributeName);
-		}
+		public string GetAttributeValue(string typeName, string attributeName = "display") =>
+			_service.GetAttributeValue(typeName, attributeName);
 
 		/// <summary>
 		/// Gets Properties list of one instance.
@@ -65,16 +65,8 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetByEntityId([FromQuery] int entityId, int typeId)
 		{
-			try
-			{
-				var properties = _service.GetByEntityId(entityId, typeId);
-				return Ok(properties);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			var properties = _service.GetByEntityId(entityId, typeId);
+			return Ok(properties);
 		}
 
 		/// <summary>
@@ -87,8 +79,9 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetByPropertyName(string typeName, int entityId, string propertyName)
 		{
-			var property = _service.GetByPropertyName(propertyName, typeName, entityId);
-			return property == null ? StatusCode(500, "No such property!") : Ok(property);
+			var property = _service.GetByPropertyName(propertyName, typeName, entityId)
+			               ?? throw new ReceiveException("No such property!");
+			return Ok(property);
 		}
 
 		/// <summary>
@@ -97,19 +90,11 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="entityId">Entity's id.</param>
 		/// <param name="typeName">EntityType name.</param>
 		/// <returns>IActionResult depending on result of operation.</returns>
-		[HttpGet]
+		[HttpGet, Authorize]
 		public IActionResult GetByTypeName([FromQuery] int entityId, string typeName)
 		{
-			try
-			{
-				var properties = _service.GetByTypeName(entityId, typeName);
-				return Ok(properties);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			var properties = _service.GetByTypeName(entityId, typeName);
+			return Ok(properties);
 		}
 
 		/// <summary>
@@ -120,16 +105,8 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetPropertiesByTypeId([FromQuery] int typeId)
 		{
-			try
-			{
-				var properties = _service.GetTypePropertiesById(typeId);
-				return Ok(properties);
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine(e);
-				return StatusCode(500, e.Message);
-			}
+			var properties = _service.GetTypePropertiesById(typeId);
+			return Ok(properties);
 		}
 
 		/// <summary>
@@ -142,9 +119,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Update(string typeName, string newValue, int propertyId)
 		{
-			var updatedProperty = _service.Update(typeName, newValue, propertyId);
-			if (updatedProperty == null)
-				return StatusCode(500);
+			var updatedProperty = _service.Update(typeName, newValue, propertyId) ?? throw new UpdateException();
 			return Ok(updatedProperty);
 		}
 	}

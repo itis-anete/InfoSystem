@@ -1,5 +1,6 @@
 using InfoSystem.Core.Entities;
 using InfoSystem.Sockets.Services;
+using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
 	[Authorize]
+	[BadRequestExceptionFilter]
 	[Route("api/[controller]/[action]")]
 	public class RoleController : Controller
 	{
@@ -28,9 +30,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpPost]
 		public IActionResult Create(string name, bool canRead, bool canWrite)
 		{
-			var newRole = _service.Create(name, canRead, canWrite);
-			if (newRole == null)
-				return BadRequest();
+			var newRole = _service.Create(name, canRead, canWrite) ?? throw new AdditionException();
 			return Ok(newRole);
 		}
 
@@ -42,8 +42,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpDelete]
 		public IActionResult Delete(int roleId)
 		{
-			if (!_service.Delete(roleId))
-				return BadRequest();
+			if (!_service.Delete(roleId)) throw new DeletionException();
 			return Ok();
 		}
 
@@ -55,9 +54,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult GetById(int roleId)
 		{
-			var role = _service.GetById(roleId);
-			if (role == null)
-				return BadRequest();
+			var role = _service.GetById(roleId) ?? throw new ReceiveException();
 			return Ok(role);
 		}
 
@@ -69,9 +66,7 @@ namespace InfoSystem.Web.Controllers
 		[HttpGet]
 		public IActionResult Update(Role newRole)
 		{
-			var updatedRole = _service.Update(newRole);
-			if (updatedRole == null)
-				return BadRequest();
+			var updatedRole = _service.Update(newRole) ?? throw new UpdateException();
 			return Ok(updatedRole);
 		}
 	}
