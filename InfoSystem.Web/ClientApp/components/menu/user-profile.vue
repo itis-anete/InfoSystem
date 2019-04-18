@@ -1,8 +1,8 @@
 <template>
-  <v-menu offset-y left min-width="200" v-if="user.login">
+  <v-menu offset-y left min-width="200" v-if="users.login">
     <template v-slot:activator="{ on }">
       <v-btn class="profile-btn" d-flex large depressed v-on="on">
-        {{ user.login }}
+        {{ users.login }}
         <v-avatar size="40" class="ml-3 mr-4" color="white">
           <img src="https://cdn3.iconfinder.com/data/icons/users-6/100/654853-user-men-2-512.png" alt="avatar" />
         </v-avatar>
@@ -31,10 +31,10 @@
 import { mapState, mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapState(['user'])
+    ...mapState(['users'])
   },
   methods: {
-    ...mapActions(['logOut']),
+    ...mapActions(['menu/logOut']),
     onLogOut() {
       this.logOut()
       this.$router.push('/authenticate')
