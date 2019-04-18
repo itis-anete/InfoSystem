@@ -1,61 +1,32 @@
 import axios from 'axios'
 import { MenuItem } from '../models/menuItem'
 
-export interface MenuState {
-  drawer: Boolean
-  menuItems: MenuItem[]
-}
+import { Module, VuexModule, MutationAction, Mutation, Action } from 'vuex-module-decorators'
 
-export const state = (): MenuState => ({
-  drawer: false,
-  menuItems: []
+@Module({
+  name: 'menu',
+  stateFactory: true,
+  namespaced: true
 })
+export default class MenuModule extends VuexModule {
+  menuItems: MenuItem[] = []
 
-export const getters = {
-  drawer(state: MenuState) {
-    return state.drawer
-  },
-  sortedMenuItems(state: MenuState) {
-    return state.menuItems
-    // return state.menuItems.sort((a: any, b: any) => {
-    //   var titleA = a.find(x => x.key == 'title').value
-    //   var titleB = b.find(x => x.key == 'title').value
-    //   if (titleA == 'Home' && titleB == 'Registries') return -1
-    //   else if (titleA == 'Registries' && titleB == 'Home') return 1
-    //   else if (titleA == 'Home') return -1
-    //   else if (titleA == 'Registries') return -1
-    //   else return 1
-    // })
+  drawer: Boolean = false
+
+  @MutationAction
+  async getMenuItems() {
+    let response = await axios({ method: 'get', url: '/api/Entity/GetMenu' })
+    return {
+      menuItems: response.data as MenuItem[]
+    }
   }
-}
 
-export const mutations = {
-  setMenuItems(state: MenuState, payload: MenuItem[]) {
-    state.menuItems = payload
-  },
-  addMenuItem(state: MenuState, payload: MenuItem) {
-    state.menuItems.push(payload)
-  },
-  setDrawer(state: MenuState, payload: Boolean) {
-    state.drawer = payload
-  }
-}
-
-export const actions = {
-  setDrawer({ commit }, payload: Boolean) {
-    commit('setDrawer', payload)
-  },
-  async getMenuItems({ commit, rootState }) {
-    const token = rootState.users.token
-    let response = await axios({ method: 'get', url: '/api/Entity/GetMenu', headers: { Authorization: token } })
-    commit('setMenuItems', response.data as MenuItem[])
-  },
-  async addMenuItem({ commit, rootState }, payload: MenuItem) {
+  @Action({ commit: 'ADD_MENU_ITEM' })
+  async addMenuItem(payload: MenuItem) {
     const typeName = 'menuitem'
     let entity = await axios({
       method: 'post',
-      url: `/api/Entity/Add?typeName=menuitem&requiredAttributeValue=${payload.Title}`,
-      headers: { Authorization: rootState.users.token }
+      url: `/api/Entity/Add?typeName=menuitem&requiredAttributeValue=${payload.Title}`
     })
     let property = {
       key: 'link',
@@ -63,17 +34,34 @@ export const actions = {
       typeId: entity.data.typeId,
       entityId: entity.data.id
     }
-    await axios({ method: 'post', url: `/api/Property/Add`, data: property, headers: { Authorization: rootState.users.token } })
-
+    await axios({
+      method: 'post',
+      url: `/api/Property/Add`,
+      data: property
+    })
     property.key = 'icon'
     property.value = payload.Icon
-    await axios({ method: 'post', url: `/api/Property/Add`, data: property, headers: { Authorization: rootState.users.token } })
+    await axios({
+      method: 'post',
+      url: `/api/Property/Add`,
+      data: property
+    })
 
     let menuItem = await axios({
       method: 'get',
-      url: `/api/Property/GetByTypeName?entityId=${entity.data.id}&typeName=${typeName}`,
-      headers: { Authorization: rootState.users.token }
+      url: `/api/Property/GetByTypeName?entityId=${entity.data.id}&typeName=${typeName}`
     })
-    commit('addMenuItem', menuItem.data)
+
+    return menuItem.data as MenuItem
+  }
+
+  @Mutation
+  ADD_MENU_ITEM(payload: MenuItem) {
+    this.menuItems.push(payload)
+  }
+
+  @Mutation
+  setDrawer(payload: Boolean) {
+    this.drawer = payload
   }
 }

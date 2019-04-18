@@ -10,7 +10,7 @@ using Npgsql;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
-	[Authorize]
+	//[Authorize]
 	[BadRequestExceptionFilter]
 	[Route("api/[controller]/[action]")]
 	public class TypeController : Controller

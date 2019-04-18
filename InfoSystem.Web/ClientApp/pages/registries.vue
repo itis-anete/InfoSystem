@@ -20,10 +20,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { Getter, Action } from 'vuex-class'
+import types from '@/store/types'
+import { getModule } from 'vuex-module-decorators'
+import { Type } from '../models/type'
 import Toolbar from '~/components/toolbar.vue'
 import RegistryNavigationDrawer from '~/components/registry/navigation-drawer.vue'
-import { Type } from '../models/type'
 
 @Component({
   components: {
@@ -33,10 +34,14 @@ import { Type } from '../models/type'
   name: 'Registries'
 })
 export default class extends Vue {
-  @Getter('types/types') types!: Type[]
+  typesStore = getModule(types, this.$store)
 
   get dialog(): string {
     return this.$route.params.id ? 'property-new-dialog' : 'new-entity-dialog'
+  }
+
+  get types() {
+    return this.typesStore.types
   }
 
   head() {

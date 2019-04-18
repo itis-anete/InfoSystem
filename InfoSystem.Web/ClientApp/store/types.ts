@@ -1,40 +1,37 @@
 import axios from 'axios'
 import { Type } from '../models/type'
+import { Module, VuexModule, MutationAction, Action, Mutation } from 'vuex-module-decorators'
 
-export interface TypeState {
-  types: Type[]
-}
-
-export const state = (): TypeState => ({
-  types: []
+@Module({
+  name: 'types',
+  stateFactory: true,
+  namespaced: true
 })
+export default class TypesModule extends VuexModule {
+  types: Type[] = []
 
-export const getters = {
-  types(state: TypeState): Type[] {
-    return state.types
+  @MutationAction
+  async getTypes() {
+    let response = await axios({
+      method: 'get',
+      url: '/api/Type/Get'
+    })
+    return {
+      types: response.data as Type[]
+    }
   }
-}
 
-export const mutations = {
-  setTypes(state: TypeState, payload: Type[]) {
-    state.types = payload
-  },
-  addType(state: TypeState, payload: Type) {
-    state.types.push(payload)
-  }
-}
-
-export const actions = {
-  async getTypes({ commit, rootState }) {
-    let response = await axios({ method: 'get', url: '/api/Type/Get', headers: { Authorization: rootState.users.token } })
-    commit('setTypes', response.data)
-  },
-  async addType({ commit, rootState }, payload: Type) {
+  @Action({ commit: 'ADD_TYPE' })
+  async addType(payload: Type) {
     let response = await axios({
       method: 'post',
-      url: `/api/Type/Add?typeName=${payload.Name}&requiredProperty=${payload.RequiredProperty}`,
-      headers: { Authorization: rootState.users.token }
+      url: `/api/Type/Add?typeName=${payload.Name}&requiredProperty=${payload.RequiredProperty}`
     })
-    commit('addType', response.data)
+    return response.data as Type
+  }
+
+  @Mutation
+  ADD_TYPE(payload: Type) {
+    this.types.push(payload)
   }
 }

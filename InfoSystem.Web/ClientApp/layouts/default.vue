@@ -38,7 +38,8 @@ import UserProfile from '../components/menu/user-profile.vue'
     MenuListTile,
     UserProfile
   },
-  middleware: ['authentication', 'loadMenuItems']
+  middleware: ['loadMenuItems']
+  // middleware: ['authentication', 'loadMenuItems']
 })
 export default class extends Vue {
   @Getter('menu/sortedMenuItems') sortedMenuItems!: MenuItem[]
