@@ -24,6 +24,6 @@ namespace InfoSystem.Sockets.Services
 
 		public IEnumerable<Entity> GetByTypeName(string typeName) => _repository.GetByTypeName(typeName);
 
-		public IEnumerable<IEnumerable<Property>> GetMenu() => _repository.GetMenu();
+		public IEnumerable<Dictionary<string, string>> GetMenu() => _repository.GetMenu();
 	}
 }

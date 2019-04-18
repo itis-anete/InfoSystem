@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using InfoSystem.Core.Entities.Basic;
@@ -87,19 +86,21 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             return entities;
         }
 
-        public IEnumerable<IEnumerable<Property>> GetMenu()
+        public IEnumerable<Dictionary<string, string>> GetMenu()
         {
             var type = _context.Types.FirstOrDefault(t => t.Name == "menuitem") 
                        ?? throw new ArgumentException("menuitem doesn't exist in database");
             var entities = _context.Entities.Where(e => e.TypeId == type.Id);
             
-            var entitiesProperties = new List<IEnumerable<Property>>();
+            var entitiesProperties = new List<Dictionary<string, string>>();
             var propertyRepository = new PropertyRepository(_context);
             
             foreach (var entity in entities)
             {
-                entitiesProperties.Add(
-                    propertyRepository.GetByEntityId(entity.Id, type.Id));
+                var dict = new Dictionary<string, string>();
+                var props = propertyRepository.GetByEntityId(entity.Id, type.Id).ToList();
+                props.ForEach(x => dict.Add(x.Key, x.Value));
+                entitiesProperties.Add(dict);
             }
 
             return entitiesProperties;
