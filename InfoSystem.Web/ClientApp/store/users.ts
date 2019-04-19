@@ -1,49 +1,45 @@
 import axios from 'axios'
 import { User } from '../models/user'
+import { VuexModule, Module, MutationAction, Action } from 'vuex-module-decorators'
 
-export interface UserState {
-  token: String
-  login: String
-}
-
-export const state = (): UserState => ({
-  token: '',
-  login: ''
+@Module({
+  name: 'users',
+  stateFactory: true,
+  namespaced: true
 })
+export default class UsersModule extends VuexModule {
+  token: String = ''
+  login: String = ''
 
-export const mutations = {
-  setToken(state: UserState, payload: string) {
-    state.token = payload
-    window.localStorage['token'] = payload
-  },
-  setLogin(state: UserState, payload: string) {
-    state.login = payload
-    window.localStorage['login'] = payload
-  }
-}
-
-export const actions = {
-  async authenticateFromLocalStorage({ commit }) {
-    commit('setLogin', window.localStorage['login'])
-    commit('setToken', window.localStorage['token'])
-  },
-  async authenticate({ commit }, payload: User) {
-    commit('setLoading', true)
+  @MutationAction
+  async authenticate(payload: User) {
     let response = await axios({ method: 'get', url: `/api/User/LogIn?login=${payload.Login}&password=${payload.Password}` })
-    commit('setLogin', response.data.login)
-    commit('setToken', response.data.token)
-    commit('setLoading', false)
-  },
-  async register({ dispatch, commit }, payload: User) {
-    commit('setLoading', true)
-    await axios({ method: 'post', url: `/api/User/Register?login=${payload.Login}&password=${payload.Password}` })
-    dispatch('authenticate', payload)
-    commit('setLoading', false)
-  },
-  async logOut({ commit }) {
-    commit('setLogin', '')
-    commit('setToken', '')
+    window.localStorage['token'] = response.data.token
+    window.localStorage['login'] = response.data.login
+    return {
+      token: response.data.token,
+      login: response.data.login
+    }
+  }
+  @MutationAction
+  async authenticateFromLocalStorage() {
+    return {
+      token: window.localStorage['token'],
+      login: window.localStorage['login']
+    }
+  }
+  @MutationAction
+  async logOut() {
     delete window.localStorage['login']
     delete window.localStorage['token']
+    return {
+      token: '' as String,
+      login: '' as String
+    }
+  }
+  @Action
+  async register(payload: User) {
+    await axios({ method: 'post', url: `/api/User/Register?login=${payload.Login}&password=${payload.Password}` })
+    this.authenticate(payload)
   }
 }
