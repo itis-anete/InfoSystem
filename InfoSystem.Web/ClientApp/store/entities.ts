@@ -34,13 +34,11 @@ export default class EntitiesModule extends VuexModule {
   async getCurrentEntityDisplay(payload: Entity) {
     let displayKey = await axios({
       method: 'get',
-      url: `/api/Property/GetAttributeValue?typeName=${payload.Id}`
+      url: `/api/Property/GetAttributeValue?typeName=${payload.TypeName}`
     })
     let response = await axios({
       method: 'get',
-      url: `/api/Property/GetByPropertyName?typeName=${payload.TypeName}&entityId=${payload.Id}&propertyName=${
-        displayKey.data
-      }`
+      url: `/api/Property/GetByPropertyName?typeName=${payload.TypeName}&entityId=${payload.Id}&propertyName=${displayKey.data}`
     })
     return {
       currentEntityDisplay: response.data as String

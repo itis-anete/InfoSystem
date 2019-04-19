@@ -90,7 +90,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="entityId">Entity's id.</param>
 		/// <param name="typeName">EntityType name.</param>
 		/// <returns>IActionResult depending on result of operation.</returns>
-		[HttpGet, Authorize]
+		[HttpGet]
 		public IActionResult GetByTypeName([FromQuery] int entityId, string typeName)
 		{
 			var properties = _service.GetByTypeName(entityId, typeName);
