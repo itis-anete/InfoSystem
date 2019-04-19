@@ -31,7 +31,7 @@ export default {
         return this.grid.pagination
       },
       set(value) {
-        this.$store.commit('setPagination', value)
+        this.$store.dispatch('grid/setPagination', value)
       }
     }
   }

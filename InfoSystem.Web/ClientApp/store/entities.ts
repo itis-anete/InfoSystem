@@ -30,6 +30,7 @@ export default class EntitiesModule extends VuexModule {
     }
   }
 
+  @MutationAction
   async getCurrentEntityDisplay(payload: Entity) {
     let displayKey = await axios({
       method: 'get',
@@ -42,7 +43,7 @@ export default class EntitiesModule extends VuexModule {
       }`
     })
     return {
-      currentEntityDisplay: response.data as string
+      currentEntityDisplay: response.data as String
     }
   }
 
