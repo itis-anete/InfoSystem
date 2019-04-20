@@ -53,7 +53,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="attributeName"></param>
 		/// <returns>Attribute value, property key.</returns>
 		[HttpGet]
-		public string GetAttributeValue(string typeName, string attributeName = "display") =>
+		public string GetAttributeValue(string typeName, string attributeName) =>
 			_service.GetAttributeValue(typeName, attributeName);
 
 		/// <summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using InfoSystem.Core.Entities.Basic;
 using InfoSystem.Infrastructure.DataBase.Context;
@@ -88,6 +89,8 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 
         public IEnumerable<Dictionary<string, string>> GetMenu()
         {
+            var s = new Stopwatch();
+            s.Start();
             var type = _context.Types.FirstOrDefault(t => t.Name == "menuitem") 
                        ?? throw new ArgumentException("menuitem doesn't exist in database");
             var entities = _context.Entities.Where(e => e.TypeId == type.Id);
@@ -103,6 +106,9 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
                 entitiesProperties.Add(dict);
             }
 
+            
+            s.Stop();
+            Console.WriteLine(s.ElapsedMilliseconds);
             return entitiesProperties;
         }
         

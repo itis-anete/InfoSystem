@@ -59,7 +59,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			}
 		}
 
-		public string GetAttributeValue(string typeName, string attributeName)
+		public string GetAttributeValue(string typeName, string attributeName = "display")
 		{
 			var attribute = new SqlHandler(_context).GetTypeAttributesByName(typeName)
 				.FirstOrDefault(a => a.Key == attributeName);
@@ -71,9 +71,15 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 		public IEnumerable<Property> GetByEntityId(int entityId, int typeId) =>
 			GetTypePropertiesById(typeId).Where(a => a.EntityId == entityId);
 
-		public Property GetByPropertyName(string propertyName, string typeName, int entityId) =>
-			new SqlHandler(_context).GetTypePropertiesByName(typeName)
-				.FirstOrDefault(p => p.EntityId == entityId && p.Key == propertyName);
+		public Property GetByPropertyName(string propertyName, string typeName, int entityId)
+		{
+			var property = new SqlHandler(_context)
+				               .GetTypePropertiesByName(typeName)
+				               .FirstOrDefault(p => p.EntityId == entityId &&
+				                                    p.Key == propertyName) ?? throw new ArgumentException();
+			property.DisplayKey = GetAttributeValue(typeName);
+			return property;
+		}
 
 		public IEnumerable<Property> GetByTypeName(int entityId, string typeName)
 		{

@@ -11,6 +11,7 @@ namespace InfoSystem.Core.Entities.Basic
         public int EntityId { get; set; }
         public bool IsComplex => Key.StartsWith("Complex:");
         [NotMapped] public string DisplayComplexValue { get; set; }
+        [NotMapped] public string DisplayKey { get; set; }
 
         public Property()
         {
