@@ -8,12 +8,12 @@ import { VuexModule, Module, MutationAction, Action } from 'vuex-module-decorato
   namespaced: true
 })
 export default class UsersModule extends VuexModule {
-  token: String = ''
-  login: String = ''
+  token: string = ''
+  login: string = ''
 
   @MutationAction
-  async authenticate(payload: User) {
-    let response = await axios({ method: 'get', url: `/api/User/LogIn?login=${payload.Login}&password=${payload.Password}` })
+  async authenticate(user: User) {
+    let response = await axios({ method: 'get', url: `/api/User/LogIn?login=${user.Login}&password=${user.Password}` })
     window.localStorage['token'] = response.data.token
     window.localStorage['login'] = response.data.login
     return {
@@ -33,13 +33,13 @@ export default class UsersModule extends VuexModule {
     delete window.localStorage['login']
     delete window.localStorage['token']
     return {
-      token: '' as String,
-      login: '' as String
+      token: '',
+      login: ''
     }
   }
   @Action
-  async register(payload: User) {
-    await axios({ method: 'post', url: `/api/User/Register?login=${payload.Login}&password=${payload.Password}` })
-    this.authenticate(payload)
+  async register(user: User) {
+    await axios({ method: 'post', url: `/api/User/Register?login=${user.Login}&password=${user.Password}` })
+    this.authenticate(user)
   }
 }

@@ -9,7 +9,7 @@ import { Module, VuexModule, MutationAction, Action, Mutation } from 'vuex-modul
 })
 export default class EntitiesModule extends VuexModule {
   entities: Entity[] = []
-  currentEntityDisplay: String = ''
+  currentEntityDisplay: string = ''
 
   get Entities() {
     return this.entities
@@ -20,10 +20,10 @@ export default class EntitiesModule extends VuexModule {
   }
 
   @MutationAction
-  async getEntities(payload: string) {
+  async getEntities(typeName: string) {
     let response = await axios({
       method: 'get',
-      url: `/api/Entity/GetByTypeName?typeName=${payload}`
+      url: `/api/Entity/GetByTypeName?typeName=${typeName}`
     })
     return {
       entities: response.data as Entity[]
@@ -31,43 +31,43 @@ export default class EntitiesModule extends VuexModule {
   }
 
   @MutationAction
-  async getCurrentEntityDisplay(payload: Entity) {
+  async getCurrentEntityDisplay(entity: Entity) {
     let displayKey = await axios({
       method: 'get',
-      url: `/api/Property/GetAttributeValue?typeName=${payload.TypeName}`
+      url: `/api/Property/GetAttributeValue?typeName=${entity.TypeName}`
     })
     let response = await axios({
       method: 'get',
-      url: `/api/Property/GetByPropertyName?typeName=${payload.TypeName}&entityId=${payload.Id}&propertyName=${displayKey.data}`
+      url: `/api/Property/GetByPropertyName?typeName=${entity.TypeName}&entityId=${entity.Id}&propertyName=${displayKey.data}`
     })
     return {
-      currentEntityDisplay: response.data as String
+      currentEntityDisplay: response.data as string
     }
   }
 
   @Action({ commit: 'ADD_ENTITY' })
-  async addEntity(payload: Entity) {
+  async addEntity(entity: Entity) {
     let response = await axios({
       method: 'post',
-      url: `/api/Entity/Add?typeName=${payload.TypeName}&requiredAttributeValue=${payload.RequiredAttributeValue}`
+      url: `/api/Entity/Add?typeName=${entity.TypeName}&requiredAttributeValue=${entity.RequiredAttributeValue}`
     })
     return response.data as Entity
   }
 
   @Action({ commit: 'DELETE_ENTITY' })
-  async deleteEntity(payload: Entity) {
-    await axios({ method: 'delete', url: `/api/Entity/Delete?id=${payload.Id}` })
-    return payload
+  async deleteEntity(entity: Entity) {
+    await axios({ method: 'delete', url: `/api/Entity/Delete?id=${entity.Id}` })
+    return entity
   }
 
   @Mutation
-  ADD_ENTITY(payload: Entity) {
-    this.entities.push(payload)
+  ADD_ENTITY(entity: Entity) {
+    this.entities.push(entity)
   }
 
   @Mutation
-  DELETE_ENTITY(payload: Entity) {
-    let index = this.entities.indexOf(this.entities.find(x => x.Id == payload.Id) as Entity)
+  DELETE_ENTITY(entity: Entity) {
+    let index = this.entities.indexOf(this.entities.find(x => x.Id == entity.Id) as Entity)
     this.entities.splice(index, 1)
   }
 }

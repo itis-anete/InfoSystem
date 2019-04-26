@@ -16,51 +16,51 @@ export default class PropertiesModule extends VuexModule {
   }
 
   @Mutation
-  ADD_PROPERTY(payload: Property) {
-    this.properties.push(payload)
+  ADD_PROPERTY(property: Property) {
+    this.properties.push(property)
   }
 
   @Mutation
-  UPDATE_PROPERTY(payload: Property) {
-    let property = this.properties.find(x => x.Id == payload.Id) as Property
-    property.Value = payload.Value
+  UPDATE_PROPERTY(updatedProperty: Property) {
+    let property = this.properties.find(x => x.Id == updatedProperty.Id) as Property
+    property.Value = updatedProperty.Value
   }
 
   @Mutation
-  DELETE_PROPERTY(payload: Property) {
-    let index = this.properties.indexOf(this.properties.find(x => x.Id == payload.Id) as Property)
+  DELETE_PROPERTY(property: Property) {
+    let index = this.properties.indexOf(this.properties.find(x => x.Id == property.Id) as Property)
     this.properties.splice(index, 1)
   }
 
   @Action({ commit: 'ADD_PROPERTY' })
-  async addProperty(payload: Property) {
-    let response = await axios({ method: 'post', url: `/api/Property/Add`, data: payload })
+  async addProperty(property: Property) {
+    let response = await axios({ method: 'post', url: `/api/Property/Add`, data: property })
     return response.data as Property
   }
 
   @Action({ commit: 'UPDATE_PROPERTY' })
-  async updateProperty(payload: Property) {
+  async updateProperty(property: Property) {
     let response = await axios({
       method: 'post',
-      url: `/api/Property/Update?typeName=${payload.TypeName}&newValue=${payload.Value}&propertyId=${payload.Id}`
+      url: `/api/Property/Update?typeName=${property.TypeName}&newValue=${property.Value}&propertyId=${property.Id}`
     })
     return response.data as Property
   }
 
   @Action({ commit: 'DELETE_PROPERTY' })
-  async deleteProperty(payload: Property) {
+  async deleteProperty(property: Property) {
     await axios({
       method: 'delete',
-      url: `/api/Property/Delete?typeName=${payload.TypeName}&propertyId=${payload.Id}`
+      url: `/api/Property/Delete?typeName=${property.TypeName}&propertyId=${property.Id}`
     })
-    return payload
+    return property
   }
 
   @MutationAction
-  async getProperties(payload: Entity) {
+  async getProperties(entity: Entity) {
     let response = await axios({
       method: 'get',
-      url: `/api/Property/GetByTypeName?entityId=${payload.Id}&typeName=${payload.TypeName}`
+      url: `/api/Property/GetByTypeName?entityId=${entity.Id}&typeName=${entity.TypeName}`
     })
     return { properties: response.data as Property[] }
   }

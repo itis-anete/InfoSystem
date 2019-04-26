@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Type } from '../../models/type'
+import { Type } from '@/models/type'
 
 export const api = axios.create({
   baseURL: '/api/type'

@@ -25,10 +25,10 @@ export default class GridModule extends VuexModule {
   }
 
   @MutationAction
-  async loadHeaders(payload: string) {
+  async loadHeaders(typeName: string) {
     let response = await axios({
       method: 'get',
-      url: `/api/Property/GetAttributeValue?typeName=${payload}&attributeName=display`
+      url: `/api/Property/GetAttributeValue?typeName=${typeName}&attributeName=display`
     })
     return {
       headers: [{ text: response.data, sortable: false, value: response.data }, { text: '', sortable: false, value: 'Actions' }] as Header[]
@@ -36,9 +36,9 @@ export default class GridModule extends VuexModule {
   }
 
   @MutationAction
-  async setPagination(payload: any) {
+  async setPagination(pagination: any) {
     return {
-      pagination: payload
+      pagination: pagination
     }
   }
 }
