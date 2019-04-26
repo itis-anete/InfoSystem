@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { Entity } from '../models/entity'
+import * as api from '@/store/api/entities'
 import { Module, VuexModule, MutationAction, Action, Mutation } from 'vuex-module-decorators'
 
 @Module({
@@ -21,43 +21,30 @@ export default class EntitiesModule extends VuexModule {
 
   @MutationAction
   async getEntities(typeName: string) {
-    let response = await axios({
-      method: 'get',
-      url: `/api/Entity/GetByTypeName?typeName=${typeName}`
-    })
+    const entities = await api.getEntities(typeName)
     return {
-      entities: response.data as Entity[]
+      entities: entities
     }
   }
 
   @MutationAction
   async getCurrentEntityDisplay(entity: Entity) {
-    let displayKey = await axios({
-      method: 'get',
-      url: `/api/Property/GetAttributeValue?typeName=${entity.TypeName}`
-    })
-    let response = await axios({
-      method: 'get',
-      url: `/api/Property/GetByPropertyName?typeName=${entity.TypeName}&entityId=${entity.Id}&propertyName=${displayKey.data}`
-    })
+    const displayValue = await api.getCurrentEntityDisplay(entity)
     return {
-      currentEntityDisplay: response.data as string
+      currentEntityDisplay: displayValue.Value
     }
   }
 
   @Action({ commit: 'ADD_ENTITY' })
   async addEntity(entity: Entity) {
-    let response = await axios({
-      method: 'post',
-      url: `/api/Entity/Add?typeName=${entity.TypeName}&requiredAttributeValue=${entity.RequiredAttributeValue}`
-    })
-    return response.data as Entity
+    const addedEntity = await api.addEntity(entity)
+    return addedEntity
   }
 
   @Action({ commit: 'DELETE_ENTITY' })
   async deleteEntity(entity: Entity) {
-    await axios({ method: 'delete', url: `/api/Entity/Delete?id=${entity.Id}` })
-    return entity
+    const deletedEntityId = api.deleteEntity(entity)
+    return deletedEntityId
   }
 
   @Mutation
@@ -66,8 +53,8 @@ export default class EntitiesModule extends VuexModule {
   }
 
   @Mutation
-  DELETE_ENTITY(entity: Entity) {
-    let index = this.entities.indexOf(this.entities.find(x => x.Id == entity.Id) as Entity)
+  DELETE_ENTITY(id: number) {
+    let index = this.entities.indexOf(this.entities.find(x => x.Id == id) as Entity)
     this.entities.splice(index, 1)
   }
 }
