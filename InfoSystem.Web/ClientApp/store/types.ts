@@ -1,5 +1,5 @@
-import axios from 'axios'
 import { Type } from '../models/type'
+import * as api from '@/store/api/types'
 import { Module, VuexModule, MutationAction, Action, Mutation } from 'vuex-module-decorators'
 
 @Module({
@@ -16,26 +16,20 @@ export default class TypesModule extends VuexModule {
 
   @MutationAction
   async getTypes() {
-    let response = await axios({
-      method: 'get',
-      url: '/api/Type/Get'
-    })
+    const types = await api.getTypes()
     return {
-      types: response.data as Type[]
+      types: types
     }
   }
 
   @Action({ commit: 'ADD_TYPE' })
-  async addType(payload: Type) {
-    let response = await axios({
-      method: 'post',
-      url: `/api/Type/Add?typeName=${payload.Name}&requiredProperty=${payload.RequiredProperty}`
-    })
-    return response.data as Type
+  async addType(type: Type) {
+    const addedType = await api.addType(type)
+    return addedType
   }
 
   @Mutation
-  ADD_TYPE(payload: Type) {
-    this.types.push(payload)
+  ADD_TYPE(type: Type) {
+    this.types.push(type)
   }
 }
