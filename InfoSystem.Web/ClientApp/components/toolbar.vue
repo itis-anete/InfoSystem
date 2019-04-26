@@ -5,7 +5,7 @@
         <v-toolbar-items>
           <transition name="page" mode="out-in"><component :is="newDialog"/></transition>
           <v-spacer />
-          <v-progress-circular v-if="common.loading" class="px-5" style="height: 30px; margin-top: 9px" indeterminate color="primary" />
+          <!-- <v-progress-circular v-if="common.loading" class="px-5" style="height: 30px; margin-top: 9px" indeterminate color="primary" /> -->
         </v-toolbar-items>
       </v-flex>
     </v-layout>

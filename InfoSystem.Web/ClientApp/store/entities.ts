@@ -31,7 +31,7 @@ export default class EntitiesModule extends VuexModule {
   async getCurrentEntityDisplay(entity: Entity) {
     const displayValue = await api.getCurrentEntityDisplay(entity)
     return {
-      currentEntityDisplay: displayValue.Value
+      currentEntityDisplay: displayValue
     }
   }
 
@@ -54,7 +54,7 @@ export default class EntitiesModule extends VuexModule {
 
   @Mutation
   DELETE_ENTITY(id: number) {
-    let index = this.entities.indexOf(this.entities.find(x => x.Id == id) as Entity)
+    let index = this.entities.indexOf(this.entities.find(x => x.id == id) as Entity)
     this.entities.splice(index, 1)
   }
 }

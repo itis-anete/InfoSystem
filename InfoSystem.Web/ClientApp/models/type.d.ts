@@ -1,5 +1,5 @@
 export interface Type {
-  Id: number
-  Name: string
-  RequiredProperty: string
+  id: number
+  name: string
+  requiredProperty: string
 }

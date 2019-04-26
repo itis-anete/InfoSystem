@@ -1,4 +1,4 @@
-import axios from 'axios'
+import * as api from '@/store/api/grid'
 import { VuexModule, Module, MutationAction } from 'vuex-module-decorators'
 import { Header } from '~/models/header'
 
@@ -26,12 +26,9 @@ export default class GridModule extends VuexModule {
 
   @MutationAction
   async loadHeaders(typeName: string) {
-    let response = await axios({
-      method: 'get',
-      url: `/api/Property/GetAttributeValue?typeName=${typeName}&attributeName=display`
-    })
+    const header = await api.loadHeader(typeName)
     return {
-      headers: [{ text: response.data, sortable: false, value: response.data }, { text: '', sortable: false, value: 'Actions' }] as Header[]
+      headers: [{ text: header, sortable: false, value: header }, { text: '', sortable: false, value: 'Actions' }] as Header[]
     }
   }
 

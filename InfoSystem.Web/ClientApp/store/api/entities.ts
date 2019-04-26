@@ -6,23 +6,28 @@ export const api = axios.create({
   baseURL: '/api/entity'
 })
 
+export const propertyApi = axios.create({
+  baseURL: '/api/property'
+})
+
 export async function getEntities(typeName: string): Promise<Entity[]> {
   const response = await api.get(`/GetByTypeName?typeName=${typeName}`)
   return response.data as Entity[]
 }
 
 export async function addEntity(entity: Entity): Promise<Entity> {
-  const response = await api.get(`/Add?typeName=${entity.TypeName}&requiredAttributeValue=${entity.RequiredAttributeValue}`)
+  const response = await api.get(`/Add?typeName=${entity.typeName}&requiredAttributeValue=${entity.requiredAttributeValue}`)
   return response.data as Entity
 }
 
-export async function getCurrentEntityDisplay(entity: Entity): Promise<Property> {
-  const displayKey = await api.get(`/GetAttributeValue?typeName=${entity.TypeName}`)
-  const response = await api.get(`/GetByPropertyName?typeName=${entity.TypeName}&entityId=${entity.Id}&propertyName=${displayKey.data}`)
-  return response.data as Property
+export async function getCurrentEntityDisplay(entity: Entity): Promise<string> {
+  const displayKey = await propertyApi.get(`/GetAttributeValue?typeName=${entity.typeName}&attributeName=display`)
+  const response = await propertyApi.get(`/GetByPropertyName?typeName=${entity.typeName}&entityId=${entity.id}&propertyName=${displayKey.data}`)
+  const property = response.data as Property
+  return property.value
 }
 
 export async function deleteEntity(entity: Entity): Promise<number> {
-  const response = await api.delete(`/Delete?id=${entity.Id}`)
+  const response = await api.delete(`/Delete?id=${entity.id}`)
   return response.data as number
 }

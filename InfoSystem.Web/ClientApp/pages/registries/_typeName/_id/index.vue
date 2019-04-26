@@ -48,9 +48,9 @@ export default class extends Vue {
 
   async fetch({ store, params }) {
     await store.dispatch('types/getTypes')
-    await store.dispatch('entities/getCurrentEntityDisplay', { Id: params.id, TypeName: params.typeName })
+    await store.dispatch('entities/getCurrentEntityDisplay', { id: params.id, typeName: params.typeName })
     await store.dispatch('entities/getEntities', params.typeName)
-    await store.dispatch('properties/getProperties', { Id: params.id, TypeName: params.typeName })
+    await store.dispatch('properties/getProperties', { id: params.id, typeName: params.typeName })
   }
 }
 </script>

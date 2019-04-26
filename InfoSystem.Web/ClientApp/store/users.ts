@@ -13,7 +13,7 @@ export default class UsersModule extends VuexModule {
 
   @MutationAction
   async authenticate(user: User) {
-    let response = await axios({ method: 'get', url: `/api/User/LogIn?login=${user.Login}&password=${user.Password}` })
+    let response = await axios({ method: 'get', url: `/api/User/LogIn?login=${user.login}&password=${user.password}` })
     window.localStorage['token'] = response.data.token
     window.localStorage['login'] = response.data.login
     return {
@@ -39,7 +39,7 @@ export default class UsersModule extends VuexModule {
   }
   @Action
   async register(user: User) {
-    await axios({ method: 'post', url: `/api/User/Register?login=${user.Login}&password=${user.Password}` })
+    await axios({ method: 'post', url: `/api/User/Register?login=${user.login}&password=${user.password}` })
     this.authenticate(user)
   }
 }

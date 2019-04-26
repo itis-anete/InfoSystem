@@ -22,13 +22,13 @@ export default class PropertiesModule extends VuexModule {
 
   @Mutation
   UPDATE_PROPERTY(updatedProperty: Property) {
-    let property = this.properties.find(x => x.Id == updatedProperty.Id) as Property
-    property.Value = updatedProperty.Value
+    let property = this.properties.find(x => x.id == updatedProperty.id) as Property
+    property.value = updatedProperty.value
   }
 
   @Mutation
   DELETE_PROPERTY(property: Property) {
-    let index = this.properties.indexOf(this.properties.find(x => x.Id == property.Id) as Property)
+    let index = this.properties.indexOf(this.properties.find(x => x.id == property.id) as Property)
     this.properties.splice(index, 1)
   }
 
@@ -42,7 +42,7 @@ export default class PropertiesModule extends VuexModule {
   async updateProperty(property: Property) {
     let response = await axios({
       method: 'post',
-      url: `/api/Property/Update?typeName=${property.TypeName}&newValue=${property.Value}&propertyId=${property.Id}`
+      url: `/api/Property/Update?typeName=${property.typeName}&newValue=${property.value}&propertyId=${property.id}`
     })
     return response.data as Property
   }
@@ -51,7 +51,7 @@ export default class PropertiesModule extends VuexModule {
   async deleteProperty(property: Property) {
     await axios({
       method: 'delete',
-      url: `/api/Property/Delete?typeName=${property.TypeName}&propertyId=${property.Id}`
+      url: `/api/Property/Delete?typeName=${property.typeName}&propertyId=${property.id}`
     })
     return property
   }
@@ -60,7 +60,7 @@ export default class PropertiesModule extends VuexModule {
   async getProperties(entity: Entity) {
     let response = await axios({
       method: 'get',
-      url: `/api/Property/GetByTypeName?entityId=${entity.Id}&typeName=${entity.TypeName}`
+      url: `/api/Property/GetByTypeName?entityId=${entity.id}&typeName=${entity.typeName}`
     })
     return { properties: response.data as Property[] }
   }

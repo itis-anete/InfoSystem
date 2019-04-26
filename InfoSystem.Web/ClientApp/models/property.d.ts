@@ -1,10 +1,10 @@
 export interface Property {
-  Id: number
-  Key: string
-  Value: string
-  TypeId: number
-  EntityId: number
-  IsComplex: boolean
-  DisplayComplexValue: string
-  TypeName?: string
+  id: number
+  key: string
+  value: string
+  typeId: number
+  entityId: number
+  isComplex: boolean
+  displayComplexValue: string
+  typeName?: string
 }
