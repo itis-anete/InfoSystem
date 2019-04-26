@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer class="drawer" fixed :class="{ left: menu.drawer }" width="250">
+  <v-navigation-drawer class="drawer" fixed :class="{ left: drawerActive }" width="250">
     <v-subheader style="height: 47px">
       Entity Types
       <v-spacer />
@@ -12,19 +12,32 @@
   </v-navigation-drawer>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
+import menu from '@/store/menu'
+
 import NewTypeDialog from './new/type-dialog.vue'
 import TypeListTile from './type-list-tile.vue'
-import { mapState } from 'vuex'
-export default {
+
+import { Type } from '@/models/type'
+
+@Component({
+  name: 'NavigationDrawer',
   components: {
     NewTypeDialog,
     TypeListTile
-  },
-  props: ['types'],
-  computed: {
-    ...mapState(['menu'])
   }
+})
+export default class extends Vue {
+  menuStore = getModule(menu, this.$store)
+
+  get drawerActive() {
+    return this.menuStore.Drawer
+  }
+
+  @Prop() readonly types!: Type[]
 }
 </script>
 

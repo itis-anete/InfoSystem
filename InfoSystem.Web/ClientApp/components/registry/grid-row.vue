@@ -5,22 +5,29 @@
   </nuxt-link>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
+import entities from '@/store/entities'
+
 import DeleteDialog from '~/components/delete-dialog.vue'
-import { mapActions } from 'vuex'
-export default {
-  props: ['item'],
+
+import { Entity } from '../../models/entity'
+
+@Component({
+  name: 'RegistryGridRow',
   components: {
     DeleteDialog
-  },
-  methods: {
-    ...mapActions(['deleteEntity']),
-    remove() {
-      this.deleteEntity(this.item.id)
-    }
+  }
+})
+export default class extends Vue {
+  entitiesStore = getModule(entities, this.$store)
+
+  @Prop() readonly item!: Entity
+
+  remove() {
+    this.entitiesStore.deleteEntity(this.item)
   }
 }
 </script>
-
-<style>
-</style>

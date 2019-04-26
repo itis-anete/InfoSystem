@@ -18,7 +18,7 @@ import NewEntityDialog from './registry/new/entity-dialog.vue'
 import PropertyNewDialog from '~/components/property/new-dialog.vue'
 
 @Component({
-  name: 'Grid',
+  name: 'Toolbar',
   components: {
     NewEntityDialog,
     PropertyNewDialog

@@ -26,8 +26,8 @@ import { Header } from '@/models/header'
   }
 })
 export default class extends Vue {
-  propertyStore = getModule(properties, this.$store)
-  entityStore = getModule(entities, this.$store)
+  propertiesStore = getModule(properties, this.$store)
+  entitiesStore = getModule(entities, this.$store)
 
   headers: Header[] = [
     {
@@ -40,11 +40,11 @@ export default class extends Vue {
   ]
 
   get properties() {
-    return this.propertyStore.Properties
+    return this.propertiesStore.Properties
   }
 
   head() {
-    return { title: `${this.entityStore.CurrentEntityDisplay}` }
+    return { title: `${this.entitiesStore.CurrentEntityDisplay}` }
   }
 
   validate({ params }) {

@@ -12,24 +12,33 @@
   </v-edit-dialog>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-export default {
-  data: () => ({
-    typeName: '',
-    requiredProperty: ''
-  }),
-  methods: {
-    ...mapActions(['addType']),
-    create() {
-      this.addType({ typeName: this.typeName, requiredProperty: this.requiredProperty })
-      this.clear()
-    },
-    clear() {
-      this.typeName = ''
-      this.requiredProperty = ''
-      this.$refs['newTypeDialog'].isActive = false
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
+import types from '@/store/types'
+
+@Component({
+  name: 'NewTypeDialog'
+})
+export default class extends Vue {
+  typesStore = getModule(types, this.$store)
+
+  typeName = ''
+  requiredProperty = ''
+
+  $refs!: {
+    newTypeDialog: any
+  }
+
+  create() {
+    this.typesStore.addType({ name: this.typeName, requiredProperty: this.requiredProperty })
+    this.clear()
+  }
+  clear() {
+    this.typeName = ''
+    this.requiredProperty = ''
+    this.$refs.newTypeDialog.isActive = false
   }
 }
 </script>

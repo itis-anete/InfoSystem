@@ -16,7 +16,7 @@ export async function getEntities(typeName: string): Promise<Entity[]> {
 }
 
 export async function addEntity(entity: Entity): Promise<Entity> {
-  const response = await api.get(`/Add?typeName=${entity.typeName}&requiredAttributeValue=${entity.requiredAttributeValue}`)
+  const response = await api.post(`/Add?typeName=${entity.typeName}&requiredAttributeValue=${entity.requiredAttributeValue}`)
   return response.data as Entity
 }
 
@@ -29,5 +29,5 @@ export async function getCurrentEntityDisplay(entity: Entity): Promise<string> {
 
 export async function deleteEntity(entity: Entity): Promise<number> {
   await api.delete(`/Delete?id=${entity.id}`)
-  return entity.id
+  return entity.id as number
 }

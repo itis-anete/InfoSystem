@@ -9,16 +9,20 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['type'],
-  methods: {
-    formatName(name) {
-      return `${name.charAt(0).toUpperCase()}${name.slice(1)}s`
-    },
-    isActive(name) {
-      return this.$route.params.typeName == name
-    }
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Type } from '@/models/type'
+@Component({
+  name: 'TypeListTile'
+})
+export default class extends Vue {
+  @Prop() readonly type!: Type
+
+  formatName(name) {
+    return `${name.charAt(0).toUpperCase()}${name.slice(1)}s`
+  }
+  isActive(name) {
+    return this.$route.params.typeName == name
   }
 }
 </script>
