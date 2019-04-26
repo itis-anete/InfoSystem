@@ -2,7 +2,7 @@
   <grid :items="properties" :headers="headers" :gridRow="`property-grid-row`" />
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 import { mapState, mapActions } from 'vuex'
 import Grid from '~/components/grid.vue'
@@ -11,10 +11,16 @@ import properties from '@/store/properties'
 import entities from '@/store/entities'
 
 @Component({
+  name: 'Entity',
   components: {
     Grid
   },
-  name: 'Entity'
+  async fetch({ store, params }) {
+    await store.dispatch('types/getTypes')
+    await store.dispatch('entities/getCurrentEntityDisplay', { id: params.id, typeName: params.typeName })
+    await store.dispatch('entities/getEntities', params.typeName)
+    await store.dispatch('properties/getProperties', { id: params.id, typeName: params.typeName })
+  }
 })
 export default class extends Vue {
   propertyStore = getModule(properties, this.$store)
@@ -39,18 +45,7 @@ export default class extends Vue {
   }
 
   head() {
-    return {
-      title: `${this.$route.params.typeName.charAt(0).toUpperCase()}${this.$route.params.typeName.slice(1)}s - ${
-        this.entityStore.CurrentEntityDisplay
-      } | InfoSystem`
-    }
-  }
-
-  async fetch({ store, params }) {
-    await store.dispatch('types/getTypes')
-    await store.dispatch('entities/getCurrentEntityDisplay', { id: params.id, typeName: params.typeName })
-    await store.dispatch('entities/getEntities', params.typeName)
-    await store.dispatch('properties/getProperties', { id: params.id, typeName: params.typeName })
+    return { title: `${this.entityStore.CurrentEntityDisplay}` }
   }
 }
 </script>
