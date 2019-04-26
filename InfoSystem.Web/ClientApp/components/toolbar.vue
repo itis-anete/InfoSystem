@@ -5,25 +5,26 @@
         <v-toolbar-items>
           <transition name="page" mode="out-in"><component :is="newDialog"/></transition>
           <v-spacer />
-          <!-- <v-progress-circular v-if="common.loading" class="px-5" style="height: 30px; margin-top: 9px" indeterminate color="primary" /> -->
         </v-toolbar-items>
       </v-flex>
     </v-layout>
   </v-toolbar>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
 import NewEntityDialog from './registry/new/entity-dialog.vue'
 import PropertyNewDialog from '~/components/property/new-dialog.vue'
-export default {
+
+@Component({
+  name: 'Grid',
   components: {
     NewEntityDialog,
     PropertyNewDialog
-  },
-  props: ['newDialog'],
-  computed: {
-    ...mapState(['common'])
   }
+})
+export default class extends Vue {
+  @Prop(String) readonly newDialog!: string
 }
 </script>

@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="items"
-    :rows-per-page-items="grid.rowsPerPageItems"
+    :rows-per-page-items="rowsPerPageItems"
     :pagination.sync="currentPagination"
     class="fixed-header v-table__overflow table "
     style="max-height: calc(100vh - 130px);backface-visibility: hidden;"
@@ -13,27 +13,42 @@
   </v-data-table>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+import grid from '@/store/grid'
+import { getModule } from 'vuex-module-decorators'
+
 import RegistryGridRow from '~/components/registry/grid-row.vue'
 import PropertyGridRow from '~/components/property/grid-row.vue'
-export default {
-  name: 'attribute-grid',
-  props: ['items', 'headers', 'gridRow'],
+
+import { Entity } from '../models/entity'
+import { Property } from '../models/property'
+import { Header } from '../models/header'
+
+@Component({
+  name: 'Grid',
   components: {
     RegistryGridRow,
     PropertyGridRow
-  },
-  computed: {
-    ...mapState(['grid']),
-    currentPagination: {
-      get() {
-        return this.grid.pagination
-      },
-      set(value) {
-        this.$store.dispatch('grid/setPagination', value)
-      }
-    }
+  }
+})
+export default class extends Vue {
+  gridStore = getModule(grid, this.$store)
+
+  @Prop() readonly items!: Entity[] | Property[]
+  @Prop() readonly headers!: Header[]
+  @Prop(String) readonly gridRow!: string
+
+  get rowsPerPageItems() {
+    return this.gridStore.RowsPerPageItems
+  }
+
+  get currentPagination() {
+    return this.gridStore.Pagination
+  }
+  set currentPagination(value) {
+    this.gridStore.setPagination(value)
   }
 }
 </script>

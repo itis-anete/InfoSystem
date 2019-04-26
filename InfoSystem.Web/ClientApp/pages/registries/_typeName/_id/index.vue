@@ -4,11 +4,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-import { mapState, mapActions } from 'vuex'
-import Grid from '~/components/grid.vue'
+
 import { getModule } from 'vuex-module-decorators'
 import properties from '@/store/properties'
 import entities from '@/store/entities'
+
+import Grid from '@/components/grid.vue'
+
+import { Header } from '@/models/header'
 
 @Component({
   name: 'Entity',
@@ -26,7 +29,7 @@ export default class extends Vue {
   propertyStore = getModule(properties, this.$store)
   entityStore = getModule(entities, this.$store)
 
-  headers = [
+  headers: Header[] = [
     {
       text: 'Key',
       align: 'left',
@@ -40,12 +43,12 @@ export default class extends Vue {
     return this.propertyStore.Properties
   }
 
-  validate({ params }) {
-    return !isNaN(+params.id)
-  }
-
   head() {
     return { title: `${this.entityStore.CurrentEntityDisplay}` }
+  }
+
+  validate({ params }) {
+    return !isNaN(+params.id)
   }
 }
 </script>

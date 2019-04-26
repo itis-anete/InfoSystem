@@ -2,13 +2,14 @@
   <grid :items="entities" :headers="headers" :gridRow="`registry-grid-row`" />
 </template>
 
-<script script lang="ts">
-import Grid from '~/components/grid.vue'
-
+<script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
 import entities from '@/store/entities'
 import grid from '@/store/grid'
-import { getModule } from 'vuex-module-decorators'
+
+import Grid from '~/components/grid.vue'
 
 @Component({
   name: 'Registry',

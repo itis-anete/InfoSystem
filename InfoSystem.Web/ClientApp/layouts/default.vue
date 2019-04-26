@@ -53,10 +53,10 @@ export default class extends Vue {
   }
   private title = 'InfoSystem'
 
-  public get drawerActive(): Boolean {
+  public get drawerActive(): boolean {
     return this.drawer
   }
-  public set drawerActive(value: Boolean) {
+  public set drawerActive(value: boolean) {
     this.menuStore.setDrawer(value)
   }
 }

@@ -1,5 +1,6 @@
 export interface Header {
   text: string
-  sortable: boolean
-  value: string
+  align?: string
+  sortable?: boolean
+  value?: string
 }
