@@ -41,7 +41,7 @@ namespace InfoSystem.Web.Controllers
 		public IActionResult Delete([FromQuery] int id)
 		{
 			if (!_service.Delete(id)) throw new DeletionException();
-			return Ok(id);
+			return Ok();
 		}
 
 		/// <summary>

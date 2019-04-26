@@ -1,7 +1,8 @@
-import axios from 'axios'
+import * as api from '@/store/api/properties'
 import { VuexModule, Module, MutationAction, Mutation, Action } from 'vuex-module-decorators'
 import { Property } from '~/models/property'
 import { Entity } from '~/models/entity'
+import properties from '@/store/properties'
 
 @Module({
   name: 'properties',
@@ -13,6 +14,30 @@ export default class PropertiesModule extends VuexModule {
 
   get Properties() {
     return this.properties
+  }
+
+  @MutationAction
+  async getProperties(entity: Entity) {
+    const properties = await api.getProperties(entity)
+    return { properties: properties }
+  }
+
+  @Action({ commit: 'ADD_PROPERTY' })
+  async addProperty(property: Property) {
+    const addedProperty = await api.addProperty(property)
+    return addedProperty
+  }
+
+  @Action({ commit: 'UPDATE_PROPERTY' })
+  async updateProperty(property: Property) {
+    const updatedProperty = await api.addProperty(property)
+    return updatedProperty
+  }
+
+  @Action({ commit: 'DELETE_PROPERTY' })
+  async deleteProperty(property: Property) {
+    const deletedPropertyId = await api.deleteProperty(property)
+    return deletedPropertyId
   }
 
   @Mutation
@@ -27,41 +52,8 @@ export default class PropertiesModule extends VuexModule {
   }
 
   @Mutation
-  DELETE_PROPERTY(property: Property) {
-    let index = this.properties.indexOf(this.properties.find(x => x.id == property.id) as Property)
+  DELETE_PROPERTY(id: number) {
+    let index = this.properties.indexOf(this.properties.find(x => x.id == id) as Property)
     this.properties.splice(index, 1)
-  }
-
-  @Action({ commit: 'ADD_PROPERTY' })
-  async addProperty(property: Property) {
-    let response = await axios({ method: 'post', url: `/api/Property/Add`, data: property })
-    return response.data as Property
-  }
-
-  @Action({ commit: 'UPDATE_PROPERTY' })
-  async updateProperty(property: Property) {
-    let response = await axios({
-      method: 'post',
-      url: `/api/Property/Update?typeName=${property.typeName}&newValue=${property.value}&propertyId=${property.id}`
-    })
-    return response.data as Property
-  }
-
-  @Action({ commit: 'DELETE_PROPERTY' })
-  async deleteProperty(property: Property) {
-    await axios({
-      method: 'delete',
-      url: `/api/Property/Delete?typeName=${property.typeName}&propertyId=${property.id}`
-    })
-    return property
-  }
-
-  @MutationAction
-  async getProperties(entity: Entity) {
-    let response = await axios({
-      method: 'get',
-      url: `/api/Property/GetByTypeName?entityId=${entity.id}&typeName=${entity.typeName}`
-    })
-    return { properties: response.data as Property[] }
   }
 }

@@ -22,17 +22,13 @@ export default class EntitiesModule extends VuexModule {
   @MutationAction
   async getEntities(typeName: string) {
     const entities = await api.getEntities(typeName)
-    return {
-      entities: entities
-    }
+    return { entities: entities }
   }
 
   @MutationAction
   async getCurrentEntityDisplay(entity: Entity) {
     const displayValue = await api.getCurrentEntityDisplay(entity)
-    return {
-      currentEntityDisplay: displayValue
-    }
+    return { currentEntityDisplay: displayValue }
   }
 
   @Action({ commit: 'ADD_ENTITY' })

@@ -28,6 +28,6 @@ export async function getCurrentEntityDisplay(entity: Entity): Promise<string> {
 }
 
 export async function deleteEntity(entity: Entity): Promise<number> {
-  const response = await api.delete(`/Delete?id=${entity.id}`)
-  return response.data as number
+  await api.delete(`/Delete?id=${entity.id}`)
+  return entity.id
 }

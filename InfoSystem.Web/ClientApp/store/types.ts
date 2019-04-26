@@ -17,9 +17,7 @@ export default class TypesModule extends VuexModule {
   @MutationAction
   async getTypes() {
     const types = await api.getTypes()
-    return {
-      types: types
-    }
+    return { types: types }
   }
 
   @Action({ commit: 'ADD_TYPE' })

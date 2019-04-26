@@ -24,9 +24,7 @@ export default class MenuModule extends VuexModule {
   @MutationAction
   async getMenuItems() {
     const menuItems = await api.getMenuItems()
-    return {
-      menuItems: menuItems
-    }
+    return { menuItems: menuItems }
   }
 
   @Action({ commit: 'ADD_MENU_ITEM' })

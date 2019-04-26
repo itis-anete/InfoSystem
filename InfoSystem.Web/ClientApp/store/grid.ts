@@ -34,8 +34,6 @@ export default class GridModule extends VuexModule {
 
   @MutationAction
   async setPagination(pagination: any) {
-    return {
-      pagination: pagination
-    }
+    return { pagination: pagination }
   }
 }
