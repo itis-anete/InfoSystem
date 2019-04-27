@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { User } from '../models/user'
+import * as api from './api/api'
+
 import { VuexModule, Module, MutationAction, Action } from 'vuex-module-decorators'
 
 @Module({
@@ -20,6 +22,7 @@ export default class UsersModule extends VuexModule {
     let response = await axios({ method: 'get', url: `/api/User/LogIn?login=${user.login}&password=${user.password}` })
     window.localStorage['token'] = response.data.token
     window.localStorage['login'] = response.data.login
+    api.setJWT(response.data.token)
     return {
       token: response.data.token,
       login: response.data.login
@@ -27,6 +30,7 @@ export default class UsersModule extends VuexModule {
   }
   @MutationAction
   async authenticateFromLocalStorage() {
+    api.setJWT(window.localStorage['token'])
     return {
       token: window.localStorage['token'],
       login: window.localStorage['login']
@@ -36,6 +40,7 @@ export default class UsersModule extends VuexModule {
   async logOut() {
     delete window.localStorage['login']
     delete window.localStorage['token']
+    api.clearJWT()
     return {
       token: '',
       login: ''

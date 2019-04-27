@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace InfoSystem.Web.Controllers
 {
 	/// <inheritdoc />
-	//[Authorize]
+	[Authorize]
 	[BadRequestExceptionFilter]
 	[Route("api/[controller]/[action]")]
 	public class EntityController : Controller
