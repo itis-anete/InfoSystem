@@ -1,8 +1,8 @@
 <template>
-  <v-menu offset-y left min-width="200" v-if="users.login">
+  <v-menu offset-y left min-width="200" v-if="login">
     <template v-slot:activator="{ on }">
       <v-btn class="profile-btn" d-flex large depressed v-on="on">
-        {{ users.login }}
+        {{ login }}
         <v-avatar size="40" class="ml-3 mr-4" color="white">
           <img src="https://cdn3.iconfinder.com/data/icons/users-6/100/654853-user-men-2-512.png" alt="avatar" />
         </v-avatar>
@@ -27,18 +27,25 @@
   </v-menu>
 </template>
 
-<script>
-import { mapState, mapActions } from 'vuex'
-export default {
-  computed: {
-    ...mapState(['users'])
-  },
-  methods: {
-    ...mapActions(['menu/logOut']),
-    onLogOut() {
-      this.logOut()
-      this.$router.push('/authenticate')
-    }
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
+import users from '../../store/users'
+
+@Component({
+  name: 'MenuUserProfile'
+})
+export default class extends Vue {
+  usersStore = getModule(users, this.$store)
+
+  onLogOut() {
+    this.usersStore.logOut()
+    this.$router.push('/authenticate')
+  }
+
+  get login() {
+    return this.usersStore.login
   }
 }
 </script>
