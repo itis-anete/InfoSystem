@@ -22,41 +22,57 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
 import UsernameField from './username-field.vue'
 import PasswordField from './password-field.vue'
-export default {
-  props: ['value', 'buttonText', 'switchText', 'switchLink', 'onSubmit'],
+
+@Component({
+  name: 'AuthenticationCard',
   components: {
     UsernameField,
     PasswordField
   },
-  mixins: [validationMixin],
-  validations: {
+  mixins: [validationMixin]
+})
+export default class extends Vue {
+  password: string = ''
+  username: string = ''
+
+  validations: any = {
     username: { required },
     password: { required, minLength: minLength(6) }
-  },
-  data() {
-    return {
-      password: '',
-      username: ''
+  }
+
+  @Prop() isSignUp!: Boolean
+  @Prop() buttonText!: string
+  @Prop() switchText!: string
+  @Prop() switchLink!: string
+  @Prop() onSubmit!: Function
+
+  $v: any
+
+  get value() {
+    return this.isSignUp
+  }
+
+  set value(val) {
+    this.$emit('update:isSignUp', val)
+  }
+
+  submit() {
+    this.$v.$touch()
+    if (!this.$v.$invalid) {
+      this.onSubmit(this.username, this.password)
+      this.clear()
     }
-  },
-  methods: {
-    submit() {
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
-        this.onSubmit(this.username, this.password)
-        this.clear()
-      }
-    },
-    clear() {
-      this.$v.$reset()
-      this.username = ''
-      this.password = ''
-    }
+  }
+  clear() {
+    this.$v.$reset()
+    this.username = ''
+    this.password = ''
   }
 }
 </script>
