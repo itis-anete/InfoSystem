@@ -32,16 +32,16 @@ namespace InfoSystem.Web.Controllers
 			return Ok(addedProperty);
 		}
 
-		/// <summary>
-		/// Removes Property.
-		/// </summary>
-		/// <param name="typeName">EntityType name.</param>
-		/// <param name="propertyId">Instance id.</param>
-		/// <returns>IActionResult depending on result of operation.</returns>
-		[HttpDelete]
-		public IActionResult Delete([FromQuery] string typeName, int propertyId)
+        /// <summary>
+        /// Removes Property.
+        /// </summary>
+        /// <param name="typeId">EntityType id.</param>
+        /// <param name="propertyId">Instance id.</param>
+        /// <returns>IActionResult depending on result of operation.</returns>
+        [HttpDelete]
+		public IActionResult Delete([FromQuery] int typeId, int propertyId)
 		{
-			if (!_service.Delete(typeName, propertyId)) throw new DeletionException();
+			if (!_service.Delete(typeId, propertyId)) throw new DeletionException();
 			return Ok();
 		}
 
@@ -90,7 +90,7 @@ namespace InfoSystem.Web.Controllers
 		/// <param name="entityId">Entity's id.</param>
 		/// <param name="typeName">EntityType name.</param>
 		/// <returns>IActionResult depending on result of operation.</returns>
-		[HttpGet, Authorize]
+		[HttpGet]
 		public IActionResult GetByTypeName([FromQuery] int entityId, string typeName)
 		{
 			var properties = _service.GetByTypeName(entityId, typeName);
@@ -112,14 +112,14 @@ namespace InfoSystem.Web.Controllers
 		/// <summary>
 		/// Update Property value.
 		/// </summary>
-		/// <param name="typeName">Property's type name.</param>
+		/// <param name="typeId">Property's type id.</param>
 		/// <param name="newValue">New value.</param>
 		/// <param name="propertyId">Property's id.</param>
 		/// <returns>IActionResult, containing either updatedProperty or error status code.</returns>
 		[HttpPost]
-		public IActionResult Update(string typeName, string newValue, int propertyId)
+		public IActionResult Update(int typeId, string newValue, int propertyId)
 		{
-			var updatedProperty = _service.Update(typeName, newValue, propertyId) ?? throw new UpdateException();
+			var updatedProperty = _service.Update(typeId, newValue, propertyId) ?? throw new UpdateException();
 			return Ok(updatedProperty);
 		}
 	}

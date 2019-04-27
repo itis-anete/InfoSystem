@@ -1,31 +1,34 @@
 <template>
-  <authentication-card v-model="isSignUp" :switchText="`Have an account?`" :switchLink="`Log In`" :buttonText="`Sign Up`" :onSubmit="signUp" />
+  <authentication-card :isSignUp.sync="isSignUp" :switchText="`Have an account?`" :switchLink="`Log In`" :buttonText="`Sign Up`" :onSubmit="signUp" />
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import AuthenticationCard from './authentication-card.vue'
-export default {
-  props: ['value'],
+import { getModule } from 'vuex-module-decorators'
+import users from '../../store/users'
+
+@Component({
+  name: 'SignUp',
   components: {
     AuthenticationCard
-  },
-  computed: {
-    isSignUp: {
-      get() {
-        return this.value
-      },
-      set(val) {
-        this.$emit('input', val)
-      }
-    }
-  },
-  methods: {
-    ...mapActions(['register']),
-    async signUp(username, password) {
-      await this.register({ login: username, password: password })
-      this.$router.push('/')
-    }
+  }
+})
+export default class extends Vue {
+  usersStore = getModule(users, this.$store)
+
+  @Prop() value
+
+  get isSignUp() {
+    return this.value
+  }
+  set isSignUp(val) {
+    this.$emit('input', val)
+  }
+
+  async signUp(username, password) {
+    await this.usersStore.register({ login: username, password: password })
+    this.$router.push('/')
   }
 }
 </script>

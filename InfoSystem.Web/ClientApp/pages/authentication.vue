@@ -14,27 +14,30 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+
 import SignUp from '../components/authentication/signup.vue'
 import LogIn from '../components/authentication/login.vue'
 
-export default {
+@Component({
+  name: 'Authentication',
   layout: 'authentication',
   components: {
     SignUp,
     LogIn
-  },
-  data: () => ({
-    isSignUp: false
-  }),
+  }
+})
+export default class extends Vue {
+  isSignUp = false
+
+  get currentAuthState() {
+    return this.isSignUp ? 'SignUp' : 'LogIn'
+  }
+
   head() {
     return {
       title: this.currentAuthState
-    }
-  },
-  computed: {
-    currentAuthState() {
-      return this.isSignUp ? 'SignUp' : 'LogIn'
     }
   }
 }

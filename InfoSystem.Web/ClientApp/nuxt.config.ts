@@ -1,8 +1,7 @@
+import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 const pkg = require('./package')
 
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
-
-module.exports = {
+export default {
   mode: 'spa',
   head: {
     title: 'InfoSystem',
@@ -20,18 +19,31 @@ module.exports = {
     ]
   },
   loading: { color: '#52A8B6' },
+  /*
+   ** Global CSS
+   */
   css: ['~/assets/style/app.styl'],
-  plugins: ['@/plugins/vuetify'],
+
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: ['~/plugins/vuetify', '~/plugins/vuelidate'],
+
   modules: ['@nuxtjs/axios'],
   axios: {},
+  /**
+   * Build configuration
+   */
   build: {
     transpile: ['vuetify/lib'],
+    typescript: {
+      typeCheck: false
+    },
     plugins: [new VuetifyLoaderPlugin()],
     loaders: {
       stylus: {
         import: ['~assets/style/variables.styl']
       }
-    },
-    extend(config, ctx) {}
+    }
   }
 }

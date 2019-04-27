@@ -15,7 +15,7 @@ namespace InfoSystem.Sockets.Services
 
 		public Property Add(Property newProperty) => _repository.Add(newProperty);
 
-		public bool Delete(string typeName, int attributeId) => _repository.Delete(typeName, attributeId);
+		public bool Delete(int typeId, int attributeId) => _repository.Delete(typeId, attributeId);
 
 		public string GetAttributeValue(string typeName, string attributeName) =>
 			_repository.GetAttributeValue(typeName, attributeName);
@@ -31,7 +31,7 @@ namespace InfoSystem.Sockets.Services
 
 		public IEnumerable<Property> GetTypePropertiesById(int typeId) => _repository.GetTypePropertiesById(typeId);
 
-		public Property Update(string typeName, string newValue, int attributeId) =>
-			_repository.Update(typeName, newValue, attributeId);
+		public Property Update(int typeId, string newValue, int attributeId) =>
+			_repository.Update(typeId, newValue, attributeId);
 	}
 }

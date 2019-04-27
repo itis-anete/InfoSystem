@@ -13,18 +13,26 @@
   </td>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-export default {
-  props: ['remove'],
-  methods: {
-    onRemove() {
-      this.remove()
-      this.clear()
-    },
-    clear() {
-      this.$refs['deleteDialog'].isActive = false
-    }
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+@Component({
+  name: 'DeleteDialog'
+})
+export default class extends Vue {
+  @Prop() readonly remove!: Function
+
+  $refs!: {
+    deleteDialog: any
+  }
+
+  onRemove() {
+    this.remove()
+    this.clear()
+  }
+
+  clear() {
+    this.$refs.deleteDialog.isActive = false
   }
 }
 </script>

@@ -12,32 +12,43 @@
   </v-edit-dialog>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-export default {
-  data: () => ({
-    title: '',
-    icon: ''
-  }),
-  computed: {},
-  methods: {
-    ...mapActions(['addMenuItem']),
-    create() {
-      this.addMenuItem({
-        link: this.$route.path,
-        icon: this.icon,
-        title: this.title
-      })
-      this.clear()
-    },
-    clear() {
-      this.title = ''
-      this.icon = ''
-      this.$refs['newMenuItemDialog'].isActive = false
-    }
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
+import menu from '@/store/menu'
+
+@Component({
+  name: 'MenuNewItemDialog'
+})
+export default class extends Vue {
+  menuStore = getModule(menu, this.$store)
+
+  title = ''
+
+  icon = ''
+
+  $refs!: {
+    newMenuItemDialog: any
+  }
+
+  create() {
+    this.menuStore.addMenuItem({
+      link: this.$route.path,
+      icon: this.icon,
+      title: this.title
+    })
+    this.clear()
+  }
+
+  clear() {
+    this.title = ''
+    this.icon = ''
+    this.$refs.newMenuItemDialog.isActive = false
   }
 }
 </script>
+
 
 <style scoped>
 .list_tile_last {

@@ -10,16 +10,13 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    name: 'InfoSystem'
-  }),
-  head() {
-    return {
-      title: 'Home Page'
-    }
-  }
+
+<script lang="ts">
+import { Vue, Component } from 'nuxt-property-decorator'
+@Component({})
+export default class Home extends Vue {
+  private name = 'InfoSystem'
 }
 </script>
+
 

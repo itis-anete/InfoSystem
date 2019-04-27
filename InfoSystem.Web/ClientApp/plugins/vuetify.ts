@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/es5/util/colors'
+import 'material-design-icons-iconfont/dist/material-design-icons.css' // Ensure you are using css-loader
 
 Vue.use(Vuetify, {
+  iconfont: 'md',
   theme: {
     primary: '#52A8B6',
     accent: '#F2D30C',

@@ -20,15 +20,15 @@ namespace InfoSystem.Web.Controllers
 		}
 
 		/// <summary>
-		/// Add a new instance of type <paramref name="typeName"/>.
+		/// Add a new instance of entity type/>.
 		/// </summary>
-		/// <param name="typeName">Entity type name.</param>\
+		/// <param name="typeId">Entity type id.</param>\
 		/// <param name="requiredAttributeValue">Value of required property</param>
 		/// <returns>ActionResult, depending on operation result and added value.</returns> 
 		[HttpPost]
-		public IActionResult Add([FromQuery] string typeName, string requiredAttributeValue)
+		public IActionResult Add([FromQuery] int typeId, string requiredAttributeValue)
 		{
-			var addedEntity = _service.Add(typeName, requiredAttributeValue) ?? throw new AdditionException();
+			var addedEntity = _service.Add(typeId, requiredAttributeValue) ?? throw new AdditionException();
 			return Ok(addedEntity);
 		}
 

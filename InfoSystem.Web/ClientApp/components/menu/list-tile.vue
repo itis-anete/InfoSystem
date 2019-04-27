@@ -11,13 +11,21 @@
   </v-list-tile>
 </template>
 
-<script>
-export default {
-  props: ['item', 'index'],
-  computed: {
-    isActive() {
-      return this.$route.path.includes('registries')
-    }
+
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+import { MenuItem } from '../../models/menuItem'
+
+@Component({
+  name: 'MenuListTile'
+})
+export default class extends Vue {
+  @Prop() item!: MenuItem
+  @Prop() index!: number
+
+  get isActive() {
+    return this.$route.path.includes('registries')
   }
 }
 </script>

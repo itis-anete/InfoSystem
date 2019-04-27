@@ -17,46 +17,65 @@
     </v-card>
     <v-card flat class="mt-3 card_switch elevation-2">
       {{ switchText }}
-      <a @click="$emit('input', !value)">{{ switchLink }}</a>
+      <a @click="$emit('update:isSignUp', !value)">{{ switchLink }}</a>
     </v-card>
   </div>
 </template>
 
-<script>
-import { validationMixin } from 'vuelidate'
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+import { Validation } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
+
 import UsernameField from './username-field.vue'
 import PasswordField from './password-field.vue'
-export default {
-  props: ['value', 'buttonText', 'switchText', 'switchLink', 'onSubmit'],
+
+@Component({
+  name: 'AuthenticationCard',
   components: {
     UsernameField,
     PasswordField
   },
-  mixins: [validationMixin],
   validations: {
-    username: { required },
-    password: { required, minLength: minLength(6) }
-  },
-  data() {
-    return {
-      password: '',
-      username: ''
-    }
-  },
-  methods: {
-    submit() {
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
-        this.onSubmit(this.username, this.password)
-        this.clear()
-      }
+    password: {
+      required,
+      minLength: minLength(6)
     },
-    clear() {
-      this.$v.$reset()
-      this.username = ''
-      this.password = ''
+    username: {
+      required
     }
+  }
+})
+export default class extends Vue {
+  username = ''
+  password = ''
+
+  @Prop() isSignUp!: Boolean
+  @Prop() buttonText!: string
+  @Prop() switchText!: string
+  @Prop() switchLink!: string
+  @Prop() onSubmit!: Function
+
+  get value() {
+    return this.isSignUp
+  }
+
+  set value(val) {
+    this.$emit('update:isSignUp', val)
+  }
+
+  submit() {
+    this.$v.$touch()
+    if (!this.$v.$invalid) {
+      this.onSubmit(this.username, this.password)
+      this.clear()
+    }
+  }
+  clear() {
+    this.$v.$reset()
+    this.username = ''
+    this.password = ''
   }
 }
 </script>

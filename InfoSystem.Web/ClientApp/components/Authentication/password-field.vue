@@ -13,31 +13,34 @@
   />
 </template>
 
-<script>
-import { validationMixin } from 'vuelidate'
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { required, minLength } from 'vuelidate/lib/validators'
-export default {
-  props: ['password', 'submit', 'v'],
-  mixins: [validationMixin],
-  data: () => ({
-    showPassword: false
-  }),
-  computed: {
-    passwordErrors() {
-      const errors = []
-      if (!this.v.password.$dirty) return errors
-      !this.v.password.minLength && errors.push('Password must be at most 6 characters long')
-      !this.v.password.required && errors.push('Password is required.')
-      return errors
-    },
-    localPassword: {
-      get() {
-        return this.password
-      },
-      set(value) {
-        this.$emit('update:password', value)
-      }
-    }
+
+@Component({
+  name: 'AuthenticationPasswordField'
+})
+export default class extends Vue {
+  showPassword: Boolean = false
+
+  @Prop(String) password!: string
+  @Prop() submit!: Function
+  @Prop() v: any
+
+  get passwordErrors() {
+    const errors: string[] = []
+    if (!this.v.password.$dirty) return errors
+    !this.v.password.minLength && errors.push('Password must be at most 6 characters long')
+    !this.v.password.required && errors.push('Password is required.')
+    return errors
+  }
+
+  get localPassword() {
+    return this.password
+  }
+
+  set localPassword(value) {
+    this.$emit('update:password', value)
   }
 }
 </script>

@@ -23,34 +23,40 @@
   </v-app>
 </template>
 
-<script>
-import { mapGetters, mapState, mapActions } from 'vuex'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
+import menu from '@/store/menu'
+import { getModule } from 'vuex-module-decorators'
+import { MenuItem } from '../models/menuItem'
+
 import NewMenuItemDialog from '../components/menu/new-item-dialog.vue'
 import MenuListTile from '../components/menu/list-tile.vue'
 import UserProfile from '../components/menu/user-profile.vue'
-export default {
+
+@Component({
   components: {
     NewMenuItemDialog,
     MenuListTile,
     UserProfile
   },
-  middleware: ['authentication', 'loadMenuItems'],
-  data() {
-    return {
-      title: 'InfoSystem'
-    }
-  },
-  computed: {
-    ...mapState(['menu']),
-    ...mapGetters(['sortedMenuItems']),
-    drawerActive: {
-      get() {
-        return this.menu.drawer
-      },
-      set(value) {
-        this.$store.dispatch('setDrawer', value)
-      }
-    }
+  middleware: ['authentication', 'loadMenuItems']
+})
+export default class extends Vue {
+  menuStore = getModule(menu, this.$store)
+
+  get sortedMenuItems() {
+    return this.menuStore.SortedMenuItems
+  }
+  get drawer() {
+    return this.menuStore.Drawer
+  }
+  private title = 'InfoSystem'
+
+  public get drawerActive(): boolean {
+    return this.drawer
+  }
+  public set drawerActive(value: boolean) {
+    this.menuStore.setDrawer(value)
   }
 }
 </script>

@@ -1,46 +1,50 @@
 <template>
-  <grid :items="properties.properties" :headers="headers" :gridRow="`property-grid-row`" />
+  <grid :items="properties" :headers="headers" :gridRow="`property-grid-row`" />
 </template>
 
-<script>
-import { mapState, mapActions } from 'vuex'
-import Grid from '~/components/grid.vue'
+<script lang="ts">
+import { Component, Vue } from 'nuxt-property-decorator'
 
-export default {
+import { getModule } from 'vuex-module-decorators'
+import properties from '@/store/properties'
+import entities from '@/store/entities'
+
+import Grid from '@/components/grid.vue'
+
+import { Header } from '@/models/header'
+
+@Component({
   name: 'Entity',
   components: {
     Grid
   },
+  async fetch({ store, params }) {
+    await store.dispatch('types/getTypes')
+    await store.dispatch('entities/getCurrentEntityDisplay', { id: params.id, typeName: params.typeName })
+    await store.dispatch('entities/getEntities', params.typeName)
+    await store.dispatch('properties/getProperties', { id: params.id, typeName: params.typeName })
+  }
+})
+export default class extends Vue {
+  propertiesStore = getModule(properties, this.$store)
+  entitiesStore = getModule(entities, this.$store)
+
+  headers: Header[] = [
+    { text: 'Key', align: 'left', value: 'key', sortable: false },
+    { text: 'Value', sortable: false, align: 'left', value: 'value' },
+    { text: '', sortable: false, align: 'right', value: '' }
+  ]
+
+  get properties() {
+    return this.propertiesStore.Properties
+  }
+
+  head() {
+    return { title: `${this.entitiesStore.CurrentEntityDisplay}` }
+  }
+
   validate({ params }) {
     return !isNaN(+params.id)
-  },
-  head() {
-    return {
-      title: `${this.$route.params.typeName.charAt(0).toUpperCase()}${this.$route.params.typeName.slice(1)}s - ${
-        this.entities.currentEntityDisplay
-      } | InfoSystem`
-    }
-  },
-  data: () => ({
-    ent: [],
-    headers: [
-      {
-        text: 'Key',
-        align: 'left',
-        value: 'key'
-      },
-      { text: 'Value', sortable: false },
-      { text: '', sortable: false }
-    ]
-  }),
-  computed: {
-    ...mapState(['properties', 'entities'])
-  },
-  async fetch({ store, params }) {
-    await store.dispatch('getTypes')
-    await store.dispatch('getCurrentEntityDisplay', { entityId: params.id, typeName: params.typeName })
-    await store.dispatch('getEntities', params.typeName)
-    await store.dispatch('getProperties', { entityId: params.id, typeName: params.typeName })
   }
 }
 </script>
