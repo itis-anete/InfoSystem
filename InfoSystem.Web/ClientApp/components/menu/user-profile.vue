@@ -40,7 +40,7 @@ export default class extends Vue {
   usersStore = getModule(users, this.$store)
 
   get login() {
-    return this.usersStore.login
+    return this.usersStore.Login
   }
 
   onLogOut() {

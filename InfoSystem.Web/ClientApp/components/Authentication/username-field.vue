@@ -13,19 +13,17 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { validationMixin } from 'vuelidate'
-import { required } from 'vuelidate/lib/validators'
+import { Validation } from 'vuelidate'
 
 @Component({
-  name: 'AuthenticationUsernameField',
-  mixins: [validationMixin]
+  name: 'AuthenticationUsernameField'
 })
 export default class extends Vue {
   @Prop(String) username!: string
   @Prop() submit!: Function
-  @Prop() v
+  @Prop() v: any
 
-  nameErrors() {
+  get nameErrors() {
     const errors: string[] = []
     if (!this.v.username.$dirty) return errors
     !this.v.username.required && errors.push('Username is required.')

@@ -11,6 +11,10 @@ export default class UsersModule extends VuexModule {
   token: string = ''
   login: string = ''
 
+  get Login() {
+    return this.login
+  }
+
   @MutationAction
   async authenticate(user: User) {
     let response = await axios({ method: 'get', url: `/api/User/LogIn?login=${user.login}&password=${user.password}` })

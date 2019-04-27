@@ -15,21 +15,19 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
 
 @Component({
-  name: 'AuthenticationPasswordField',
-  mixins: [validationMixin]
+  name: 'AuthenticationPasswordField'
 })
 export default class extends Vue {
   showPassword: Boolean = false
 
   @Prop(String) password!: string
   @Prop() submit!: Function
-  @Prop() v
+  @Prop() v: any
 
-  passwordErrors() {
+  get passwordErrors() {
     const errors: string[] = []
     if (!this.v.password.$dirty) return errors
     !this.v.password.minLength && errors.push('Password must be at most 6 characters long')

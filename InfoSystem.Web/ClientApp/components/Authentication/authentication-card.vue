@@ -17,15 +17,17 @@
     </v-card>
     <v-card flat class="mt-3 card_switch elevation-2">
       {{ switchText }}
-      <a @click="$emit('input', !value)">{{ switchLink }}</a>
+      <a @click="$emit('update:isSignUp', !value)">{{ switchLink }}</a>
     </v-card>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { validationMixin } from 'vuelidate'
+
+import { Validation } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
+
 import UsernameField from './username-field.vue'
 import PasswordField from './password-field.vue'
 
@@ -35,24 +37,25 @@ import PasswordField from './password-field.vue'
     UsernameField,
     PasswordField
   },
-  mixins: [validationMixin]
+  validations: {
+    password: {
+      required,
+      minLength: minLength(6)
+    },
+    username: {
+      required
+    }
+  }
 })
 export default class extends Vue {
-  password: string = ''
-  username: string = ''
-
-  validations: any = {
-    username: { required },
-    password: { required, minLength: minLength(6) }
-  }
+  username = ''
+  password = ''
 
   @Prop() isSignUp!: Boolean
   @Prop() buttonText!: string
   @Prop() switchText!: string
   @Prop() switchLink!: string
   @Prop() onSubmit!: Function
-
-  $v: any
 
   get value() {
     return this.isSignUp
