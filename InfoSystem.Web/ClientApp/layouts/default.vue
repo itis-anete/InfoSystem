@@ -39,8 +39,7 @@ import UserProfile from '../components/menu/user-profile.vue'
     MenuListTile,
     UserProfile
   },
-  middleware: ['loadMenuItems']
-  // middleware: ['authentication', 'loadMenuItems']
+  middleware: ['authentication', 'loadMenuItems']
 })
 export default class extends Vue {
   menuStore = getModule(menu, this.$store)

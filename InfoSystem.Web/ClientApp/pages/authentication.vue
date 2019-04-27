@@ -29,7 +29,7 @@ import LogIn from '../components/authentication/login.vue'
   }
 })
 export default class extends Vue {
-  isSignUp = true
+  isSignUp = false
 
   get currentAuthState() {
     return this.isSignUp ? 'SignUp' : 'LogIn'

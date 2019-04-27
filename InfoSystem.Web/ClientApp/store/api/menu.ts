@@ -16,7 +16,7 @@ export async function getMenuItems(): Promise<MenuItem[]> {
 
 export async function addMenuItem(menuItem: MenuItem): Promise<MenuItem> {
   const typeName = 'menuitem'
-  const entity = await entityApi.post(`add?typeName=${typeName}&requiredAttributeValue=${menuItem.title}`)
+  const entity = await entityApi.post(`add?typeId=65&requiredAttributeValue=${menuItem.title}`)
   let property = {
     key: 'link',
     value: menuItem.link,
