@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Entity } from '~/models/entity'
 import { Property } from '~/models/property'
+import { newProperty } from '~/models/newProperty'
 
 export const api = axios.create({
   baseURL: '/api/property'
@@ -11,8 +12,8 @@ export async function getProperties(entity: Entity): Promise<Property[]> {
   return response.data as Property[]
 }
 
-export async function addProperty(property: Property): Promise<Property> {
-  const response = await api.post(`/Add`, property)
+export async function addProperty(newProperty: newProperty): Promise<Property> {
+  const response = await api.post(`/Add`, newProperty)
   return response.data as Property
 }
 

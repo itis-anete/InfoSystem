@@ -31,7 +31,7 @@ export default class extends Vue {
 
   headers: Header[] = [
     { text: 'Key', align: 'left', value: 'key', sortable: false },
-    { text: 'Value', sortable: false, align: 'center', value: 'value' },
+    { text: 'Value', sortable: false, align: 'left', value: 'value' },
     { text: '', sortable: false, align: 'right', value: '' }
   ]
 

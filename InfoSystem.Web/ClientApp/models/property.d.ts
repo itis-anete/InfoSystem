@@ -5,5 +5,5 @@ export interface Property {
   typeId: number
   entityId: number
   isComplex: boolean
-  displayComplexValue: string
+  displayComplexValue?: string
 }

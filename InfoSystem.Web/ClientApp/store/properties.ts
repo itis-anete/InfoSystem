@@ -3,6 +3,7 @@ import { VuexModule, Module, MutationAction, Mutation, Action } from 'vuex-modul
 import { Property } from '~/models/property'
 import { Entity } from '~/models/entity'
 import properties from '@/store/properties'
+import { newProperty } from '~/models/newProperty'
 
 @Module({
   name: 'properties',
@@ -23,8 +24,8 @@ export default class PropertiesModule extends VuexModule {
   }
 
   @Action({ commit: 'ADD_PROPERTY' })
-  async addProperty(property: Property) {
-    const addedProperty = await api.addProperty(property)
+  async addProperty(newProperty: newProperty) {
+    const addedProperty = await api.addProperty(newProperty)
     return addedProperty
   }
 

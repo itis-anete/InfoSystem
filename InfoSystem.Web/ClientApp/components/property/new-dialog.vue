@@ -18,50 +18,85 @@
   </v-dialog>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
+import entities from '@/store/entities'
+import types from '@/store/types'
+import properties from '@/store/properties'
+
 import Complex from '../property/complex-property.vue'
 import Simple from '../property/simple-property.vue'
+import { Type } from '../../models/type'
+import { Property } from '../../models/property'
+import { newProperty } from '../../models/newProperty'
+import { Entity } from '../../models/entity'
 
-import { mapActions, mapState } from 'vuex'
-export default {
+@Component({
+  name: 'PropertyNewDialog',
   components: {
     Complex,
     Simple
-  },
-  data: () => ({
-    dialog: false,
-    complex: false,
-    property: {
-      key: '',
-      value: '',
-      typeId: '',
-      entityId: ''
+  }
+})
+export default class extends Vue {
+  entitiesStore = getModule(entities, this.$store)
+  typesStore = getModule(types, this.$store)
+  propertiesStore = getModule(properties, this.$store)
+
+  dialog = false
+
+  complex = false
+
+  property: newProperty = {
+    key: '',
+    value: ''
+  }
+
+  get types() {
+    return this.typesStore.Types
+  }
+
+  get entities() {
+    return this.entitiesStore.Entities
+  }
+
+  get view() {
+    return this.complex ? 'complex' : 'simple'
+  }
+
+  get currentType() {
+    return this.typesStore.Types.find(x => x.name == this.$route.params.typeName) as Type
+  }
+
+  @Watch('complex')
+  onComplexChanged() {
+    this.property.key = ''
+    this.property.value = ''
+  }
+
+  async add() {
+    let newProp: newProperty = {
+      ...this.property,
+      typeId: this.currentType.id as number,
+      entityId: +this.$route.params.id
     }
-  }),
-  computed: {
-    ...mapState(['types', 'entities']),
-    view() {
-      return this.complex ? 'complex' : 'simple'
+    if (this.complex) {
+      let key = this.property.key as Type
+      let value = this.property.value as Entity
+      let id = value.id as number
+      newProp.key = `Complex:${key.name}`
+      newProp.value = id.toString()
     }
-  },
-  methods: {
-    ...mapActions(['addProperty']),
-    async add() {
-      this.property.typeId = this.types.types.find(x => x.name == this.$route.params.typeName).id
-      this.property.entityId = this.$route.params.id
-      if (this.complex) {
-        this.property.key = `Complex:${this.property.key.name}`
-        this.property.value = this.property.value.id
-      }
-      await this.addProperty(this.property)
-      this.clear()
-    },
-    clear() {
-      this.property.key = ''
-      this.property.value = ''
-      this.complex = false
-      this.dialog = false
-    }
+    await this.propertiesStore.addProperty(newProp)
+    this.clear()
+  }
+  clear() {
+    this.property.key = ''
+    this.property.value = ''
+    this.complex = false
+    this.dialog = false
   }
 }
 </script>
