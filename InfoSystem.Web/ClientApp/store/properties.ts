@@ -30,7 +30,7 @@ export default class PropertiesModule extends VuexModule {
 
   @Action({ commit: 'UPDATE_PROPERTY' })
   async updateProperty(property: Property) {
-    const updatedProperty = await api.addProperty(property)
+    const updatedProperty = await api.updateProperty(property)
     return updatedProperty
   }
 

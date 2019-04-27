@@ -30,13 +30,9 @@ export default class extends Vue {
   entitiesStore = getModule(entities, this.$store)
 
   headers: Header[] = [
-    {
-      text: 'Key',
-      align: 'left',
-      value: 'key'
-    },
-    { text: 'Value', sortable: false },
-    { text: '', sortable: false }
+    { text: 'Key', align: 'left', value: 'key', sortable: false },
+    { text: 'Value', sortable: false, align: 'center', value: 'value' },
+    { text: '', sortable: false, align: 'right', value: '' }
   ]
 
   get properties() {

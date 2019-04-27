@@ -1,6 +1,6 @@
 export interface Entity {
   id?: number
-  typeId?: number
+  typeId: number
   typeName?: string
-  requiredAttributeValue?: string
+  requiredAttributeValue: string
 }

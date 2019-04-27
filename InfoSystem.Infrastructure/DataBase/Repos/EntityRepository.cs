@@ -17,10 +17,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             _context = dbContext;
         }
 
-        public Entity Add(string typeName, string requiredAttributeValue)
+        public Entity Add(int typeId, string requiredAttributeValue)
         {
             var newEntity = new Entity();
             EntityType type;
+            var typeName = _context.Types.FirstOrDefault(x => x.Id == typeId).Name;
             try
             {
                 typeName = typeName.ToLower();

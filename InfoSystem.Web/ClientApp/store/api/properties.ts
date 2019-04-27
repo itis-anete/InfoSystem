@@ -17,11 +17,11 @@ export async function addProperty(property: Property): Promise<Property> {
 }
 
 export async function updateProperty(property: Property): Promise<Property> {
-  const response = await api.post(`/Update?typeName=${property.typeName}&newValue=${property.value}&propertyId=${property.id}`)
+  const response = await api.post(`/Update?typeId=${property.typeId}&newValue=${property.value}&propertyId=${property.id}`)
   return response.data as Property
 }
 
 export async function deleteProperty(property: Property): Promise<number> {
-  await api.delete(`/Delete?typeName=${property.typeName}&propertyId=${property.id}`)
-  return property.id
+  await api.delete(`/Delete?typeId=${property.typeId}&propertyId=${property.id}`)
+  return property.id as number
 }

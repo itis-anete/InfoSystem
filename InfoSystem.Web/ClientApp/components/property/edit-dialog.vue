@@ -11,30 +11,39 @@
   </td>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-export default {
-  props: ['item'],
-  data() {
-    return {
-      value: this.item.value
+<script lang="ts">
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+import { getModule } from 'vuex-module-decorators'
+import properties from '@/store/properties'
+
+import { Property } from '../../models/property'
+
+@Component({
+  name: 'PropertyEditDialog'
+})
+export default class extends Vue {
+  propertiesStore = getModule(properties, this.$store)
+
+  @Prop() readonly item!: Property
+
+  value = this.item.value
+
+  $refs!: {
+    propertyEditDialog: any
+  }
+
+  save() {
+    const property = {
+      ...this.item,
+      value: this.value
     }
-  },
-  methods: {
-    ...mapActions(['updateProperty']),
-    save() {
-      const property = {
-        propertyId: this.item.id,
-        typeName: this.$route.params.typeName,
-        newValue: this.value
-      }
-      this.updateProperty(property)
-      this.$refs['propertyEditDialog'].isActive = false
-    },
-    cancel() {
-      this.value = this.item.value
-      this.$refs['propertyEditDialog'].isActive = false
-    }
+    this.propertiesStore.updateProperty(property)
+    this.$refs.propertyEditDialog.isActive = false
+  }
+  cancel() {
+    this.value = this.item.value
+    this.$refs.propertyEditDialog.isActive = false
   }
 }
 </script>

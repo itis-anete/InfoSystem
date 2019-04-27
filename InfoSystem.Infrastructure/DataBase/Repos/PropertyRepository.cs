@@ -43,10 +43,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			}
 		}
 
-		public bool Delete(string typeName, int attributeId)
+		public bool Delete(int typeId, int attributeId)
 		{
 			try
 			{
+                var typeName = _context.Types.FirstOrDefault(x => x.Id == typeId).Name;
 				typeName = typeName.ToLower();
 				var sql = SqlOptions.GenerateDeleteScript(typeName, attributeId);
 				_context.Database.ExecuteSqlCommand(sql);
@@ -110,10 +111,11 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
 			property.DisplayComplexValue = propertyValue;
 		}
 
-		public Property Update(string typeName, string newValue, int attributeId)
-		{
+		public Property Update(int typeId, string newValue, int attributeId)
+		{            
 			try
 			{
+                var typeName = _context.Types.FirstOrDefault(x => x.Id == typeId).Name;
 				typeName = typeName.ToLower();
 				var sql = SqlOptions.GenerateUpdateScript(typeName, newValue, attributeId);
 				_context.Database.ExecuteSqlCommand(sql);

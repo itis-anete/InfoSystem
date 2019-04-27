@@ -16,7 +16,7 @@ export async function getEntities(typeName: string): Promise<Entity[]> {
 }
 
 export async function addEntity(entity: Entity): Promise<Entity> {
-  const response = await api.post(`/Add?typeName=${entity.typeName}&requiredAttributeValue=${entity.requiredAttributeValue}`)
+  const response = await api.post(`/Add?typeId=${entity.typeId}&requiredAttributeValue=${entity.requiredAttributeValue}`)
   return response.data as Entity
 }
 
