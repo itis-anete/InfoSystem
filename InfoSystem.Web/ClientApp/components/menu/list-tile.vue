@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
 import { MenuItem } from '../../models/menuItem'
 
 @Component({
@@ -21,7 +22,7 @@ import { MenuItem } from '../../models/menuItem'
 })
 export default class extends Vue {
   @Prop() item!: MenuItem
-  @Prop() index!: Number
+  @Prop() index!: number
 
   get isActive() {
     return this.$route.path.includes('registries')

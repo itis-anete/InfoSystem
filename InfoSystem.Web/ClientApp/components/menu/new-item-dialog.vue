@@ -25,6 +25,7 @@ export default class extends Vue {
   menuStore = getModule(menu, this.$store)
 
   title = ''
+
   icon = ''
 
   $refs!: {

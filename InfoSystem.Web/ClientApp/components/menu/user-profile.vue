@@ -39,13 +39,13 @@ import users from '../../store/users'
 export default class extends Vue {
   usersStore = getModule(users, this.$store)
 
+  get login() {
+    return this.usersStore.login
+  }
+
   onLogOut() {
     this.usersStore.logOut()
     this.$router.push('/authenticate')
-  }
-
-  get login() {
-    return this.usersStore.login
   }
 }
 </script>
