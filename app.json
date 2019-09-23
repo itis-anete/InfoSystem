@@ -1,0 +1,15 @@
+{
+  "name": "InfoSystem",
+  "description": "InfoSystem web-application",
+  "repository": "https://github.com/d4n0n-myself/InfoSystem",
+  "keywords": ["aspnet", "core"],
+  "stack": "heroku-16",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    },
+    {
+      "url": "https://github.com/jincod/dotnetcore-buildpack"
+    }
+  ]
+}

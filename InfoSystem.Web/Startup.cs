@@ -58,11 +58,6 @@ namespace InfoSystem.Web
 		{
 			if (env.IsDevelopment())
 				app.UseDeveloperExceptionPage();
-			else
-			{
-				app.UseExceptionHandler("/Error");
-				app.UseHsts();
-			}
 
 			app.UseStaticFiles();
 			app.UseSpaStaticFiles();
@@ -73,15 +68,19 @@ namespace InfoSystem.Web
 			app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "d4n0n's spec"));
 
 			app.UseMvc(routes =>
+			{
 				routes.MapRoute(
 					name: "default",
-					template: "{controller}/{action=Index}/{id?}"));
+					template: "{controller}/{action=Index}/{id?}");
+			});
+			
+			// commented this out to use heroku deploy 
 			app.UseSpa(spa =>
 			{
 				spa.Options.SourcePath = "ClientApp";
 
-				if (env.IsDevelopment())
-					spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+//				if (env.IsDevelopment())
+//					spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
 			});
 		}
 	}
