@@ -1,7 +1,9 @@
+using System;
 using InfoSystem.Core;
 using InfoSystem.Core.Entities;
 using InfoSystem.Core.Entities.Basic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace InfoSystem.Infrastructure.DataBase.Context
 {
@@ -16,7 +18,7 @@ namespace InfoSystem.Infrastructure.DataBase.Context
 
         public InfoSystemDbContext()
         {
-            _connectionString = new ConfigurationProvider().Configuration["ConnectionString"];
+            _connectionString = GetConnString();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,6 +31,16 @@ namespace InfoSystem.Infrastructure.DataBase.Context
             modelBuilder.Entity<Entity>().HasIndex(e => e.TypeId);
             modelBuilder.Entity<EntityType>().HasIndex(t => t.Name);
             modelBuilder.Entity<User>().HasIndex(u => u.Login);
+        }
+        
+        private static string GetConnString()
+        {
+            var url = Environment.GetEnvironmentVariable("CONNSTRING");
+            if (!string.IsNullOrEmpty(url))
+                return url;
+        
+            url = new Core.ConfigurationProvider().Configuration["ConnectionString"];
+            return url;
         }
     }
 }

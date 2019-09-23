@@ -22,6 +22,81 @@
         <Compile Remove="Models\**" />
         <Content Remove="$(SpaRoot)**" />
         <Content Remove="Models\**" />
+        <Content Include="ClientApp\dist\.nojekyll">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\200.html">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\authentication\index.html">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\favicon.ico">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\index.html">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\README.md">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\035f29dde0950ce29032.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\0f50a32aca085a3962be.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\4d9857078d0cca611771.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\6b7e56b74fac5e50bae6.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\7254c84210421065d640.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\9976f7b381e837f47d65.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\b0690f41f110c6280277.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\b46c6c3eabc3af3c8eeb.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\d6795f6d4168c60024f1.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\d7804759cd89ac0f31e1.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\e39596b6dd291daa359e.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\e87f4c96387603defd0a.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\e8ddb600c3209d22fb39.js">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\fonts\586090b.ttf">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\fonts\9219a80.woff">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\fonts\b661c28.eot">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\fonts\bca3a18.woff2">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\img\724c318.png">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\dist\_nuxt\LICENSES">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
         <EmbeddedResource Remove="Models\**" />
         <None Remove="$(SpaRoot)**" />
         <None Remove="Models\**" />
@@ -50,12 +125,12 @@
         <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
     </Target>
 
-    <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-        <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <!--Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+        &lt;!&ndash; As part of publishing, ensure the JS resources are freshly built in production mode &ndash;&gt;
         <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run dev" />
 
-        <!-- Include the newly-built files in the publish output -->
+        &lt;!&ndash; Include the newly-built files in the publish output &ndash;&gt;
         <ItemGroup>
             <DistFiles Include="$(SpaRoot)build\**" />
             <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
@@ -63,6 +138,6 @@
                 <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             </ResolvedFileToPublish>
         </ItemGroup>
-    </Target>
+    </Target>-->
 
 </Project>
