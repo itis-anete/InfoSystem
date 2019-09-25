@@ -3,7 +3,7 @@
   "description": "InfoSystem web-application",
   "repository": "https://github.com/d4n0n-myself/InfoSystem",
   "keywords": ["aspnet", "core"],
-  "stack": "heroku-16",
+  "stack": "heroku-18",
   "buildpacks": [
     {
       "url": "https://github.com/heroku/heroku-buildpack-nodejs"

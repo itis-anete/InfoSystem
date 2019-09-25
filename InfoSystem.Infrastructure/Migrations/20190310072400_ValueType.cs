@@ -6,11 +6,11 @@ namespace InfoSystem.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "ValueType",
-                table: "Attributes",
-                nullable: false,
-                oldClrType: typeof(int));
+//            migrationBuilder.AlterColumn<string>(
+//                name: "ValueType",
+//                table: "Attributes",
+//                nullable: false,
+//                oldClrType: typeof(int));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

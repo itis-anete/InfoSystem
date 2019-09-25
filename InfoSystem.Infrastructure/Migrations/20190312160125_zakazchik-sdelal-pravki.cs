@@ -7,8 +7,8 @@ namespace InfoSystem.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Attributes");
+//            migrationBuilder.DropTable(
+//                name: "Attributes");
 
             migrationBuilder.DropTable(
                 name: "Values");

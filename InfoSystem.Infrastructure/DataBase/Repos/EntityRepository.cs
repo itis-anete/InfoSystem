@@ -21,13 +21,20 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
         {
             var newEntity = new Entity();
             EntityType type;
-            var typeName = _context.Types.FirstOrDefault(x => x.Id == typeId).Name;
+            var typeFromDb = _context.Types.FirstOrDefault(x => x.Id == typeId);
+
+            if (typeFromDb == null)
+            {
+                throw new InvalidOperationException("Не найден тип для добавления сущности");
+            }
+            
+            var typeName = typeFromDb.Name;
             try
             {
                 typeName = typeName.ToLower();
-                type = _context.Types.FirstOrDefault(t => t.Name == typeName) ??
+                typeFromDb = _context.Types.FirstOrDefault(t => t.Name == typeName) ??
                        throw new ArgumentException("No such type found in db");
-                newEntity.TypeId = type.Id;
+                newEntity.TypeId = typeFromDb.Id;
                 newEntity.Display = requiredAttributeValue;
             }
             catch (Exception e)
@@ -40,7 +47,7 @@ namespace InfoSystem.Infrastructure.DataBase.Repos
             {
                 var entityEntry = AddEntityToDatabase(newEntity);
                 var newProperty = AddRequiredPropertyAndReturnItFromDb(typeName, requiredAttributeValue,
-                    type.RequiredProperty, entityEntry);
+                    typeFromDb.RequiredProperty, entityEntry);
 
                 var handler = new SqlHandler(_context);
                 if (!handler.CheckIfDisplayAttributeIsSet(typeName))
