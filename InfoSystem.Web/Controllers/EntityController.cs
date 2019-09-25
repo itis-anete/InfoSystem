@@ -1,3 +1,4 @@
+using System.Linq;
 using InfoSystem.Sockets.Services;
 using InfoSystem.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
@@ -78,6 +79,20 @@ namespace InfoSystem.Web.Controllers
 		{
 			var entities = _service.GetByTypeName(typeName);
 			return Ok(entities);
+		}
+		
+		/// <summary>
+		/// Get Id of one type.
+		/// </summary>
+		/// <param name="typeName">Entity type name.</param>
+		/// <returns>Id of one type.</returns>
+		[HttpGet]
+		public IActionResult GetTypeIdByTypeName([FromQuery] string typeName)
+		{
+			var typeId = _service.GetByTypeName(typeName)
+				.FirstOrDefault()
+				.TypeId;
+			return Ok(typeId);
 		}
 
 		[HttpGet]

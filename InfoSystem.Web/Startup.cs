@@ -79,8 +79,8 @@ namespace InfoSystem.Web
 			{
 				spa.Options.SourcePath = "ClientApp";
 
-//				if (env.IsDevelopment())
-//					spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+				if (env.IsDevelopment())
+					spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
 			});
 		}
 	}
